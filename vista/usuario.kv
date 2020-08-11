@@ -21,6 +21,7 @@
 			text: 'Usuario'
 			color: 0, 0, 0, 1
 		TextInput:
+			id: txt_usuario
 		 
 	BoxLayout:
 		background_color: 1, .3, .4, .85
@@ -30,12 +31,15 @@
 			color: 0, 0, 0, 1
 		TextInput:
 			password: True
+			id: txt_pass
 			 
 	BoxLayout:
         orientation: 'horizontal'
         Button:
 			text: 'Aceptar'
 			background_color: .2, .4, .9, 1
+			on_press: root.btnAceptar()
         Button:
 			text: 'Cancelar'
 			background_color: .2, .4, .9, 1
+			on_press: root.btnCancelar()
