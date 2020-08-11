@@ -55,19 +55,19 @@ class conexion:
 
     def insert(self, parameter_list, tabla):
         con=sqlite3.connect("data-ofelia.db")
-        con.execute(self.insert_case(tabla)[0],parameter_list)
+        con.execute(self.insert_case(tabla),parameter_list)
     
     def update(self, parameter_list, tabla):
         con=sqlite3.connect("data-ofelia.db")
-        con.execute(self.update_case(tabla)[0],parameter_list)
+        con.execute(self.update_case(tabla),parameter_list)
 
     def delete(self, id, tabla):
         con=sqlite3.connect("data-ofelia.db")
-        con.execute(delete_case(tabla)[0],id)
+        con.execute(delete_case(tabla),id)
 
     def selectId(self, id, tabla):
         con=sqlite3.connect("data-ofelia.db")
-        cursor=con.execute(selectId_case(tabla)[0],id)
+        cursor=con.execute(selectId_case(tabla),id)
         return cursor
 
     def selectAll(self, tabla):

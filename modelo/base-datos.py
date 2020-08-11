@@ -87,7 +87,7 @@ try:
    
     print("se creo la base de datos")                        
 except sqlite3.OperationalError:
-    print("La tabla articulos ya existe")                    
+    print("base de datos generada con anterioridad")                    
 conexion.close()
 
  
