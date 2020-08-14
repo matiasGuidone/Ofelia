@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Principal</class>
+ <widget class="QMainWindow" name="Principal">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>627</width>
+    <height>502</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Ofelia</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>image/icon/Icono.ico</normaloff>image/icon/Icono.ico</iconset>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>627</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <widget class="QMenu" name="menuInicio">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="title">
+     <string>Inicio</string>
+    </property>
+    <addaction name="actionRegistrarse"/>
+    <addaction name="separator"/>
+    <addaction name="actionABM_Usuarios"/>
+    <addaction name="actionABM_Gastos"/>
+    <addaction name="separator"/>
+    <addaction name="actionListas_de_Precios"/>
+    <addaction name="actionConfigurar_Controles"/>
+    <addaction name="actionConfigurar_Resu_menes"/>
+   </widget>
+   <widget class="QMenu" name="menuConsultar">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="title">
+     <string>Consultar</string>
+    </property>
+    <addaction name="actionLista_de_Comandos"/>
+    <addaction name="actionLista_de_Precios"/>
+   </widget>
+   <widget class="QMenu" name="menuAcerca">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="title">
+     <string>Acerca</string>
+    </property>
+    <addaction name="actionAyuda"/>
+    <addaction name="actionAcerca_de_Software"/>
+   </widget>
+   <widget class="QMenu" name="menuEditar">
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="title">
+     <string>Editar</string>
+    </property>
+    <addaction name="actionEmitir_Resumen"/>
+    <addaction name="actionRealizar_Pedido"/>
+   </widget>
+   <addaction name="menuInicio"/>
+   <addaction name="menuAcerca"/>
+   <addaction name="menuEditar"/>
+   <addaction name="menuConsultar"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionRegistrarse">
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/favicon (4).ico</normaloff>image/icon/favicon (4).ico</iconset>
+   </property>
+   <property name="text">
+    <string>Identificación</string>
+   </property>
+  </action>
+  <action name="actionABM_Usuarios">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/Identificacion.ico</normaloff>image/icon/Identificacion.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Configurar Usuarios</string>
+   </property>
+  </action>
+  <action name="actionABM_Gastos">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/gasto.png</normaloff>image/icon/gasto.png</iconset>
+   </property>
+   <property name="text">
+    <string>Configurar Gastos</string>
+   </property>
+  </action>
+  <action name="actionConfigurar_Ventas">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/Venta.png</normaloff>image/icon/Venta.png</iconset>
+   </property>
+   <property name="text">
+    <string>Configurar Ventas</string>
+   </property>
+  </action>
+  <action name="actionAyuda">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/ayuda.png</normaloff>image/icon/ayuda.png</iconset>
+   </property>
+   <property name="text">
+    <string>Ayuda</string>
+   </property>
+  </action>
+  <action name="actionAcerca_de_Software">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/Acerca.png</normaloff>image/icon/Acerca.png</iconset>
+   </property>
+   <property name="text">
+    <string>Acerca del Software</string>
+   </property>
+  </action>
+  <action name="actionListas_de_Precios">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/012_008_1k.png</normaloff>image/icon/012_008_1k.png</iconset>
+   </property>
+   <property name="text">
+    <string>Configurar Listas</string>
+   </property>
+  </action>
+  <action name="actionConfigurar_Controles">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/Lista de Comandos.ico</normaloff>image/icon/Lista de Comandos.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Configurar Comandos</string>
+   </property>
+  </action>
+  <action name="actionLista_de_Comandos">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/Lista de Comandos.ico</normaloff>image/icon/Lista de Comandos.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Lista de Comandos</string>
+   </property>
+  </action>
+  <action name="actionLista_de_Precios">
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/Lista de Precios.ico</normaloff>image/icon/Lista de Precios.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Lista de Precios</string>
+   </property>
+  </action>
+  <action name="actionEmitir_Resumen">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/Resumen.ico</normaloff>image/icon/Resumen.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Realizar Resumen</string>
+   </property>
+  </action>
+  <action name="actionRealizar_Pedido">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/Pedidos.png</normaloff>image/icon/Pedidos.png</iconset>
+   </property>
+   <property name="text">
+    <string>Realizar Pedido</string>
+   </property>
+  </action>
+  <action name="actionConfigurar_Resu_menes">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>image/icon/Resumen.ico</normaloff>image/icon/Resumen.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Configurar Resúmenes</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

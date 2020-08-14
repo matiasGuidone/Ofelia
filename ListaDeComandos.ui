@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>320</width>
+    <height>359</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QTreeWidget" name="treeWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>11</y>
+     <width>301</width>
+     <height>341</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="alternatingRowColors">
+    <bool>false</bool>
+   </property>
+   <property name="uniformRowHeights">
+    <bool>false</bool>
+   </property>
+   <property name="sortingEnabled">
+    <bool>true</bool>
+   </property>
+   <property name="animated">
+    <bool>true</bool>
+   </property>
+   <column>
+    <property name="text">
+     <string>Comandos</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>image/icon/teclado.png</normaloff>image/icon/teclado.png</iconset>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Tecla Asignada</string>
+    </property>
+   </column>
+   <item>
+    <property name="text">
+     <string>Caja 2</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>image/icon/comercio-y-compras.png</normaloff>image/icon/comercio-y-compras.png</iconset>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Caja 1</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>image/icon/comercio-y-compras.png</normaloff>image/icon/comercio-y-compras.png</iconset>
+    </property>
+    <item>
+     <property name="text">
+      <string>Teclado Numérico</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>9</string>
+      </property>
+      <property name="text">
+       <string>9</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>8</string>
+      </property>
+      <property name="text">
+       <string>8</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>7</string>
+      </property>
+      <property name="text">
+       <string>7</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>6</string>
+      </property>
+      <property name="text">
+       <string>6</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>5</string>
+      </property>
+      <property name="text">
+       <string>5</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>4</string>
+      </property>
+      <property name="text">
+       <string>4</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>3</string>
+      </property>
+      <property name="text">
+       <string>3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>2</string>
+      </property>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>1</string>
+      </property>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </item>
+    </item>
+    <item>
+     <property name="text">
+      <string>Registrar Gasto</string>
+     </property>
+     <property name="text">
+      <string>-</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Realizar Registro</string>
+     </property>
+     <property name="text">
+      <string>Enter</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Insertar Tipo de Pago</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>image/icon/tecla.png</normaloff>image/icon/tecla.png</iconset>
+     </property>
+     <property name="text">
+      <string>+</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Targeta de Débito</string>
+      </property>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Targeta de Crédito</string>
+      </property>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Efectivo</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </item>
+    </item>
+    <item>
+     <property name="text">
+      <string>Insertar Observación</string>
+     </property>
+     <property name="text">
+      <string>+</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Comenzar de Nuevo</string>
+     </property>
+     <property name="text">
+      <string>*</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Borrar Registro Anterior</string>
+     </property>
+     <property name="text">
+      <string>/</string>
+     </property>
+    </item>
+   </item>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
