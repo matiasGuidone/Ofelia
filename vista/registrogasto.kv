@@ -1,0 +1,74 @@
+#:kivy 1.10.0
+ 
+
+<Box>:
+	name: 'Registro de gastos'
+	orientation: 'vertical'
+	spacing: 10
+	padding: 3
+	canvas.before:
+		Color:
+			rgba:  1, 1, 1, 1
+		Rectangle:
+            pos: self.pos
+            size: self.size
+	BoxLayout:
+		Image:
+			source: 'vegetal.png'
+			size: 150,77
+	
+	BoxLayout:
+		orientation: 'horizontal'
+		Label:
+			text: 'Tipo de gasto'
+			color: 0, 0, 0, 1
+		ToggleButton:
+            text:"Empleado"
+            group: "tipo-g"
+            id: btn-empleado
+            on_press: root.btnEmpleado()
+        ToggleButton:
+            text:"Proveedor"
+            group: "tipo-g"
+            id: btn-proveedor
+            on_press: root.btnProveedor()
+		ToggleButton:
+            text:"Fijos"
+            group: "tipo-g"
+            id: btn-fijos
+            on_press: root.btnFijos()
+        ToggleButton:
+            text:"Otros"
+            group: "tipo-g"
+            id: btn-otros
+            on_press: root.btnOtros() 
+
+	BoxLayout:
+		orientation: 'horizontal'
+		Label:
+			id: lblSubcate
+			text: ''
+			color: 0, 0, 0, 1
+		
+
+	BoxLayout:
+		background_color: 1, .3, .4, .85
+		orientation: 'horizontal'
+		Label:
+			text: 'Sueldo'
+			color: 0, 0, 0, 1
+		TextInput:
+			id: txt_sueldo
+		ScrollView:
+			id: scrlView
+			 
+	BoxLayout:
+        orientation: 'horizontal'
+        Button:
+			text: 'Pagar'
+			background_color: .2, .4, .9, 1
+			on_press: root.btnPagar()
+        Button:
+			text: 'Salir'
+			background_color: .2, .4, .9, 1
+			on_press: root.btnSalir()
