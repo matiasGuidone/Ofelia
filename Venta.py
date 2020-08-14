@@ -10,10 +10,10 @@ class Venta:
     conex=conexion()
 #Datos venta
     id_Venta=0
-    f_h_venta=FechaYHora()
+    f_h_venta=FechayHora()
     monto_venta=0.0
     borrado=0
-    fechaBorrado=FechaYHora()
+    fechaBorrado=FechayHora()
     observacion=""
     tiposDePago_id_tipo_pago=0
     caja=0
@@ -52,8 +52,8 @@ class Venta:
     def ListarVentas(self):
         pass
 
-    def BuscarVentas(self,)
-    
+    def BuscarVentas(self):
+        pass
     
 
 

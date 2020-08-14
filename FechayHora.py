@@ -1,6 +1,6 @@
 from datetime import *
 
-class FechaYHora:
+class FechayHora:
     formato = "%d-%m-%y  %H:%M:%S"
     now=datetime.now()
     ahoraString =" "
@@ -49,4 +49,5 @@ class FechaYHora:
     # Prepara la cadena para guardar
         self.now=datetime.now()
         return self.now.strftime(self.formatos(12))
+    
     
