@@ -51,6 +51,8 @@ class Venta:
 
     def ListarVentas(self):
         pass
+
+    def BuscarVentas(self,)
     
     
 
