@@ -13,31 +13,22 @@ from modelo.conexion import conexion
 
 class Box(BoxLayout):
     pass
-     
+
+    id_subcategoria = 0
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        from kivy.core.window import Window
-        Window.size = (800, 500)
+        # from kivy.core.window import Window
+        # Window.size = (800, 500)
         
   
-
-    #     # dropdown = self.ids.drp_tipogasto
-    #     # for index in range(10): 
-  
-    #     # # Adding button in drop down list 
-    #     #     btn = Button(text ='Value % d' % index, size_hint_y = None, height = 40) 
-        
-    #     #     # binding the button to show the text when selected 
-    #     #     btn.bind(on_release = lambda btn: dropdown.select(btn.text)) 
-        
-    #     #     # then add the button inside the dropdown 
-    #     #     dropdown.add_widget(btn)
-    #     # pass
     def cargarComboSubCategoria(self, datos):
         dropdown = self.ids.drpTipogasto  
         dropdown.clear_widgets()   
         for index in range(len(datos)): 
-            btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, height = 40) 
+            btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
+            
+            btn.bind(on_press = lambda btn: self.elegirSubCat(btn.id))
             btn.bind(on_release = lambda btn: dropdown.select(btn.text)) 
             dropdown.add_widget(btn) 
 
@@ -45,7 +36,11 @@ class Box(BoxLayout):
         mainbutton.bind(on_release = dropdown.open) 
         dropdown.bind(on_select = lambda instance, x: setattr(mainbutton, 'text', x)) 
 
+    def elegirSubCat(self,id):
+        self.id_subcategoria = int(id)
+
     def btnEmpleado(self):
+        self.id_subcategoria = 0
         self.ids.lblSubcate.text = "Empleados: "
         cone = conexion()
         subcatego = cone.selectAll("SubcategoriaGastos", ["CategoriaGastos_id_cat_gasto", "1"])
@@ -53,6 +48,7 @@ class Box(BoxLayout):
         pass
 
     def btnProveedor(self):
+        self.id_subcategoria = 0
         self.ids.lblSubcate.text = "Proveedor: "
         cone = conexion()
         subcatego = cone.selectAll("SubcategoriaGastos", ["CategoriaGastos_id_cat_gasto", "2"])
@@ -60,6 +56,7 @@ class Box(BoxLayout):
         pass
 
     def btnFijos(self):
+        self.id_subcategoria = 0
         self.ids.lblSubcate.text = "Fijos: "
         cone = conexion()
         subcatego = cone.selectAll("SubcategoriaGastos", ["CategoriaGastos_id_cat_gasto", "3"])
@@ -67,6 +64,7 @@ class Box(BoxLayout):
         pass
 
     def btnOtros(self):
+        self.id_subcategoria = 0
         self.ids.lblSubcate.text = "Otros: "
         cone = conexion()
         subcatego = cone.selectAll("SubcategoriaGastos", ["CategoriaGastos_id_cat_gasto", "4"])
@@ -74,12 +72,11 @@ class Box(BoxLayout):
         pass
 
     def btnPagar(self): 
-        
-        usuario_text = self.ids.txt_usuario.text
-        pass_text = self.ids.txt_pass.text
+        #(monto_gasto, observacion_gasto, Turnos_id_turno, SubcategoriaGastos_id_subcat_gasto)
+        param = [self.ids.txtMonto.text, self.ids.txtObservaciones.text,1,self.id_subcategoria]
         cone = conexion()
-        param = [usuario_text, "admin", pass_text]
-        cone.insert(param,"Usuarios")
+        cone.insert(param,"Gastos")
+        self.ids.lblInfo.text = "Gasto almacenado con éxito -"
         pass
     def btnSalir(self):
         

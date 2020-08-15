@@ -14,7 +14,7 @@ class conexion:
             elif argument == "Ventas": return "insert into Ventas (f_h_venta, monto_venta, borrado, f_h_borrado, observacion, Turnos_id_turno, TiposDePagos_id_tipo_pago, caja ) values (?,?,?,?,?,?,?,?)"
             elif argument == "CategoriaProductos": return "insert into CategoriaProductos (descr_categ) values (?)"
             elif argument == "ProductosPorMayor": return "insert into ProductosPorMayor (nombre_producto, monto_producto, CategoriaProductos_id_cat_prod ) values (?,?,?)"
-            elif argument == "Gastos": return "insert into Gastos (monto_gasto, observacion_gasto, Turnos_id_turno, SubcategoriaGastos_id_subcat_gasto) values (?,?,?,?,?)"
+            elif argument == "Gastos": return "insert into Gastos (monto_gasto, observacion_gasto, Turnos_id_turno, SubcategoriaGastos_id_subcat_gasto) values (?,?,?,?)"
         
 
     def update_case(self, argument):
@@ -55,15 +55,21 @@ class conexion:
 
     def insert(self, parameter_list, tabla):
         con=sqlite3.connect("data-ofelia.db")
-        con.execute(self.insert_case(tabla),parameter_list)
+        cur = con.cursor()
+        cur.execute(self.insert_case(tabla),parameter_list)
+        con.commit()
     
     def update(self, parameter_list, tabla):
         con=sqlite3.connect("data-ofelia.db")
-        con.execute(self.update_case(tabla),parameter_list)
+        cur = con.cursor()
+        cur.execute(self.update_case(tabla),parameter_list)
+        con.commit()
 
     def delete(self, id, tabla):
         con=sqlite3.connect("data-ofelia.db")
-        con.execute(self.delete_case(tabla),id)
+        cur = con.cursor()
+        cur.execute(self.delete_case(tabla),id)
+        con.commit()
 
     def selectId(self, id, tabla):
         con=sqlite3.connect("data-ofelia.db")
