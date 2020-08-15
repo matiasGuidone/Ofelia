@@ -7,9 +7,7 @@ import sys, os
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion 
 # configuration
-from kivy.config import Config
-Config.set("graphics", "width",  800)
-Config.set("graphics", "height", 400)
+
  
 
 
@@ -18,7 +16,10 @@ class Box(BoxLayout):
      
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        from kivy.core.window import Window
+        Window.size = (800, 500)
         
+  
 
     #     # dropdown = self.ids.drp_tipogasto
     #     # for index in range(10): 
@@ -32,44 +33,56 @@ class Box(BoxLayout):
     #     #     # then add the button inside the dropdown 
     #     #     dropdown.add_widget(btn)
     #     # pass
+    def cargarComboSubCategoria(self, datos):
+        dropdown = self.ids.drpTipogasto  
+        dropdown.clear_widgets()   
+        for index in range(len(datos)): 
+            btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, height = 40) 
+            btn.bind(on_release = lambda btn: dropdown.select(btn.text)) 
+            dropdown.add_widget(btn) 
+
+        mainbutton = self.ids.btnMainTG 
+        mainbutton.bind(on_release = dropdown.open) 
+        dropdown.bind(on_select = lambda instance, x: setattr(mainbutton, 'text', x)) 
 
     def btnEmpleado(self):
-        self.ids.lblSubcate.text = "Empleados "
+        self.ids.lblSubcate.text = "Empleados: "
         cone = conexion()
         subcatego = cone.selectAll("SubcategoriaGastos", ["CategoriaGastos_id_cat_gasto", "1"])
-        print (subcatego)
+        self.cargarComboSubCategoria(subcatego)
         pass
 
     def btnProveedor(self):
-        self.ids.lblSubcate.text = "Proveedor "
+        self.ids.lblSubcate.text = "Proveedor: "
         cone = conexion()
         subcatego = cone.selectAll("SubcategoriaGastos", ["CategoriaGastos_id_cat_gasto", "2"])
-        print (subcatego)
+        self.cargarComboSubCategoria(subcatego)
         pass
 
     def btnFijos(self):
-        self.ids.lblSubcate.text = "Fijos "
+        self.ids.lblSubcate.text = "Fijos: "
         cone = conexion()
         subcatego = cone.selectAll("SubcategoriaGastos", ["CategoriaGastos_id_cat_gasto", "3"])
-        print (subcatego)
+        self.cargarComboSubCategoria(subcatego)
         pass
 
     def btnOtros(self):
-        self.ids.lblSubcate.text = "Otros "
+        self.ids.lblSubcate.text = "Otros: "
         cone = conexion()
         subcatego = cone.selectAll("SubcategoriaGastos", ["CategoriaGastos_id_cat_gasto", "4"])
-        print (subcatego)
+        self.cargarComboSubCategoria(subcatego)
         pass
 
     def btnPagar(self): 
-        # usuario_text = self.ids.txt_usuario.text
-        # pass_text = self.ids.txt_pass.text
-        # cone = conexion()
-        # param = [usuario_text, "admin", pass_text]
-        # cone.insert(param,"Usuarios")
+        
+        usuario_text = self.ids.txt_usuario.text
+        pass_text = self.ids.txt_pass.text
+        cone = conexion()
+        param = [usuario_text, "admin", pass_text]
+        cone.insert(param,"Usuarios")
         pass
     def btnSalir(self):
-        #print ('Aceptar')
+        
         pass
 
 class RegistroGastoApp(App):

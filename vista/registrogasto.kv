@@ -2,10 +2,11 @@
  
 
 <Box>:
-	name: 'Registro de gastos'
+	text: 'Registro de gastos'
 	orientation: 'vertical'
-	spacing: 10
-	padding: 3
+	size : 640, 300
+	spacing: 40
+	padding: 4
 	canvas.before:
 		Color:
 			rgba:  1, 1, 1, 1
@@ -15,33 +16,44 @@
 	BoxLayout:
 		Image:
 			source: 'vegetal.png'
-			size: 150,77
 	
 	BoxLayout:
 		orientation: 'horizontal'
 		Label:
+		
 			text: 'Tipo de gasto'
 			color: 0, 0, 0, 1
+			
 		ToggleButton:
+		
             text:"Empleado"
             group: "tipo-g"
             id: btn-empleado
             on_press: root.btnEmpleado()
+			background_color: .2, .4, .9, 1
+
         ToggleButton:
+		
             text:"Proveedor"
             group: "tipo-g"
             id: btn-proveedor
             on_press: root.btnProveedor()
+			background_color: .2, .4, .9, 1
+
 		ToggleButton:
+		
             text:"Fijos"
             group: "tipo-g"
             id: btn-fijos
             on_press: root.btnFijos()
+			background_color: .2, .4, .9, 1
         ToggleButton:
+		
             text:"Otros"
             group: "tipo-g"
             id: btn-otros
             on_press: root.btnOtros() 
+			background_color: .2, .4, .9, 1
 
 	BoxLayout:
 		orientation: 'horizontal'
@@ -49,26 +61,47 @@
 			id: lblSubcate
 			text: ''
 			color: 0, 0, 0, 1
-		
+		Button:
+			id: btnMainTG
+			text: "Seleccionar"
+		DropDown:
+			id: drpTipogasto
 
 	BoxLayout:
 		background_color: 1, .3, .4, .85
 		orientation: 'horizontal'
 		Label:
-			text: 'Sueldo'
+			text: 'Gasto: '
 			color: 0, 0, 0, 1
 		TextInput:
-			id: txt_sueldo
-		ScrollView:
-			id: scrlView
+			id: txtGasto
+			input_filter: 'float'
+
+	BoxLayout:
+		background_color: 1, .3, .4, .85
+		orientation: 'horizontal'
+		Label:
+			text: 'Monto abonado: '
+			color: 0, 0, 0, 1
+		TextInput:
+			id: txtMonto
+			input_filter: 'float'
+	BoxLayout:
+		background_color: 1, .3, .4, .85
+		orientation: 'horizontal'
+		Label:
+			id: lblInfo
+			text: ''
+			color: 0, 0, 0, 1
+
 			 
 	BoxLayout:
         orientation: 'horizontal'
         Button:
+			text: 'Salir'
+			background_color: .2, .4, .9, 1
+			on_press: app.stop() 
+		Button:
 			text: 'Pagar'
 			background_color: .2, .4, .9, 1
 			on_press: root.btnPagar()
-        Button:
-			text: 'Salir'
-			background_color: .2, .4, .9, 1
-			on_press: root.btnSalir()
