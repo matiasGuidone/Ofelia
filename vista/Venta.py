@@ -6,15 +6,35 @@ from datetime import datetime
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 
-from modelo.conexion import conexion
-from modelo.conexion import FechayHora
+from modelo import conexion
+from modelo import FechayHora
 
-sys.path.append(os.getcwd())
+
+# configuration
+from kivy.config import Config
+Config.set("graphics", "width",  800)
+Config.set("graphics", "height", 400)
 
 class Box(BoxLayout):
-    pass
 
-class Venta(App):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def btnRegistrarVenta(self):
+        #self.ids.lblSubcate.text = "Registrar"
+        #v=AccionVentas(turno, caja)
+#montoDeVenta(float), observación,idTurno,tipoPago,Caja
+        #v.cargarVenta([])
+        print ("registro venta")
+
+    def btnBorrar(self):
+        #self.ids.lblSubcate.text = "Registrar"
+        #v=AccionVentas(turno, caja)
+#montoDeVenta(float), observación,idTurno,tipoPago,Caja
+        #v.cargarVenta([])
+        print ("Borro venta")
+
+class AccionVentas:
 #Utiles para la corrida
     lista=None   
 #conexion
@@ -69,9 +89,12 @@ class Venta(App):
     def BuscarVentas(self):
         pass
     
+
+class Venta(App):
+
     def build(self):
         return Box()
-
         
 if __name__ == "__venta__":
     Venta().run()
+

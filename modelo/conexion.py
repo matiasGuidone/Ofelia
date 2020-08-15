@@ -68,11 +68,26 @@ class conexion:
     def selectId(self, id, tabla):
         con=sqlite3.connect("data-ofelia.db")
         cursor=con.execute(self.selectId_case(tabla),id)
+        return cursor.fetchall()
+
+    def selectAll(self, tabla, condiciones = None):
+        if condiciones == None :
+            con=sqlite3.connect("data-ofelia.db")
+            cursor=con.execute("select * from "+tabla)
+            return cursor.fetchall()
+        else :
+            con=sqlite3.connect("data-ofelia.db")
+            consulta = "select * from "+tabla
+            consulta += " "
+            for i in range(len(condiciones)):
+                if i%2==0 :
+                    consulta += condiciones[i]
+                else :
+                    consulta += " = "+condiciones[i]
+            cursor=con.execute("select * from "+tabla)
+            return cursor.fetchall()
+        cursor=con.execute(self.selectId_case(tabla),id)
         return cursor
 
-    def selectAll(self, tabla):
-        con=sqlite3.connect("data-ofelia.db")
-        cursor=con.execute("select * from "+tabla)
-        return cursor
             
  

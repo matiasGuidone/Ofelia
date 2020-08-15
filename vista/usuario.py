@@ -6,7 +6,7 @@ from kivy.app import App
 from kivy.config import Config
 from kivy.uix.boxlayout import BoxLayout
 
-from modelo.conexion import conexion
+from modelo import conexion
 
 sys.path.append(os.getcwd())
 

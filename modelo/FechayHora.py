@@ -1,4 +1,4 @@
-from datetime import *
+from datetime import datetime
 
 class FechayHora:
     formato = "%d-%m-%y  %H:%M:%S"
@@ -49,5 +49,3 @@ class FechayHora:
     # Prepara la cadena para guardar
         self.now=datetime.now()
         return self.now.strftime(self.formatos(12))
-    
-    

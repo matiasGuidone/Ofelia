@@ -1,10 +1,21 @@
 #:kivy 1.10.0
 
 <Box>:
-    orientation: 'vertical'
-    Button:
-        text: 'Este botón está arriba'
-    Label:
-        text: 'Esta es una etiqueta'
-    Button:
-        text: 'Este botón está abajo'
+    orientation: 'horizontal'
+    spacing:10
+    pading:3
+    FloatLayout:   
+            size_hint: .2, .2     
+		Button:
+            text: "Registrar"
+            pos_hint: {'x': 0, 'y': 0}
+            size_hint: 1, .5
+            id: btn_RegVenta
+            on_press: root.btnRegistrarVenta()  
+		Button:
+            text: "Borrar"
+            pos_hint: {'x': 0, 'y': .5}
+            size_hint: 1, .5
+            id: btn_Borrar
+            on_press: root.btnBorrar()  
+        
