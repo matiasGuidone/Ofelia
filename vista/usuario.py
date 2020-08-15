@@ -1,11 +1,15 @@
-from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
+import os
+import sys
 
-import sys, os
-sys.path.append(os.getcwd())
-from modelo.conexion import conexion 
+from kivy.app import App
 # configuration
 from kivy.config import Config
+from kivy.uix.boxlayout import BoxLayout
+
+from modelo.conexion import conexion
+
+sys.path.append(os.getcwd())
+
 Config.set("graphics", "width",  540)
 Config.set("graphics", "height", 200)
 

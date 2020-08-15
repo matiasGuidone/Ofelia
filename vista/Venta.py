@@ -1,19 +1,30 @@
-import sqlite3
-import FechayHora
-import modelo.conexion
+import os
+import sys
+
 from datetime import datetime
 
-class Venta:
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+
+from modelo.conexion import conexion
+from modelo.conexion import FechayHora
+
+sys.path.append(os.getcwd())
+
+class Box(BoxLayout):
+    pass
+
+class Venta(App):
 #Utiles para la corrida
-    lista=[]    
+    lista=None   
 #conexion
-    conex=conexion()
+    conex=None
 #Datos venta
     id_Venta=0
-    f_h_venta=FechayHora()
+    f_h_venta=None
     monto_venta=0.0
     borrado=0
-    fechaBorrado=FechayHora()
+    fechaBorrado=None
     observacion=""
     tiposDePago_id_tipo_pago=0
     caja=0
@@ -31,6 +42,9 @@ class Venta:
     def _init_(self, turno, caja):
         self.id_Turno=turno
         self.caja=caja
+        self.conex=conexion()
+        self.f_h_venta=FechayHora()
+        self.fechaBorrado=FechayHora()
 
     def cargarVenta(self, lista2):
         #La lista viene con montoDeVenta(float), observación,idTurno,tipoPago,Caja        
@@ -55,5 +69,9 @@ class Venta:
     def BuscarVentas(self):
         pass
     
+    def build(self):
+        return Box()
 
-
+        
+if __name__ == "__venta__":
+    Venta().run()
