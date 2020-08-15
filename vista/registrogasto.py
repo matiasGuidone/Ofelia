@@ -8,6 +8,7 @@ from kivy.uix.label import Label
 import sys, os
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion 
+from modelo.FechayHora import FechayHora 
 # configuration
 
  
@@ -93,7 +94,8 @@ class Box(BoxLayout):
         else : 
 
             #insercion de gasto
-            param = [self.ids.txtMonto.text,self.str_seleccion + ' : -'+self.sub_categoria[0][1]+': '+ self.ids.txtObservaciones.text,1,self.id_subcategoria]
+            hora = FechayHora().getAhoraGuardo()
+            param = [self.ids.txtMonto.text,self.str_seleccion + ' : -'+self.sub_categoria[0][1]+': '+ self.ids.txtObservaciones.text,1,self.id_subcategoria,hora]
             cone = conexion()
             cone.insert(param,"Gastos")
 
@@ -108,7 +110,7 @@ class Box(BoxLayout):
             self.ids.txtGasto.text = ''
             self.ids.txtMonto.text = ''
             self.ids.modMonto.active = False
-            self.ids.lblInfo.text = "Gasto almacenado con éxito ._"
+            self.ids.lblInfo.text = "Gasto almacenado con éxito ._"+hora
             pass
      
     def ingMonto(self):

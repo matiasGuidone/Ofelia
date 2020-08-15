@@ -14,7 +14,7 @@ class conexion:
             elif argument == "Ventas": return "insert into Ventas (f_h_venta, monto_venta, borrado, f_h_borrado, observacion, Turnos_id_turno, TiposDePagos_id_tipo_pago, caja ) values (?,?,?,?,?,?,?,?)"
             elif argument == "CategoriaProductos": return "insert into CategoriaProductos (descr_categ) values (?)"
             elif argument == "ProductosPorMayor": return "insert into ProductosPorMayor (nombre_producto, monto_producto, CategoriaProductos_id_cat_prod ) values (?,?,?)"
-            elif argument == "Gastos": return "insert into Gastos (monto_gasto, observacion_gasto, Turnos_id_turno, SubcategoriaGastos_id_subcat_gasto) values (?,?,?,?)"
+            elif argument == "Gastos": return "insert into Gastos (monto_gasto, observacion_gasto, Turnos_id_turno, SubcategoriaGastos_id_subcat_gasto, fecha) values (?,?,?,?,?)"
         
 
     def update_case(self, argument):
@@ -26,7 +26,7 @@ class conexion:
             elif argument == "Ventas": return "update Ventas set f_h_venta = ?, monto_venta = ?, borrado = ?, f_h_borrado = ?, observacion = ?, Turnos_id_turno = ?, TiposDePagos_id_tipo_pago = ?, caja = ?  where id_venta = ?"
             elif argument == "CategoriaProductos": return "update CategoriaProductos set descr_categ = ? where id_cat_prod = ?"
             elif argument == "ProductosPorMayor": return "update ProductosPorMayor set nombre_producto = ?, monto_producto = ?, CategoriaProductos_id_cat_prod = ? where id_productos = ?"
-            elif argument == "Gastos": return "update Gastos set monto_gasto = ?, observacion_gasto = ?, TiposDePagos_id_tipo_pago = ?, Turnos_id_turno = ?, SubcategoriaGastos_id_subcat_gasto = ? where id_gasto = ?"
+            elif argument == "Gastos": return "update Gastos set monto_gasto = ?, observacion_gasto = ?, TiposDePagos_id_tipo_pago = ?, Turnos_id_turno = ?, SubcategoriaGastos_id_subcat_gasto = ?, fecha = ? where id_gasto = ?"
        
 
     def selectId_case(self, argument):
