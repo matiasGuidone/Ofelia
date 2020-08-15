@@ -27,7 +27,7 @@
 		ToggleButton:
 		
             text:"Empleado"
-            group: "tipo-g"
+            group: "tipog"
             id: btn-empleado
             on_press: root.btnEmpleado()
 			background_color: .2, .4, .9, 1
@@ -35,7 +35,7 @@
         ToggleButton:
 		
             text:"Proveedor"
-            group: "tipo-g"
+            group: "tipog"
             id: btn-proveedor
             on_press: root.btnProveedor()
 			background_color: .2, .4, .9, 1
@@ -43,14 +43,14 @@
 		ToggleButton:
 		
             text:"Fijos"
-            group: "tipo-g"
+            group: "tipog"
             id: btn-fijos
             on_press: root.btnFijos()
 			background_color: .2, .4, .9, 1
         ToggleButton:
 		
             text:"Otros"
-            group: "tipo-g"
+            group: "tipog"
             id: btn-otros
             on_press: root.btnOtros() 
 			background_color: .2, .4, .9, 1
@@ -76,6 +76,7 @@
 		TextInput:
 			id: txtGasto
 			input_filter: 'float'
+			on_text: root.ingMonto()
 
 	BoxLayout:
 		background_color: 1, .3, .4, .85
@@ -83,9 +84,25 @@
 		Label:
 			text: 'Monto abonado: '
 			color: 0, 0, 0, 1
-		TextInput:
-			id: txtMonto
-			input_filter: 'float'
+		BoxLayout:
+			orientation: 'horizontal'
+			BoxLayout:
+				orientation: 'horizontal'
+				CheckBox:
+					id:modMonto  
+					color: .2, .4, .9, 1
+					active: False
+				Label:
+					text: 'Modificar'
+					color: 0, 0, 0, 1
+
+			TextInput:
+				id: txtMonto
+				input_filter: 'float'
+				disabled: not modMonto.active
+			 
+			
+			
 	BoxLayout:
 		background_color: 1, .3, .4, .85
 		orientation: 'horizontal'
