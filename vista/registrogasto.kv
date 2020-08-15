@@ -73,10 +73,18 @@
 		Label:
 			text: 'Gasto: '
 			color: 0, 0, 0, 1
-		TextInput:
-			id: txtGasto
-			input_filter: 'float'
-			on_text: root.ingMonto()
+		BoxLayout:
+			background_color: 1, .3, .4, .85
+			orientation: 'horizontal'
+			Label: 
+				text: 'pesos ($)'
+				color: 0, 0, 0, 1 
+				halign: 'left'
+			TextInput:
+				id: txtGasto
+				input_filter: 'float'
+				on_text: root.ingMonto()
+			
 
 	BoxLayout:
 		background_color: 1, .3, .4, .85
@@ -95,11 +103,16 @@
 				Label:
 					text: 'Modificar'
 					color: 0, 0, 0, 1
-
-			TextInput:
-				id: txtMonto
-				input_filter: 'float'
-				disabled: not modMonto.active
+			BoxLayout:
+				orientation: 'horizontal'
+				Label: 
+					text: 'pesos ($)'
+					color: 0, 0, 0, 1
+					halign: 'right'
+				TextInput:
+					id: txtMonto
+					input_filter: 'float'
+					disabled: not modMonto.active
 			 
 			
 			
@@ -121,7 +134,7 @@
 		Label:
 			id: lblInfo
 			text: ''
-			color: 0, 0, 0, 1
+			color: 1, .0, .0, 1
 
 			 
 	BoxLayout:

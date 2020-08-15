@@ -18,6 +18,7 @@ class Box(BoxLayout):
 
     id_subcategoria = 0
     str_seleccion = ""
+    sub_categoria = []
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -39,7 +40,14 @@ class Box(BoxLayout):
 
     def elegirSubCat(self,id):
         self.id_subcategoria = int(id)
+        con = conexion()
+        subaux = con.selectId(self.id_subcategoria, 'SubcategoriaGastos')
+        if len(subaux) > 0 :
+            self.sub_categoria = subaux
+            self.ids.lblInfo.text = "Dinero en cuenta: $ % d " % subaux[0][11] 
+            ##la columna 11 tiene el dinero en cuenta 
 
+#eventos de los botones toggle de arriba cada uno busca en la base los resultados correspondientes con cada tipo de gasto
     def btnEmpleado(self):
         self.id_subcategoria = 0
         self.ids.lblSubcate.text = "Empleados: "
@@ -76,25 +84,40 @@ class Box(BoxLayout):
         self.cargarComboSubCategoria(subcatego)
         pass
 
+#Evento de botón de pagar realiza el descuento en la cuenta que tiene a favor el registro seleccionado
     def btnPagar(self): 
-        if self.id_subcategoria == 0 or not  self.ids.txtMonto.text.isdigit():
+        if self.id_subcategoria == 0 or not  len(self.ids.txtMonto.text) > 0:
             popup = Popup(title="Mensaje", content= Label(text=str("Seleccione un "+self.str_seleccion+" de la lista e ingrese monto.")), size_hint=(None,None), size=(500, 90))
             popup.open()
         #(monto_gasto, observacion_gasto, Turnos_id_turno, SubcategoriaGastos_id_subcat_gasto)
         else : 
-            param = [self.ids.txtMonto.text, self.ids.txtObservaciones.text,1,self.id_subcategoria]
+
+            #insercion de gasto
+            param = [self.ids.txtMonto.text,self.str_seleccion + ' : -'+self.sub_categoria[0][1]+': '+ self.ids.txtObservaciones.text,1,self.id_subcategoria]
             cone = conexion()
             cone.insert(param,"Gastos")
-            self.ids.lblInfo.text = "Gasto almacenado con éxito -"
+
+            #"update SubcategoriaGastos set nomb_subcat = ?, descr_subcat = ?, empleado_id = ?, 
+            # proveedor_id = ?, sueldo = ?, adelanto = ?, contacto = ?, f_h_adelanto = ?, f__h_pago = ?,
+            #  CategoriaGastos_id_cat_gasto = ?, cuenta = ? where id_subcat_gasto = ?"
+
+            #insercion en la cuenta
+            cuenta = (self.sub_categoria[0][11]  + float(self.ids.txtGasto.text)) - float(self.ids.txtMonto.text)
+            param = [self.sub_categoria[0][1], self.sub_categoria[0][2],self.sub_categoria[0][3],self.sub_categoria[0][4],self.sub_categoria[0][5],self.sub_categoria[0][6],self.sub_categoria[0][7],self.sub_categoria[0][8],self.sub_categoria[0][9],self.sub_categoria[0][10],cuenta,self.id_subcategoria]
+            cone.update(param,"SubcategoriaGastos")
+            self.ids.txtGasto.text = ''
+            self.ids.txtMonto.text = ''
+            self.ids.modMonto.active = False
+            self.ids.lblInfo.text = "Gasto almacenado con éxito ._"
             pass
      
     def ingMonto(self):
-        self.ids.txtMonto.text = self.ids.txtGasto.text
+        if len(self.sub_categoria) > 0 and self.ids.txtGasto.text != '':
+            self.ids.txtMonto.text = str(float(self.ids.txtGasto.text) + self.sub_categoria[0][11])
+        else :
+            self.ids.txtMonto.text = self.ids.txtGasto.text
         pass
-
-    def editarMonto(self):
-         
-        pass
+ 
 
 class RegistroGastoApp(App):
     def build(self):

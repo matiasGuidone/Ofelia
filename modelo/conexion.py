@@ -73,7 +73,7 @@ class conexion:
 
     def selectId(self, id, tabla):
         con=sqlite3.connect("data-ofelia.db")
-        cursor=con.execute(selectId_case(tabla),id)
+        cursor=con.execute(self.selectId_case(tabla),[id])
         return cursor.fetchall()
 
     def selectAll(self, tabla, condiciones = None):
