@@ -68,7 +68,7 @@ class conexion:
     def delete(self, id, tabla):
         con=sqlite3.connect("data-ofelia.db")
         cur = con.cursor()
-        cur.execute(self.delete_case(tabla),id)
+        cur.execute(self.delete_case(tabla),[id])
         con.commit()
 
     def selectId(self, id, tabla):
