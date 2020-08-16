@@ -4,6 +4,7 @@ from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button 
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+import platform
 
 import sys, os
 sys.path.append(os.getcwd())
@@ -30,9 +31,15 @@ class Box(BoxLayout):
         dropdown = self.ids.drpTipogasto  
         dropdown.clear_widgets()   
         for index in range(len(datos)): 
-            btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
-            
-            btn.bind(on_press = lambda btn: self.elegirSubCat(btn.id))
+            sistema = platform.system()
+            if sistema == "Windows":
+                btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None,  height = 40) 
+            else:
+                btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
+            if sistema == "Windows":
+                btn.bind(on_press = lambda btn: self.elegirSubCat(datos[index][0]))
+            else:
+                btn.bind(on_press = lambda btn: self.elegirSubCat(btn.id))
             btn.bind(on_release = lambda btn: dropdown.select(btn.text)) 
             dropdown.add_widget(btn) 
 
