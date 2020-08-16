@@ -11,6 +11,7 @@ from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
 import sys, os
+import platform
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion 
 Config.set("graphics", "width",  540)
@@ -26,12 +27,19 @@ class Box(BoxLayout):
         super().__init__(**kwargs)
         datos = conexion().selectAll("Usuarios")
         dropdown = self.ids.drpUsuarios  
-        dropdown.clear_widgets()   
+        dropdown.clear_widgets()  
+        sistema = platform.system() 
         for index in range(len(datos)): 
             btn = Button()
-            btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
+           
+            if sistema == "Windows":
+                btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None, height = 40) 
+                btn.bind(on_press = lambda btn: self.selectUsuario(btn.text.rsplit("-",2)[0]))
+            else:
+                 btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
+                 btn.bind(on_press = lambda btn: self.selectUsuario(btn.id))
             
-            btn.bind(on_press = lambda btn: self.selectUsuario(btn.id))
+            
             btn.bind(on_release = lambda btn: dropdown.select(btn.text)) 
             dropdown.add_widget(btn) 
 
@@ -68,7 +76,7 @@ class Box(BoxLayout):
         contenido.add_widget(contr2)
         contenido.add_widget(tipos)
         contenido.add_widget(but)
-        popup = Popup(title= titulo, content= contenido, size_hint=(None,None), size=(450, 300))
+        popup = Popup(title= titulo, content= contenido, size_hint=(None,None),auto_dismiss=False, size=(450, 300))
         popup.open()
         pass
 
@@ -85,7 +93,7 @@ class Box(BoxLayout):
         cont.add_widget(Button(text='si', on_press = lambda btn: self.elimina() ))
         cont.add_widget(Button(text='no',on_press = lambda *args: mensj.dismiss() ))
         
-        mensj = Popup(title="Confirmar", content= cont, size_hint=(None,None), size=(330, 150))
+        mensj = Popup(title="Confirmar", content= cont,auto_dismiss=False, size_hint=(None,None), size=(330, 150))
         mensj.open()
         
         # param = [usuario_text, "admin", pass_text]

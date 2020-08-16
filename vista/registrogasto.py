@@ -29,15 +29,16 @@ class Box(BoxLayout):
   
     def cargarComboSubCategoria(self, datos):
         dropdown = self.ids.drpTipogasto  
-        dropdown.clear_widgets()   
+        dropdown.clear_widgets()  
+        sistema = platform.system() 
         for index in range(len(datos)): 
-            sistema = platform.system()
+            
             if sistema == "Windows":
-                btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None,  height = 40) 
+                btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None,  height = 40) 
             else:
                 btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
             if sistema == "Windows":
-                btn.bind(on_press = lambda btn: self.elegirSubCat(datos[index][0]))
+                btn.bind(on_press = lambda btn: self.elegirSubCat(btn.text.rsplit("-",2)[0]))
             else:
                 btn.bind(on_press = lambda btn: self.elegirSubCat(btn.id))
             btn.bind(on_release = lambda btn: dropdown.select(btn.text)) 
@@ -96,7 +97,7 @@ class Box(BoxLayout):
 #Evento de botón de pagar realiza el descuento en la cuenta que tiene a favor el registro seleccionado
     def btnPagar(self): 
         if self.id_subcategoria == 0 or not  len(self.ids.txtMonto.text) > 0:
-            popup = Popup(title="Mensaje", content= Label(text=str("Seleccione un "+self.str_seleccion+" de la lista e ingrese monto.")), size_hint=(None,None), size=(500, 90))
+            popup = Popup(title="Mensaje", content= Label(text=str("Seleccione un "+self.str_seleccion+" de la lista e ingrese monto.")), size_hint=(None,None),auto_dismiss=False, size=(500, 90))
             popup.open()
         #(monto_gasto, observacion_gasto, Turnos_id_turno, SubcategoriaGastos_id_subcat_gasto)
         else : 

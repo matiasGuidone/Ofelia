@@ -5,8 +5,10 @@ from datetime import datetime
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.carousel import Carousel
-
+from kivy.uix.dropdown import DropDown
+from kivy.uix.dropdown import Button
+from kivy.uix.dropdown import Label
+from kivy.uix.dropdown import InputText
 
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion
