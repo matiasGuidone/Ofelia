@@ -12,7 +12,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
 import sys, os
 sys.path.append(os.getcwd())
-
+from modelo.conexion import conexion 
 Config.set("graphics", "width",  540)
 Config.set("graphics", "height", 300)
 
