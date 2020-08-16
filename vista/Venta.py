@@ -19,7 +19,7 @@ from modelo.FechayHora import FechayHora
 from kivy.config import Config
 Config.set("graphics", "width",  800)
 Config.set("graphics", "height", 400)
-
+#damian
 class Box(BoxLayout):
 
     def __init__(self, **kwargs):
