@@ -25,6 +25,9 @@ class Box(BoxLayout):
    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.cargarDrp()
+        pass
+    def cargarDrp(self):
         datos = conexion().selectAll("Usuarios")
         dropdown = self.ids.drpUsuarios  
         dropdown.clear_widgets()  
@@ -46,7 +49,6 @@ class Box(BoxLayout):
         mainbutton = self.ids.btnMain
         mainbutton.bind(on_release = dropdown.open) 
         dropdown.bind(on_select = lambda instance, x: setattr(mainbutton, 'text', x))
-        pass
 
     def selectUsuario(self,id):
         self.id = int(id)
@@ -66,7 +68,7 @@ class Box(BoxLayout):
         contr2 = TextInput(hint_text="Repetir contraseña", password = True)
         but = BoxLayout(orientation='horizontal')
         but.add_widget(Button(text="Cancelar",on_press = lambda *args: popup.dismiss()))
-        but.add_widget(Button(text="Guardar" ,on_press = lambda *args: self.guardarUser(user.text, contr.text, contr2.text)))
+        but.add_widget(Button(text="Guardar" ,on_press = lambda *args: self.guardarUser(user.text, contr.text, contr2.text, popup)))
         tipos = BoxLayout() 
         tipos.add_widget(ToggleButton(text="Administrador",group = 'tipo', on_press = lambda btn: self.selectTipo("admin"))) 
         tipos.add_widget(ToggleButton(text="Caja", group = 'tipo', on_press = lambda btn: self.selectTipo("caja")))
@@ -81,27 +83,44 @@ class Box(BoxLayout):
         pass
 
     def btnEditar(self):
-        self.openPopup("Editar el usuario")
+        if len(self.user) == 0 :
+            contenido = BoxLayout(orientation='vertical')
+            contenido.add_widget(Label(text=str("Seleccione un usuario de la lista.")))
+            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss()))
+            popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130))
+            popup.open()
+        else:
+            self.openPopup("Editar el usuario")
         
         # param = [usuario_text, "admin", pass_text]
         # cone.insert(param,"Usuarios")
         pass
 
     def btnEliminar(self):
-        cont = BoxLayout()
-        cont.add_widget(Label(text='¿ Desea eliminar el usuario "'+self.user[0][1]+'" ?'))
-        cont.add_widget(Button(text='si', on_press = lambda btn: self.elimina() ))
-        cont.add_widget(Button(text='no',on_press = lambda *args: mensj.dismiss() ))
-        
-        mensj = Popup(title="Confirmar", content= cont,auto_dismiss=False, size_hint=(None,None), size=(330, 150))
-        mensj.open()
+        if len(self.user) == 0 :
+            contenido = BoxLayout(orientation='vertical')
+            contenido.add_widget(Label(text=str("Seleccione un usuario de la lista.")))
+            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss()))
+            popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130))
+            popup.open()
+        else:    
+            cont = BoxLayout(orientation='vertical')
+            buttons = BoxLayout()
+            cont.add_widget(Label(text='¿ Desea eliminar el usuario "'+self.user[0][1]+'" ?'))
+            buttons.add_widget(Button(text='si', on_press = lambda btn: self.elimina(mensj) ))
+            buttons.add_widget(Button(text='no',on_press = lambda *args: mensj.dismiss() ))
+            cont.add_widget(buttons)
+            mensj = Popup(title="Confirmar", content= cont,auto_dismiss=False, size_hint=(None,None), size=(430, 120))
+            mensj.open()
         
         # param = [usuario_text, "admin", pass_text]
         # cone.insert(param,"Usuarios")
         pass
     
-    def elimina(self):
+    def elimina(self,popup):
         conexion().delete(self.id, 'Usuarios')
+        popup.dismiss()
+        self.cargarDrp()
         pass
 
     def btnNuevo(self):
@@ -113,14 +132,21 @@ class Box(BoxLayout):
         self.tipo = tipo
         pass
 
-    def guardarUser(self, user, contr, contr2):
+    def guardarUser(self, user, contr, contr2, popup):
         if contr == contr2 and self.id == 0:
             conexion().insert([user, self.tipo , contr], 'Usuarios')
+            popup.dismiss()
+            self.cargarDrp()
         elif contr == contr2 :
             conexion().update([user, self.tipo , contr, self.id], 'Usuarios')
+            popup.dismiss()
+            self.cargarDrp()
         else:
-            mensj = Popup(title="Error", content= Label(text='Asegurese de que las contraseñas ingresadas sean idénticas'), size_hint=(None,None), size=(330, 150))
-            mensj.open()
+            contenido = BoxLayout(orientation='vertical')
+            contenido.add_widget(Label(text=str("Las contraseñas ingresadas deben ser idénticas")))
+            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss()))
+            popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130))
+            popup.open()
         pass
 
 	# def btnNuevo(self):
