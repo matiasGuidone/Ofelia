@@ -1,11 +1,29 @@
 #:kivy 1.10.0
 
 <Box>:
-    orientation: 'horizontal'
-    spacing:10
-    pading:3
-    FloatLayout:   
-            size_hint: .2, .2     
+    name: 'Venta'
+	orientation: 'horizontal'
+	spacing: 10
+	padding: 3
+    BoxLayout:   
+	    orientation: 'vertical'
+		TextInput:
+                  id: 'Monto'                  
+		Label:
+                  text: "Monto Ant"
+                  id: lbAnterior
+    BoxLayout:   
+	    orientation: 'vertical'
+		Carousel:
+            direction: 'right'
+		Button:
+            text: "Borrar"
+            pos_hint: {'x': 0, 'y': .5}
+            size_hint: 1, .5
+            id: btn_Borrar
+            on_press: root.btnBorrar()  
+    BoxLayout:   
+	    orientation: 'vertical'
 		Button:
             text: "Registrar"
             pos_hint: {'x': 0, 'y': 0}
@@ -18,4 +36,32 @@
             size_hint: 1, .5
             id: btn_Borrar
             on_press: root.btnBorrar()  
+    BoxLayout:   
+	    orientation: 'vertical'
+		Button:
+            text: "Registrar"
+            pos_hint: {'x': 0, 'y': 0}
+            size_hint: 1, .5
+                  id: btn_RegVenta
+                  on_press: root.btnRegistrarVenta()  
+		Button:
+                  text: "Borrar"
+                  pos_hint: {'x': 0, 'y': .5}
+                  size_hint: 1, .5
+                  id: btn_Borrar
+                  on_press: root.btnBorrar()  
+    BoxLayout:   
+	    orientation: 'vertical'
+		Button:
+                  text: "Registrar"
+                  pos_hint: {'x': 0, 'y': 0}
+                  size_hint: 1, .5
+                  id: btn_RegVenta
+                  on_press: root.btnRegistrarVenta()  
+		Button:
+                  text: "Borrar"
+                  pos_hint: {'x': 0, 'y': .5}
+                  size_hint: 1, .5
+                  id: btn_Borrar
+                  on_press: root.btnBorrar()  
         

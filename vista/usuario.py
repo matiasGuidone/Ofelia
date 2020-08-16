@@ -28,6 +28,7 @@ class Box(BoxLayout):
         dropdown = self.ids.drpUsuarios  
         dropdown.clear_widgets()   
         for index in range(len(datos)): 
+            btn = Button()
             btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
             
             btn.bind(on_press = lambda btn: self.selectUsuario(btn.id))
