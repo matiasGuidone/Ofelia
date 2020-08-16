@@ -2,8 +2,8 @@
  
 
 <Box>:
-	text: 'Registro de gastos'
-	orientation: 'vertical' 
+	 
+	orientation: 'vertical'
 	spacing: 15
 	padding: 4
 	canvas.before:
@@ -20,7 +20,7 @@
 		orientation: 'horizontal'
 		Label:
 		
-			text: 'Tipo de gasto'
+			text: 'Tipo de cuenta:'
 			color: 0, 0, 0, 1
 			
 		ToggleButton:
@@ -53,6 +53,7 @@
             id: btn-otros
             on_press: root.btnOtros() 
 			background_color: .2, .4, .9, 1
+	Label:
 
 	BoxLayout:
 		orientation: 'horizontal'
@@ -65,84 +66,82 @@
 			text: "Seleccionar"
 		DropDown:
 			id: drpTipogasto
-
+	Label:
+	
 	BoxLayout:
 		background_color: 1, .3, .4, .85
 		orientation: 'horizontal'
-		Label:
-			text: 'Gasto: '
-			color: 0, 0, 0, 1
-		BoxLayout:
-			background_color: 1, .3, .4, .85
-			orientation: 'horizontal'
-			Label: 
-				text: 'pesos ($)'
-				color: 0, 0, 0, 1 
-				halign: 'left'
-			TextInput:
-				id: txtGasto
-				input_filter: 'float'
-				on_text: root.ingMonto()
-			
-
-	BoxLayout:
-		background_color: 1, .3, .4, .85
-		orientation: 'horizontal'
-		Label:
-			text: 'Monto abonado: '
-			color: 0, 0, 0, 1
-		BoxLayout:
-			orientation: 'horizontal'
+		
+		Label: 
+		Button:
+			background_color: 0, 0, 1, 1 
+			on_press: root.btnNuevo()
+			id: btnNuevo
+			disabled: True
 			BoxLayout:
+				pos: self.parent.pos
+				size: self.parent.size
 				orientation: 'horizontal'
-				CheckBox:
-					id:modMonto  
-					color: .2, .4, .9, 1
-					active: False
 				Label:
-					text: 'Modificar'
-					color: 0, 0, 0, 1
+				Image:
+					source: '../image/icon/plus-square.png'
+					width: 17
+					size_hint_x: None
+					
+				Label:
+					text: 'Nuevo'
+					width: 70
+					size_hint_x: None
+					color: 1, 1, 1, 1
+				Label:
+		Button:
+			background_color: 0, 0, 1, 1 
+			on_press: root.btnEliminar()
+			id: btnEliminar
+			disabled: True
 			BoxLayout:
+				pos: self.parent.pos
+				size: self.parent.size
 				orientation: 'horizontal'
-				Label: 
-					text: 'pesos ($)'
-					color: 0, 0, 0, 1
-					halign: 'right'
-				TextInput:
-					id: txtMonto
-					input_filter: 'float'
-					disabled: not modMonto.active
-			 
-			
-			
-	BoxLayout:
-		background_color: 1, .3, .4, .85
-		orientation: 'horizontal'
-		spacing: 10
-		padding: 2
-		Label:
-			text: 'Observaciones: '
-			color: 0, 0, 0, 1
-		TextInput:
-			id: txtObservaciones
-
-	BoxLayout:
-
-		background_color: 1, .3, .4, .85
-		orientation: 'horizontal'
-		Label:
-			id: lblInfo
-			text: ''
-			color: 1, .0, .0, 1
-
-			 
+				Label:
+				Image:
+					source: '../image/icon/minus-square.png'
+					width: 17
+					size_hint_x: None
+					
+				Label:
+					text: 'Eliminar'
+					width: 70
+					size_hint_x: None
+					color: 1, 1, 1, 1
+				Label:
+		Button:
+			background_color: 0, 0, 1, 1 
+			on_press: root.btnEditar()
+			id: btnEditar
+			disabled: True
+			BoxLayout:
+				pos: self.parent.pos
+				size: self.parent.size
+				orientation: 'horizontal'
+				Label:
+				Image:
+					source: '../image/icon/edit.png'
+					width: 17
+					size_hint_x: None
+					
+				Label:
+					text: 'Editar'
+					width: 70
+					size_hint_x: None
+					color: 1, 1, 1, 1
+				Label:
+		Label: 
+	Label:		 
 	BoxLayout:
         orientation: 'horizontal'
-        Button:
+		Button:
 			text: 'Salir'
 			background_color: .2, .4, .9, 1
 			on_press: app.stop() 
-		Button:
-			text: 'Pagar'
-			background_color: .2, .4, .9, 1
-			on_press: root.btnPagar()
+	 	 
