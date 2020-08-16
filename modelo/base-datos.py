@@ -80,6 +80,7 @@ try:
                               TiposDePagos_id_tipo_pago integer,
                               Turnos_id_turno integer,
                               SubcategoriaGastos_id_subcat_gasto integer,
+                              fecha text,
                               FOREIGN KEY(TiposDePagos_id_tipo_pago) REFERENCES TiposDePagos(id_tipo_pago),
                               FOREIGN KEY(Turnos_id_turno) REFERENCES Turnos(id_turno)
                               FOREIGN KEY(SubcategoriaGastos_id_subcat_gasto) REFERENCES SubcategoriaGastos(id_subcat_gasto)
