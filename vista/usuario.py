@@ -1,4 +1,9 @@
+import os
+import sys
+
 from kivy.app import App
+# configuration
+from kivy.config import Config
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button 
 from kivy.uix.popup import Popup
@@ -7,9 +12,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
 import sys, os
 sys.path.append(os.getcwd())
-from modelo.conexion import conexion 
-# configuration
-from kivy.config import Config
+
 Config.set("graphics", "width",  540)
 Config.set("graphics", "height", 300)
 
