@@ -5,23 +5,31 @@
 	orientation: 'horizontal'
 	spacing: 10
 	padding: 3
+
     BoxLayout:   
 	    orientation: 'vertical'
 		TextInput:
-                  id: 'Monto'                  
+            id: timonto                 
 		Label:
-                  text: "Monto Ant"
-                  id: lbAnterior
+            text: "Monto Ant"
+            id: lbAnterior
+
+    BoxLayout:   
+        orientation: 'vertical'
+        DropDown:
+            id: drpUsuarios             
+        Label:
+            text: "Pago"
+            id: lbPagoAnterior
+
     BoxLayout:   
 	    orientation: 'vertical'
-		Carousel:
-            direction: 'right'
-		Button:
-            text: "Borrar"
-            pos_hint: {'x': 0, 'y': .5}
-            size_hint: 1, .5
-            id: btn_Borrar
-            on_press: root.btnBorrar()  
+		TextInput:
+            id: tiobservacion                 
+		Label:
+            text: "Observacion Anterior"
+            id: lbobserAnt
+
     BoxLayout:   
 	    orientation: 'vertical'
 		Button:
@@ -36,32 +44,4 @@
             size_hint: 1, .5
             id: btn_Borrar
             on_press: root.btnBorrar()  
-    BoxLayout:   
-	    orientation: 'vertical'
-		Button:
-            text: "Registrar"
-            pos_hint: {'x': 0, 'y': 0}
-            size_hint: 1, .5
-                  id: btn_RegVenta
-                  on_press: root.btnRegistrarVenta()  
-		Button:
-                  text: "Borrar"
-                  pos_hint: {'x': 0, 'y': .5}
-                  size_hint: 1, .5
-                  id: btn_Borrar
-                  on_press: root.btnBorrar()  
-    BoxLayout:   
-	    orientation: 'vertical'
-		Button:
-                  text: "Registrar"
-                  pos_hint: {'x': 0, 'y': 0}
-                  size_hint: 1, .5
-                  id: btn_RegVenta
-                  on_press: root.btnRegistrarVenta()  
-		Button:
-                  text: "Borrar"
-                  pos_hint: {'x': 0, 'y': .5}
-                  size_hint: 1, .5
-                  id: btn_Borrar
-                  on_press: root.btnBorrar()  
         

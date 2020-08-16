@@ -6,9 +6,9 @@ from datetime import datetime
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.dropdown import DropDown
-from kivy.uix.dropdown import Button
-from kivy.uix.dropdown import Label
-from kivy.uix.dropdown import InputText
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
 
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion
@@ -17,8 +17,8 @@ from modelo.FechayHora import FechayHora
 
 # configuration
 from kivy.config import Config
-Config.set("graphics", "width",  800)
-Config.set("graphics", "height", 400)
+Config.set("graphics", "width",  520)
+Config.set("graphics", "height", 90)
 #damian
 class Box(BoxLayout):
 
@@ -96,10 +96,9 @@ class AccionVentas:
     
 
 class Venta(App):
-
     def build(self):
-        return Box()
+                return Box()
         
-if __name__ == "__venta__":
+if __name__ == "__main__":
     Venta().run()
 
