@@ -1,16 +1,17 @@
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button 
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
+from kivy.config import Config
 import platform
 
 import sys, os
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion 
 from modelo.FechayHora import FechayHora 
- 
+Config.set("graphics", "width",  640)
+Config.set("graphics", "height", 450)
 # configuration
 
  
