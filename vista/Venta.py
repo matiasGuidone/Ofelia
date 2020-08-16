@@ -5,9 +5,12 @@ from datetime import datetime
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.carousel import Carousel
 
-from modelo import conexion
-from modelo import FechayHora
+
+sys.path.append(os.getcwd())
+from modelo.conexion import conexion
+from modelo.FechayHora import FechayHora
 
 
 # configuration
