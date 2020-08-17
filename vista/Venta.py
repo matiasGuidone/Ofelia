@@ -6,7 +6,6 @@ from datetime import datetime
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
@@ -18,21 +17,24 @@ from modelo.FechayHora import FechayHora
 
 # configuration
 from kivy.config import Config
-Config.set("graphics", "width",  520)
-Config.set("graphics", "height", 90)
+Config.set("graphics", "width",  620)
+Config.set("graphics", "height", 190)
 #damian
 class Box(BoxLayout):
     pass
     sistema=None
     dropdown=None
     diccTipoPago={'0' : "Efectivo", '1' : "Débito", '2' : "Crédito"}
+    turno=""
+    caja=0
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs):         
         super().__init__(**kwargs)
+        self.inicio()   
+        pass
         
     def btnRegistrarVenta(self):
-        #self.ids.lblSubcate.text = "Registrar"
-        #v=AccionVentas(turno, caja)
+        #v = AccionVentas(self.turno, self.caja)
 #montoDeVenta(float), observación,idTurno,tipoPago,Caja
         #v.cargarVenta([])
         print ("registro venta")
@@ -44,17 +46,28 @@ class Box(BoxLayout):
         #v.cargarVenta([])
         print ("Borro venta")
 
+    def inicio(self):
+        self.turno=0#consulto en base de datos
+        self.caja=0
+        self.cargarCombo()   
+        self.focoComponentes()
+
+    def focoComponentes(self):        
+        self.ids.timonto.multiline=False
+        #self.ids.timonto.focus_next=self.ids.btnMain
+           
+
     def cargarCombo(self):
         self.dropdown = self.ids.drpTipoPago
         self.dropdown.clear_widgets()
         self.sistema = platform.system() 
 
         for i in range(len(self.diccTipoPago)):
-            btn = Button(text=' %d' % i + self.diccTipoPago[i], size_hint_y=None, height=30)
+            btn = Button(text=self.diccTipoPago[str(i)], size_hint_y=None, height=30)
             btn.bind(on_press=lambda btn: self.dropdown.select(btn.text))
             self.dropdown.add_widget(btn)
 
-        mainbutton = Button(text='Efectivo', size_hint=(None, None))
+        mainbutton = self.ids.btnMain
         mainbutton.bind(on_release=self.dropdown.open)
         self.dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
 
@@ -121,7 +134,7 @@ class AccionVentas:
 
 class Venta(App):
     def build(self):
-                return Box()
+                return Box()   
         
 if __name__ == "__main__":
     Venta().run()

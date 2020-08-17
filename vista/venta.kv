@@ -3,22 +3,28 @@
 <Box>:
     text: 'Venta'
 	orientation: 'horizontal'
-	spacing: 10
-	padding: 3
+	spacing: 2
+	padding: 50
 
     BoxLayout:   
 	    orientation: 'vertical'
 		TextInput:
             input_filter: 'float'
-            id: timonto                 
+            focused: True
+            multiline: False
+            id: timonto                             
 		Label:
             text: "Monto Ant"
             id: lbAnterior
 
     BoxLayout:   
-        orientation: 'vertical'
+        orientation: 'vertical'  
+        Button:
+            text:'Efectivo'
+            id:btnMain          
         DropDown:
-            id: drpTipoPago            
+            focused: True
+            id: drpTipoPago 
         Label:
             text: "Pago"
             id: lbPagoAnterior
@@ -26,7 +32,8 @@
     BoxLayout:   
 	    orientation: 'vertical'
 		TextInput:
-            id: tiobservacion                 
+            focused: True
+            id: tiobservacion  
 		Label:
             text: "Observacion Anterior"
             id: lbobserAnt
@@ -34,6 +41,7 @@
     BoxLayout:   
 	    orientation: 'vertical'
 		Button:
+            focused: True
             text: "Registrar"
             pos_hint: {'x': 0, 'y': 0}
             size_hint: 1, .5
