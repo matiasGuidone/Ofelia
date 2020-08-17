@@ -1,10 +1,10 @@
 #:kivy 1.10.0
 
-<Box>:
-	name: 'Logueo'
+<Principal>: 
 	orientation: 'vertical'
 	spacing: 10
 	padding: 3
+	
 	canvas.before:
 		Color:
 			rgba:  1, 1, 1, 1
@@ -13,128 +13,38 @@
             size: self.size
 	BoxLayout:
 		BoxLayout:
+			orientation: 'vertical'
+			Image:
+
+				source: '../image/Ofelia.png'
+				size_hint: 1,.2
 			Image:
 				source: 'vegetal.png'
 				size: 150,77
-			# Label:
-			# 	id: lblTitu
-			# 	text: 'Usuarios'
-			# 	color: 0, 0, 0, 1
-		 
 	BoxLayout:
-		orientation: 'horizontal'
-		Label:
-			text: 'Lista de usuarios: '
-			color: 0, 0, 0, 1
-		Button:
-			id: btnMain
-			text: "Seleccionar"
-		DropDown:
-			id: drpUsuarios 
-
-	BoxLayout:
-		orientation: 'horizontal'
-		Label:
-		Button:
-			on_press: root.btnEditar()
-			id: btnEditar
-			background_color: 0, 0, 1, 1
-			BoxLayout:
-				pos: self.parent.pos
-				size: self.parent.size
-				orientation: 'horizontal'
-				Label:
-				Image:
-					background_color: 1, 1, 1, 1
-					source: '../image/icon/edit.png'
-					width: 17
-					size_hint_x: None
-					
-				Label:
-					text: 'Editar'
-					width: 70
-					size_hint_x: None
-					color: 1, 1, 1, 1
-				Label:
-				
-
-		Button:
-			background_color: 0, 0, 1, 1 
-			on_press: root.btnNuevo()
-			id: btnNuevo
-			BoxLayout:
-				pos: self.parent.pos
-				size: self.parent.size
-				orientation: 'horizontal'
-				Label:
-				Image:
-					source: '../image/icon/plus-square.png'
-					width: 17
-					size_hint_x: None
-					
-				Label:
-					text: 'Nuevo'
-					width: 70
-					size_hint_x: None
-					color: 1, 1, 1, 1
-				Label:
-		Button:
-			background_color: 0, 0, 1, 1
-			on_press: root.btnEliminar()
-			id: btnEliminar
-			BoxLayout:
-				pos: self.parent.pos
-				size: self.parent.size
-				orientation: 'horizontal'
-				Label:
-				Image:
-					source: '../image/icon/minus-square.png'
-					width: 17
-					size_hint_x: None
-					
-				Label:
-					text: 'Eliminar'
-					width: 70
-					size_hint_x: None
-					color: 1, 1, 1, 1
-				Label:
-		Label:
-		# Label:
-		# 	text: 'Usuario'
-		# 	color: 0, 0, 0, 1
-		# TextInput:
-		# 	id: txtUsuario
-		 
-	BoxLayout:
-		background_color: 1, .3, .4, .85
-		orientation: 'horizontal'
-		# Label:
-		# 	text: 'Contraseña'
-		# 	color: 0, 0, 0, 1
-		# TextInput:
-		# 	password: True
-		# 	id: txtContra
-	BoxLayout:
-		background_color: 1, .3, .4, .85
+		height: .2
 		orientation: 'horizontal'
 		Button:
-			text: 'Salir'
+			size_hint: 1,.17
+			text: 'Ventas'
 			background_color: .2, .4, .9, 1
-			on_press: app.stop() 
-		# Label:
-		# 	text: 'Confirmar contraseña'
-		# 	color: 0, 0, 0, 1
-		# TextInput:
-		# 	password: True
-		# 	id: txtConfContra
-			 
-	# BoxLayout:
-    #     orientation: 'horizontal'
-    #     Button:
-	# 		text: 'Aceptar'
-	# 		background_color: 0, 0, 1, 1
-	# 		on_press: root.btnAceptar()
-    #     Button:
-	# 		text: 'Cancelar'
-	# 		background_color: .2, .4, .9, 1
-	# 		on_press: root.btnCancelar()
+			on_press: root.btnVentas()
+		Button:
+			size_hint: 1,.17
+			text: 'Cuentas'
+			background_color: .2, .4, .9, 1
+			on_press: root.btnCuentas()
+		Button:
+			size_hint: 1,.17
+			text: 'Usuarios'
+			background_color: .2, .4, .9, 1
+			on_press: root.btnUsuarios()
+		Button:
+			size_hint: 1,.17
+			text: 'Pagos'
+			background_color: .2, .4, .9, 1
+			on_press: root.btnPagos()
+		 
+		
+		 
+	 

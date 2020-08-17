@@ -8,6 +8,7 @@ import platform
 
 import sys, os
 sys.path.append(os.getcwd())
+
 from modelo.conexion import conexion 
 from modelo.FechayHora import FechayHora 
 Config.set("graphics", "width",  640)
@@ -17,7 +18,7 @@ Config.set("graphics", "height", 450)
  
 
 
-class Box(BoxLayout):
+class RegistroGasto(BoxLayout):
     pass
 
     id_subcategoria = 0
@@ -93,7 +94,7 @@ class Box(BoxLayout):
         self.cargarComboSubCategoria(subcatego)
         pass
 
-#Evento de botón de pagar realiza el descuento en la cuenta que tiene a favor el registro seleccionado
+#Evento de botn de pagar realiza el descuento en la cuenta que tiene a favor el registro seleccionado
     def btnPagar(self): 
         if self.id_subcategoria == 0 or not  len(self.ids.txtMonto.text) > 0:
             contenido = BoxLayout(orientation='vertical')
@@ -121,7 +122,7 @@ class Box(BoxLayout):
             self.ids.txtGasto.text = ''
             self.ids.txtMonto.text = ''
             self.ids.modMonto.active = False
-            self.ids.lblInfo.text = "Gasto almacenado con éxito ._"+hora
+            self.ids.lblInfo.text = "Gasto almacenado exitosamente ._"+hora
             pass
      
     def ingMonto(self):
@@ -134,7 +135,7 @@ class Box(BoxLayout):
 
 class RegistroGastoApp(App):
     def build(self):
-		  		return Box() 
+		  		return RegistroGasto() 
 
 if __name__ == "__main__":
 	RegistroGastoApp().run()

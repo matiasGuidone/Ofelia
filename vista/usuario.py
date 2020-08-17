@@ -10,6 +10,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.screenmanager import ScreenManager, Screen
 import sys, os
 import platform
 sys.path.append(os.getcwd())
@@ -17,7 +18,7 @@ from modelo.conexion import conexion
 Config.set("graphics", "width",  540)
 Config.set("graphics", "height", 300)
 
-class Box(BoxLayout):
+class Usuario(BoxLayout):
     pass
     id = 0
     tipo = ''
@@ -27,6 +28,7 @@ class Box(BoxLayout):
         super().__init__(**kwargs)
         self.cargarDrp()
         pass
+
     def cargarDrp(self):
         datos = conexion().selectAll("Usuarios")
         dropdown = self.ids.drpUsuarios  
@@ -156,7 +158,7 @@ class Box(BoxLayout):
 
 class UsuarioApp(App):
     def build(self):
-		  		return Box() 
+		  		return Usuario() 
 
 if __name__ == "__main__":
 	UsuarioApp().run()

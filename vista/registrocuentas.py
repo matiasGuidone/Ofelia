@@ -6,6 +6,7 @@ from kivy.uix.label import Label
 from kivy.config import Config
 from kivy.uix.textinput import TextInput
 from kivy.uix.togglebutton import ToggleButton
+from kivy.uix.screenmanager import ScreenManager, Screen
 import platform
 
 import sys, os
@@ -16,7 +17,7 @@ Config.set("graphics", "width",  640)
 Config.set("graphics", "height", 380)
 # configuration
 
-class Box(BoxLayout):
+class RegistroCuentas(BoxLayout):
     pass
 
     id = 0
@@ -33,7 +34,6 @@ class Box(BoxLayout):
         dropdown.clear_widgets()  
         sistema = platform.system() 
         for index in range(len(datos)): 
-            
             if sistema == "Windows":
                 btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None,  height = 40) 
                 btn.bind(on_press = lambda btn: self.elegirSubCat(btn.text.rsplit("-",2)[0]))
@@ -193,7 +193,7 @@ class Box(BoxLayout):
 
 class RegistroCuentasApp(App):
     def build(self):
-		  		return Box() 
+		  		return RegistroCuentas() 
 
 if __name__ == "__main__":
 	RegistroCuentasApp().run()
