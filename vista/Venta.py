@@ -1,5 +1,6 @@
 import os
 import sys
+import platform
 
 from datetime import datetime
 
@@ -21,10 +22,14 @@ Config.set("graphics", "width",  520)
 Config.set("graphics", "height", 90)
 #damian
 class Box(BoxLayout):
+    pass
+    sistema=None
+    dropdown=None
+    diccTipoPago={'0' : "Efectivo", '1' : "Débito", '2' : "Crédito"}
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-    
+        
     def btnRegistrarVenta(self):
         #self.ids.lblSubcate.text = "Registrar"
         #v=AccionVentas(turno, caja)
@@ -38,6 +43,23 @@ class Box(BoxLayout):
 #montoDeVenta(float), observación,idTurno,tipoPago,Caja
         #v.cargarVenta([])
         print ("Borro venta")
+
+    def cargarCombo(self):
+        self.dropdown = self.ids.drpTipoPago
+        self.dropdown.clear_widgets()
+        self.sistema = platform.system() 
+
+        for i in range(len(self.diccTipoPago)):
+            btn = Button(text=' %d' % i + self.diccTipoPago[i], size_hint_y=None, height=30)
+            btn.bind(on_press=lambda btn: self.dropdown.select(btn.text))
+            self.dropdown.add_widget(btn)
+
+        mainbutton = Button(text='Efectivo', size_hint=(None, None))
+        mainbutton.bind(on_release=self.dropdown.open)
+        self.dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
+
+
+
 
 class AccionVentas:
 #Utiles para la corrida
@@ -70,6 +92,7 @@ class AccionVentas:
         self.conex=conexion()
         self.f_h_venta=FechayHora()
         self.fechaBorrado=FechayHora()
+        pass
 
     def cargarVenta(self, lista2):
         #La lista viene con montoDeVenta(float), observación,idTurno,tipoPago,Caja        
@@ -84,6 +107,7 @@ class AccionVentas:
         (self.lista).insert(0, ((self.f_h_venta).getAhoraGuardo()))
 
         self.conex.insert(self.lista, "Ventas")
+        pass
 
     def borrarVenta(self):
         pass

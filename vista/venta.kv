@@ -1,7 +1,7 @@
 #:kivy 1.10.0
 
 <Box>:
-    name: 'Venta'
+    text: 'Venta'
 	orientation: 'horizontal'
 	spacing: 10
 	padding: 3
@@ -9,6 +9,7 @@
     BoxLayout:   
 	    orientation: 'vertical'
 		TextInput:
+            input_filter: 'float'
             id: timonto                 
 		Label:
             text: "Monto Ant"
@@ -17,7 +18,7 @@
     BoxLayout:   
         orientation: 'vertical'
         DropDown:
-            id: drpUsuarios             
+            id: drpTipoPago            
         Label:
             text: "Pago"
             id: lbPagoAnterior
