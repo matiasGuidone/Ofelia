@@ -4,53 +4,61 @@
     text: 'Venta'
 	orientation: 'horizontal'
 	spacing: 2
-	padding: 50
+	padding: 70
+    
+    canvas.before:
+		Color:
+			rgba:  1, 1, 1, 1
+		Rectangle:
+            pos: self.pos
+            size: self.size
 
+    BoxLayout:   
+	    orientation: 'vertical'              
+		Label:
+            text: 'Cargar Venta:'          
+		Label:
+            text: 'Venta Anterior:'	
     BoxLayout:   
 	    orientation: 'vertical'
 		TextInput:
+            id: timonto     
             input_filter: 'float'
             focused: True
-            multiline: False
-            id: timonto                             
+            write_tab: False 
+            multiline: False       
+            on_text_validate: root.enter(1)                
 		Label:
-            text: "Monto Ant"
+            text: 'Monto Ant'
             id: lbAnterior
 
     BoxLayout:   
         orientation: 'vertical'  
-        Button:
-            text:'Efectivo'
-            id:btnMain          
-        DropDown:
-            focused: True
-            id: drpTipoPago 
+		BoxLayout:   
+            orientation: 'horizontal'  
+            TextInput:
+                id: tiPago 
+                input_filter: 'int'
+                focused: True
+                write_tab: False 
+                multiline: False   
+                on_text: root.filtro()
+                on_text_validate: root.enter(2)  
+            Label:
+                text: 'Efectivo'
+                id: lbPago
         Label:
-            text: "Pago"
+            text: 'Pago'
             id: lbPagoAnterior
 
     BoxLayout:   
 	    orientation: 'vertical'
 		TextInput:
             focused: True
+            write_tab: False 
+            multiline: False       
+            on_text_validate: root.enter(3)   
             id: tiobservacion  
 		Label:
-            text: "Observacion Anterior"
+            text: 'Observacion Anterior'
             id: lbobserAnt
-
-    BoxLayout:   
-	    orientation: 'vertical'
-		Button:
-            focused: True
-            text: "Registrar"
-            pos_hint: {'x': 0, 'y': 0}
-            size_hint: 1, .5
-            id: btn_RegVenta
-            on_press: root.btnRegistrarVenta()  
-		Button:
-            text: "Borrar"
-            pos_hint: {'x': 0, 'y': .5}
-            size_hint: 1, .5
-            id: btn_Borrar
-            on_press: root.btnBorrar()  
-        

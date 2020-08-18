@@ -1,24 +1,22 @@
 import os
 import sys
 import platform
-
 from datetime import datetime
 
 from kivy.app import App
+# configuration
+from kivy.config import Config
+Config.set("graphics", "width",  620)
+Config.set("graphics", "height", 300)
+from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
-
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion
 from modelo.FechayHora import FechayHora
 
 
-# configuration
-from kivy.config import Config
-Config.set("graphics", "width",  620)
-Config.set("graphics", "height", 190)
 #damian
 class Box(BoxLayout):
     pass
@@ -27,10 +25,13 @@ class Box(BoxLayout):
     diccTipoPago={'0' : "Efectivo", '1' : "Débito", '2' : "Crédito"}
     turno=""
     caja=0
+    tipoPago=0
+    mont=False
+    Pago=False
 
     def __init__(self, **kwargs):         
         super().__init__(**kwargs)
-        self.inicio()   
+        self.inicio() 
         pass
         
     def btnRegistrarVenta(self):
@@ -48,30 +49,60 @@ class Box(BoxLayout):
 
     def inicio(self):
         self.turno=0#consulto en base de datos
-        self.caja=0
-        self.cargarCombo()   
-        self.focoComponentes()
+        self.caja=0 
+        self.focoComponentes()    
 
+    def filtro(self):        
+        i=0
+        if len(self.ids.tiPago.text) > 1:
+            self.ids.tiPago.text=""
+            self.ids.lbPago.text="Efectivo"
+        elif len(self.ids.tiPago.text) == 0:
+            self.ids.lbPago.text="Efectivo"
+        elif (int(self.ids.tiPago.text)) in range(1,4):   
+            i=int(self.ids.tiPago.text)-1
+            self.ids.lbPago.text=str(self.diccTipoPago[str(i)])
+            self.tipoPago=int(self.ids.tiPago.text)
+        else:
+            self.ids.tiPago.text="1"
+            self.ids.lbPago.text="Efectivo"
+            
+        
     def focoComponentes(self):        
         self.ids.timonto.multiline=False
-        #self.ids.timonto.focus_next=self.ids.btnMain
-           
+        self.ids.tiobservacion.multiline=False
+        self.ids.timonto.focus=True
+    
 
-    def cargarCombo(self):
-        self.dropdown = self.ids.drpTipoPago
-        self.dropdown.clear_widgets()
-        self.sistema = platform.system() 
-
-        for i in range(len(self.diccTipoPago)):
-            btn = Button(text=self.diccTipoPago[str(i)], size_hint_y=None, height=30)
-            btn.bind(on_press=lambda btn: self.dropdown.select(btn.text))
-            self.dropdown.add_widget(btn)
-
-        mainbutton = self.ids.btnMain
-        mainbutton.bind(on_release=self.dropdown.open)
-        self.dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))
-
-
+# Manejo escucha de teclado
+    def enter(self, n):
+        if n == 1:
+            if self.ids.timonto.text!=None:
+                self.ids.timonto.focus=False
+                self.ids.tiPago.focus=True
+                self.mont=True
+        elif n == 2: 
+            if self.ids.tiPago.text!=None and self.mont:
+                self.ids.tiPago.focus=False
+                self.ids.tiobservacion.focus=True
+                self.Pago=True
+        elif n == 3:
+            if self.mont and self.Pago:
+                self.ids.tiobservacion.focus=False
+                self.ids.lbAnterior.text=self.ids.timonto.text
+                print(self.ids.timonto.text)
+                self.ids.lbPagoAnterior.text=self.diccTipoPago[str(self.tipoPago)]
+                print(self.diccTipoPago[str(self.tipoPago)])
+                self.ids.lbobserAnt.text=self.ids.tiobservacion.text
+                print(self.ids.tiobservacion.text)
+            
+                #Guardar en base
+                self.btnRegistrarVenta()
+                self.ids.timonto.text=""
+                self.ids.tiobservacion.text=""
+                self.ids.timonto.focus=True
+                self.Pago=False
+                self.mmont=False
 
 
 class AccionVentas:
