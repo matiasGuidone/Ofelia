@@ -6,10 +6,12 @@ from datetime import datetime
 from kivy.app import App
 # configuration
 from kivy.config import Config
-Config.set("graphics", "width",  620)
-Config.set("graphics", "height", 300)
+Config.set("graphics", "window_state",  'maximized')
+#Config.set("graphics", "height", 110)
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 sys.path.append(os.getcwd())
@@ -50,21 +52,22 @@ class Box(BoxLayout):
     def inicio(self):
         self.turno=0#consulto en base de datos
         self.caja=0 
-        self.focoComponentes()    
+        self.focoComponentes()   
+        
 
-    def filtro(self):        
-        i=0
+    def filtro(self):  
         if len(self.ids.tiPago.text) > 1:
             self.ids.tiPago.text=""
+            self.Pago=False
             self.ids.lbPago.text="Efectivo"
         elif len(self.ids.tiPago.text) == 0:
             self.ids.lbPago.text="Efectivo"
         elif (int(self.ids.tiPago.text)) in range(1,4):   
-            i=int(self.ids.tiPago.text)-1
-            self.ids.lbPago.text=str(self.diccTipoPago[str(i)])
-            self.tipoPago=int(self.ids.tiPago.text)
+            self.tipoPago=(int(self.ids.tiPago.text)-1)
+            self.ids.lbPago.text=str(self.diccTipoPago[str(self.tipoPago)])
         else:
             self.ids.tiPago.text="1"
+            self.tipoPago=0
             self.ids.lbPago.text="Efectivo"
             
         
@@ -100,6 +103,8 @@ class Box(BoxLayout):
                 self.btnRegistrarVenta()
                 self.ids.timonto.text=""
                 self.ids.tiobservacion.text=""
+                self.ids.tiPago.text=""
+                self.ids.lbPago.text="Efectivo"
                 self.ids.timonto.focus=True
                 self.Pago=False
                 self.mmont=False

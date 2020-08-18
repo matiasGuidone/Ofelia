@@ -2,10 +2,7 @@
 
 <Box>:
     text: 'Venta'
-	orientation: 'horizontal'
-	spacing: 2
-	padding: 70
-    
+	orientation: 'horizontal'  
     canvas.before:
 		Color:
 			rgba:  1, 1, 1, 1
@@ -13,52 +10,74 @@
             pos: self.pos
             size: self.size
 
-    BoxLayout:   
-	    orientation: 'vertical'              
-		Label:
-            text: 'Cargar Venta:'          
-		Label:
-            text: 'Venta Anterior:'	
-    BoxLayout:   
-	    orientation: 'vertical'
-		TextInput:
-            id: timonto     
-            input_filter: 'float'
-            focused: True
-            write_tab: False 
-            multiline: False       
-            on_text_validate: root.enter(1)                
-		Label:
-            text: 'Monto Ant'
-            id: lbAnterior
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'top' 
+        size: 110 , 810 
+        FloatLayout:
+            size: 110 , 810  
+            BoxLayout:   
+                orientation: 'horizontal'
+                spacing: 2
+                padding: 20
+                BoxLayout:   
+                    orientation: 'vertical'  
+                    size: 170 , 70            
+                    Label:
+                        text: 'Cargar Venta:   '    
+                        color: 0, 0, 0, 1      
+                    Label:
+                        text: 'Venta Anterior: '
+                        color: 0, 0, 0, 1
+                BoxLayout:   
+                    orientation: 'vertical'
+                    size: 50 , 70         
+                    TextInput:
+                        id: timonto     
+                        input_filter: 'float'
+                        focused: True
+                        write_tab: False 
+                        multiline: False       
+                        on_text_validate: root.enter(1)                
+                    Label:
+                        text: 'Monto Ant'
+                        color: 0, 0, 0, 1
+                        id: lbAnterior
 
-    BoxLayout:   
-        orientation: 'vertical'  
-		BoxLayout:   
-            orientation: 'horizontal'  
-            TextInput:
-                id: tiPago 
-                input_filter: 'int'
-                focused: True
-                write_tab: False 
-                multiline: False   
-                on_text: root.filtro()
-                on_text_validate: root.enter(2)  
-            Label:
-                text: 'Efectivo'
-                id: lbPago
-        Label:
-            text: 'Pago'
-            id: lbPagoAnterior
+                BoxLayout:   
+                    orientation: 'vertical'  
+                    size: 200 , 70         
+                    BoxLayout:   
+                        orientation: 'horizontal'  
+                        TextInput:
+                            size: 30 , 33         
+                            id: tiPago 
+                            input_filter: 'int'
+                            focused: True
+                            write_tab: False 
+                            multiline: False   
+                            on_text: root.filtro()
+                            on_text_validate: root.enter(2)  
+                        Label:
+                            text: 'Efectivo'
+                            size: 168 , 33  
+                            color: 0, 0, 0, 1
+                            id: lbPago
+                    Label:
+                        text: 'Pago'
+                        color: 0, 0, 0, 1
+                        id: lbPagoAnterior
 
-    BoxLayout:   
-	    orientation: 'vertical'
-		TextInput:
-            focused: True
-            write_tab: False 
-            multiline: False       
-            on_text_validate: root.enter(3)   
-            id: tiobservacion  
-		Label:
-            text: 'Observacion Anterior'
-            id: lbobserAnt
+                BoxLayout:  
+                    size: 350 , 70  
+                    orientation: 'vertical'
+                    TextInput:
+                        focused: True
+                        write_tab: False 
+                        multiline: False       
+                        on_text_validate: root.enter(3)   
+                        id: tiobservacion  
+                    Label:
+                        text: 'Observacion Anterior'
+                        color: 0, 0, 0, 1
+                        id: lbobserAnt
