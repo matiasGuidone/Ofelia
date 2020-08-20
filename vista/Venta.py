@@ -10,7 +10,7 @@ Config.set("graphics", "window_state",  'maximized')
 #Config.set("graphics", "height", 110)
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
@@ -141,6 +141,7 @@ class AccionVentas:
         self.conex=conexion()
         self.f_h_venta=FechayHora()
         self.fechaBorrado=FechayHora()
+        
         pass
 
     def cargarVenta(self, lista2):

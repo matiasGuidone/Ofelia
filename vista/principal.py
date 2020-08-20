@@ -15,13 +15,13 @@ import sys, os
 import platform
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion 
-
-
-Config.set("graphics", "width",  640)
-Config.set("graphics", "height", 480)
+Config.set("graphics", "window_state",  'maximized')
+#Config.set("graphics", "width",  640)
+#Config.set("graphics", "height", 480)
 
 class Principal(BoxLayout):
     user = []
+    abrir=0
    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -57,41 +57,57 @@ class Principal(BoxLayout):
             popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130))
             popup.open()
         else:
+            self.abrirVentana()
             popup.dismiss()
         pass
 
     def btnVentas(self):
+        self.abrir=1
         if len(self.user) == 0 :
             self.openPopup()
         else:
-            os.system('python3 ./vista/Venta.py')
+            print("soy ventas")        
+            os.system("python vista/Venta.py")
         pass
 
     def btnUsuarios(self):
-        # UsuarioApp().run()
+        self.abrir=2 
         if len(self.user) == 0 :
             self.openPopup()
         elif self.user[0][2]== 'admin':
-            os.system('python3 ./vista/usuario.py')
+            print("soy Usuarios")
+            os.system('python vista/usuario.py')
         pass
 
     def btnCuentas(self):
-        # RegistroCuentasApp().run()
-        # self.openPopup()
+        self.abrir=3
         if len(self.user) == 0 :
             self.openPopup()
         elif self.user[0][2]== 'admin':
-            os.system('python3 ./vista/registrocuentas.py')
+            print("soy Cuentas")
+            os.system('python vista/registrocuentas.py')
         pass
 
     def btnPagos(self):
-        # RegistroGastoApp().run()
+        self.abrir=3
         if len(self.user) == 0 :
             self.openPopup()
         elif self.user[0][2]== 'admin' or self.user[0][2]== 'caja-pagos':
-            os.system('python3 ./vista/registrogasto.py')
+            print("soy gastos")
+            os.system('python vista/registrogasto.py')
         pass
 
+    def abrirVentana(self):
+        if self.abrir==1:    
+            print("soy 1")
+            os.system("python vista/Venta.py")
+        elif self.abrir==2:
+            print("soy 2")
+            os.system('python vista/usuario.py')
+        elif self.abrir==3:
+            print("soy 3")
+            os.system('python vista/registrocuentas.py')
+#os.system ("/usr/bin/python fichero.py")
 
 class PrincipalApp(App):
     def build(self):
