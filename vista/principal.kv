@@ -4,45 +4,67 @@
 	orientation: 'vertical'
 	spacing: 10
 	padding: 3
-	
 	canvas.before:
 		Color:
 			rgba:  1, 1, 1, 1
 		Rectangle:
-            pos: self.pos
-            size: self.size
+			pos: self.pos
+			size: self.size	
 	BoxLayout:
+		orientation:'horizontal'	
+		Label:
+		Label:
 		BoxLayout:
-			orientation: 'vertical'
+			orientation:'vertical'
+			Label:
+			Label:
+				id: lbOfelia
+				text: "Ofelia"
+				color: 0, 0, 0, 1
+				font_size: 100.0
+		Scatter:
+			scale: 2.86
+			do_rotation:False
+			do_scale:False
+            do_translation:False
 			Image:
-
-				source: '../image/Ofelia.png'
-				size_hint: 1,.2
-			Image:
-				source: 'vegetal.png'
-				size: 150,77
+				source: 'veget.png'
+				size_hint: .4, .4
+				#size: 150,77
 	BoxLayout:
 		height: .2
 		orientation: 'horizontal'
 		Button:
+			id: vent
 			size_hint: 1,.17
-			text: 'Ventas'
-			background_color: .2, .4, .9, 1
+			text: 'Ventas'  
+			font_size :'25sp'
+			background_normal: ''			        
+			background_color: 1, .745, .039, 1
 			on_press: root.btnVentas()
 		Button:
+			id: cuen
 			size_hint: 1,.17
+			font_size :'25sp'
 			text: 'Cuentas'
-			background_color: .2, .4, .9, 1
+			background_normal: ''		
+			background_color: 1, .745, .039, 1
 			on_press: root.btnCuentas()
 		Button:
+			id: usu
 			size_hint: 1,.17
+			font_size :'25sp'
 			text: 'Usuarios'
-			background_color: .2, .4, .9, 1
+			background_normal: ''		
+			background_color: 1, .745, .039, 1
 			on_press: root.btnUsuarios()
 		Button:
+			id: pag
 			size_hint: 1,.17
+			font_size :'25sp'
 			text: 'Pagos'
-			background_color: .2, .4, .9, 1
+			background_normal: ''		
+			background_color: 1, .745, .039, 1
 			on_press: root.btnPagos()
 		 
 		

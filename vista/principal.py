@@ -19,54 +19,58 @@ Config.set("graphics", "window_state",  'maximized')
 #Config.set("graphics", "width",  640)
 #Config.set("graphics", "height", 480)
 
+
+from kivy.uix.colorpicker import ColorPicker
+
 class Principal(BoxLayout):
     user = []
     abrir=0
-   
+
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        
-    
+        super().__init__(**kwargs)  
 
     def openPopup(self):
         #armado de popup 
         contenido = BoxLayout(orientation='vertical')
-        #campos de llenado
-        
-        user = TextInput(hint_text="Nombre de usuario")
 
-        contr = TextInput(hint_text="Contraseña", password = True)
+        #campos de llenado        
+        tiuser = TextInput(hint_text="Nombre de usuario")
+        ticontr = TextInput(hint_text="Contraseña", password = True)        
+        ticontr.multiline=False
+        tiuser.multiline=False
+        
         but = BoxLayout(orientation='horizontal')
-        but.add_widget(Button(text="Salir",on_press = lambda *args: logueo.dismiss()))
-        but.add_widget(Button(text="Ingresar" ,on_press = lambda *args: self.iniciar(user.text, contr.text, logueo)))
-       
-        contenido.add_widget(user)
-        contenido.add_widget(contr)
+        but.add_widget(Button(text="Ingresar" ,on_press = lambda *args: self.iniciar(tiuser.text, ticontr.text, logueo), background_normal= '', background_color= (1, .745, .039, 1), font_size =25.0))       
+        but.add_widget(Button(text="Salir",on_press = lambda *args: logueo.dismiss(), background_normal= '', background_color= (1, .745, .039, 1), font_size =25.0))
+        
+        contenido.add_widget(tiuser)
+        contenido.add_widget(ticontr)
 
         contenido.add_widget(but)
         logueo = Popup(title= 'Logueo', content= contenido, size_hint=(None,None),auto_dismiss=False, size=(420, 170))
         logueo.open()
+        
         pass
+
 
     def iniciar(self,usuario, contr, popup):
         self.user = conexion().selectAll('Usuarios',['nombre_usu',"'"+usuario+"'",'contraseña', "'"+contr+"'"])
         if len(self.user) == 0:
             contenido = BoxLayout(orientation='vertical')
             contenido.add_widget(Label(text=str("Usuario o contraseña errónea")))
-            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss()))
+            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss(), background_normal= '', background_color= (1, .745, .039, 1), font_size =25.0))
             popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130))
             popup.open()
         else:
-            self.abrirVentana()
             popup.dismiss()
+            self.abrirVentana()
         pass
 
     def btnVentas(self):
         self.abrir=1
         if len(self.user) == 0 :
             self.openPopup()
-        else:
-            print("soy ventas")        
+        else:        
             os.system("python vista/Venta.py")
         pass
 
@@ -75,7 +79,6 @@ class Principal(BoxLayout):
         if len(self.user) == 0 :
             self.openPopup()
         elif self.user[0][2]== 'admin':
-            print("soy Usuarios")
             os.system('python vista/usuario.py')
         pass
 
@@ -84,30 +87,26 @@ class Principal(BoxLayout):
         if len(self.user) == 0 :
             self.openPopup()
         elif self.user[0][2]== 'admin':
-            print("soy Cuentas")
             os.system('python vista/registrocuentas.py')
         pass
 
     def btnPagos(self):
-        self.abrir=3
+        self.abrir=4
         if len(self.user) == 0 :
             self.openPopup()
         elif self.user[0][2]== 'admin' or self.user[0][2]== 'caja-pagos':
-            print("soy gastos")
             os.system('python vista/registrogasto.py')
         pass
 
     def abrirVentana(self):
         if self.abrir==1:    
-            print("soy 1")
             os.system("python vista/Venta.py")
         elif self.abrir==2:
-            print("soy 2")
             os.system('python vista/usuario.py')
         elif self.abrir==3:
-            print("soy 3")
             os.system('python vista/registrocuentas.py')
-#os.system ("/usr/bin/python fichero.py")
+        elif self.abrir==4:
+            os.system('python vista/registrogasto.py')
 
 class PrincipalApp(App):
     def build(self):

@@ -13,15 +13,12 @@
             pos: self.pos
             size: self.size
 	BoxLayout:
-		Image:
-			source: 'vegetal.png'
+		
 	
 	BoxLayout:
 		orientation: 'horizontal'
-		Label:
-		
-			text: 'Tipo de gasto'
-			color: 0, 0, 0, 1
+		Image:
+			source: 'veget.png'
 			
 		ToggleButton:
 		
@@ -29,7 +26,9 @@
             group: "tipog"
             id: btn-empleado
             on_press: root.btnEmpleado()
-			background_color: .2, .4, .9, 1
+			font_size :'25sp'
+			background_normal: ''			        
+			background_color: 1, .745, .039, 1
 
         ToggleButton:
 		
@@ -37,7 +36,9 @@
             group: "tipog"
             id: btn-proveedor
             on_press: root.btnProveedor()
-			background_color: .2, .4, .9, 1
+			font_size :'25sp'
+			background_normal: ''			        
+			background_color: 1, .745, .039, 1
 
 		ToggleButton:
 		
@@ -45,44 +46,65 @@
             group: "tipog"
             id: btn-fijos
             on_press: root.btnFijos()
-			background_color: .2, .4, .9, 1
+			font_size :'25sp'
+			background_normal: ''			        
+			background_color: 1, .745, .039, 1
+
         ToggleButton:
 		
             text:"Otros"
             group: "tipog"
             id: btn-otros
             on_press: root.btnOtros() 
-			background_color: .2, .4, .9, 1
+			font_size :'25sp'
+			background_normal: ''			        
+			background_color: 1, .745, .039, 1
 
 	BoxLayout:
 		orientation: 'horizontal'
 		Label:
 			id: lblSubcate
+			font_size :'25sp'
+			valign: 'center'
 			text: ''
 			color: 0, 0, 0, 1
 		Button:
 			id: btnMainTG
+			font_size :'25sp'
+			background_normal: ''			        
+			background_color: 1, .745, .039, 1
 			text: "Seleccionar"
 		DropDown:
 			id: drpTipogasto
+			font_size :'25sp'
+			background_normal: ''			        
+			background_color: 1, .745, .039, 1
 
 	BoxLayout:
 		background_color: 1, .3, .4, .85
 		orientation: 'horizontal'
 		Label:
 			text: 'Gasto: '
+			font_size :'25sp'
+			valign: 'center'
 			color: 0, 0, 0, 1
 		BoxLayout:
 			background_color: 1, .3, .4, .85
 			orientation: 'horizontal'
 			Label: 
 				text: 'pesos ($)'
+				font_size :'25sp'
 				color: 0, 0, 0, 1 
+				valign: 'center'
 				halign: 'left'
 			TextInput:
 				id: txtGasto
 				input_filter: 'float'
+				multiline:False
+				valign: 'center'
+				font_size :'20sp'
 				on_text: root.ingMonto()
+				on_text_validate: root.foco(1)
 			
 
 	BoxLayout:
@@ -90,6 +112,8 @@
 		orientation: 'horizontal'
 		Label:
 			text: 'Monto abonado: '
+			valign: 'center'
+			font_size :'25sp'
 			color: 0, 0, 0, 1
 		BoxLayout:
 			orientation: 'horizontal'
@@ -97,20 +121,30 @@
 				orientation: 'horizontal'
 				CheckBox:
 					id:modMonto  
+					font_size :'25sp'
+					valign: 'center'
 					color: .2, .4, .9, 1
 					active: False
 				Label:
 					text: 'Modificar'
+					valign: 'center'
+					font_size :'25sp'
 					color: 0, 0, 0, 1
 			BoxLayout:
 				orientation: 'horizontal'
 				Label: 
 					text: 'pesos ($)'
+					font_size :'25sp'
 					color: 0, 0, 0, 1
+					valign: 'center'
 					halign: 'right'
 				TextInput:
 					id: txtMonto
 					input_filter: 'float'
+					multiline:False
+					valign: 'center'
+					font_size :'20sp'
+					on_text_validate: root.foco(2)
 					disabled: not modMonto.active
 			 
 			
@@ -122,9 +156,15 @@
 		padding: 2
 		Label:
 			text: 'Observaciones: '
+			valign: 'center'
+			font_size :'25sp'
 			color: 0, 0, 0, 1
 		TextInput:
+			font_size :'20sp'
+			multiline:False
+			valign: 'center'
 			id: txtObservaciones
+			on_text_validate: root.foco(3)
 
 	BoxLayout:
 
@@ -132,6 +172,8 @@
 		orientation: 'horizontal'
 		Label:
 			id: lblInfo
+			font_size :'25sp'
+			valign: 'center'
 			text: ''
 			color: 1, .0, .0, 1
 
@@ -140,9 +182,13 @@
         orientation: 'horizontal'
         Button:
 			text: 'Salir'
-			background_color: .2, .4, .9, 1
+			font_size :'25sp'
+			background_normal: ''			        
+			background_color: 1, .745, .039, 1
 			on_press: app.stop() 
 		Button:
 			text: 'Pagar'
-			background_color: .2, .4, .9, 1
+			font_size :'25sp'
+			background_normal: ''			        
+			background_color: 1, .745, .039, 1
 			on_press: root.btnPagar()

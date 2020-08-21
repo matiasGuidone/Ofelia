@@ -15,8 +15,9 @@ import sys, os
 import platform
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion 
-Config.set("graphics", "width",  540)
-Config.set("graphics", "height", 300)
+Config.set("graphics", "window_state",  'maximized')
+#Config.set("graphics", "width",  540)
+#Config.set("graphics", "height", 300)
 
 class Usuario(BoxLayout):
     pass

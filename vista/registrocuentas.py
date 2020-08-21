@@ -13,8 +13,9 @@ import sys, os
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion 
 from modelo.FechayHora import FechayHora 
-Config.set("graphics", "width",  640)
-Config.set("graphics", "height", 380)
+Config.set("graphics", "window_state",  'maximized')
+#Config.set("graphics", "width",  640)
+#Config.set("graphics", "height", 380)
 # configuration
 
 class RegistroCuentas(BoxLayout):

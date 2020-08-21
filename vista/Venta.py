@@ -71,10 +71,15 @@ class Box(BoxLayout):
             self.ids.lbPago.text="Efectivo"
             
         
-    def focoComponentes(self):        
+    def focoComponentes(self):  
+        #self.ids.Scat(do_rotation=False)   
+        #self.ids.timonto(hint_text = "Monto" )
+        #self.ids.timonto(hint_text = "Tipo de Pago" )
+        #self.ids.tiPago(hint_text = "Observación" )
         self.ids.timonto.multiline=False
         self.ids.tiobservacion.multiline=False
         self.ids.timonto.focus=True
+
     
 
 # Manejo escucha de teclado

@@ -11,8 +11,9 @@ sys.path.append(os.getcwd())
 
 from modelo.conexion import conexion 
 from modelo.FechayHora import FechayHora 
-Config.set("graphics", "width",  640)
-Config.set("graphics", "height", 450)
+Config.set("graphics", "window_state",  'maximized')
+#Config.set("graphics", "width",  640)
+#Config.set("graphics", "height", 450)
 # configuration
 
  
@@ -27,7 +28,20 @@ class RegistroGasto(BoxLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-              
+
+    def foco(self, i):
+        if i==1:
+            self.ids.txtGasto.focus=False
+            if self.ids.modMonto.active==True:
+                self.ids.txtMonto.focus=True
+            else:
+                self.ids.txtObservaciones.focus=True
+        elif i==2:
+            self.ids.txtMonto.focus=False
+            self.ids.txtObservaciones.focus=True
+        else:
+            self.btnPagar()
+            self.ids.txtGasto.focus=True         
   
     def cargarComboSubCategoria(self, datos):
         dropdown = self.ids.drpTipogasto  

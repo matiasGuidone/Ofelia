@@ -2,19 +2,19 @@
 
 <Box>:
     text: 'Venta'
-	orientation: 'horizontal'  
+	orientation: 'vertical'  
     canvas.before:
 		Color:
 			rgba:  1, 1, 1, 1
 		Rectangle:
             pos: self.pos
             size: self.size
-
-    AnchorLayout:
-        anchor_x: 'right'
-        anchor_y: 'top' 
-        size: 810 , 110  
-
+    
+    Scatter:         
+        id: Scat
+        do_rotation : False     
+        scale_min : .5 
+        scale_max : 2.                
         GridLayout:
             size: 810 , 110  
             rows: 1
@@ -42,7 +42,7 @@
                     input_filter: 'float'
                     focused: True
                     write_tab: False 
-                    multiline: False       
+                    multiline: False   
                     on_text_validate: root.enter(1)              
                 Label:
                     text: 'Monto Ant'
@@ -90,3 +90,25 @@
                     text: 'Observacion Anterior'
                     color: 0, 0, 0, 1
                     id: lbobserAnt
+    BoxLayout:
+        orientation:'horizontal'
+        size_hint_x: 1  
+        size_hint_y: .10
+        Button:
+            text: 'Borrar Anterior'
+            id: btnBorrarAnt
+        Button:
+            text: 'Gestionar Cajas'
+            id: btnConsultarTurno
+        Button:
+            text: 'Consultar Ventas'
+            id: btnConsultarTurno
+        Button:
+            text: 'Gestionar Turnos'
+            id: btnGestionarTurno
+        Button:
+            text: 'Salir'
+            id: btnSalir
+
+
+
