@@ -47,20 +47,40 @@ class RegistroGasto(BoxLayout):
         dropdown = self.ids.drpTipogasto  
         dropdown.clear_widgets()  
         sistema = platform.system() 
-        for index in range(len(datos)): 
-            
-            if sistema == "Windows":
-                btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None,  height = 40) 
-                btn.bind(on_press = lambda btn: self.elegirSubCat(btn.text.rsplit("-",2)[0]))
-            else:
-                btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
-                btn.bind(on_press = lambda btn: self.elegirSubCat(btn.id))
-            btn.bind(on_release = lambda btn: dropdown.select(btn.text)) 
-            dropdown.add_widget(btn) 
-
+        if len(datos) != 0:
+            self.habilito(False)
+            for index in range(len(datos)): 
+                
+                if sistema == "Windows":
+                    btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None,  height = 40) 
+                    btn.bind(on_press = lambda btn: self.elegirSubCat(btn.text.rsplit("-",2)[0]))
+                else:
+                    btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
+                    btn.bind(on_press = lambda btn: self.elegirSubCat(btn.id))
+                btn.bind(on_release = lambda btn: dropdown.select(btn.text)) 
+                dropdown.add_widget(btn) 
+        else:
+            self.habilito(True)            
         mainbutton = self.ids.btnMainTG 
         mainbutton.bind(on_release = dropdown.open) 
         dropdown.bind(on_select = lambda instance, x: setattr(mainbutton, 'text', x)) 
+
+    def habilito(self, v):
+        self.ids.lblSubcate.disabled = v
+        self.ids.btnMainTG.disabled = v
+        self.ids.drpTipogasto.disabled = v
+        self.ids.lbgasto.disabled = v
+        self.ids.lbpesos.disabled = v
+        self.ids.txtGasto.disabled = v
+        self.ids.lbmontoabonado.disabled = v        
+        self.ids.modMonto.active = v
+        self.ids.modMonto.disabled = v
+        self.ids.lbmodificar.disabled = v
+        self.ids.lbPesos.disabled = v
+        self.ids.lbobservacion.disabled = v
+        self.ids.txtObservaciones.disabled = v
+        self.ids.lblInfo.disabled = v
+        self.ids.btnpagar.disabled = v   
 
     def elegirSubCat(self,id):
         self.id_subcategoria = int(id)

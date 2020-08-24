@@ -12,14 +12,15 @@
 		Rectangle:
             pos: self.pos
             size: self.size
+			source: 'Fondo.png'
+
 	BoxLayout:
-		
-	
-	BoxLayout:
-		orientation: 'horizontal'
-		Image:
-			source: 'veget.png'
 			
+	#	Image:
+	#		size: 200, 200
+	#		source: 'veget.png'
+	BoxLayout:
+		orientation: 'horizontal'			
 		ToggleButton:
 		
             text:"Empleado"
@@ -27,7 +28,7 @@
             id: btn-empleado
             on_press: root.btnEmpleado()
 			font_size :'25sp'
-			background_normal: ''			        
+			background_normal: 'normal.png'			        
 			background_color: 1, .745, .039, 1
 
         ToggleButton:
@@ -37,7 +38,7 @@
             id: btn-proveedor
             on_press: root.btnProveedor()
 			font_size :'25sp'
-			background_normal: ''			        
+			background_normal: 'normal.png'		        
 			background_color: 1, .745, .039, 1
 
 		ToggleButton:
@@ -47,7 +48,7 @@
             id: btn-fijos
             on_press: root.btnFijos()
 			font_size :'25sp'
-			background_normal: ''			        
+			background_normal: 'normal.png'	       
 			background_color: 1, .745, .039, 1
 
         ToggleButton:
@@ -57,7 +58,7 @@
             id: btn-otros
             on_press: root.btnOtros() 
 			font_size :'25sp'
-			background_normal: ''			        
+			background_normal: 'normal.png'			        
 			background_color: 1, .745, .039, 1
 
 	BoxLayout:
@@ -66,37 +67,46 @@
 			id: lblSubcate
 			font_size :'25sp'
 			valign: 'center'
+			halign: 'right'
 			text: ''
+			disabled: True
 			color: 0, 0, 0, 1
 		Button:
 			id: btnMainTG
 			font_size :'25sp'
-			background_normal: ''			        
+			background_normal: 'normal.png'			        
 			background_color: 1, .745, .039, 1
+			disabled: True
 			text: "Seleccionar"
 		DropDown:
 			id: drpTipogasto
 			font_size :'25sp'
-			background_normal: ''			        
+			background_normal: 'normal.png'		        
 			background_color: 1, .745, .039, 1
+			disabled: True
 
 	BoxLayout:
 		background_color: 1, .3, .4, .85
 		orientation: 'horizontal'
 		Label:
+			id: lbgasto
 			text: 'Gasto: '
 			font_size :'25sp'
 			valign: 'center'
+			halign: 'right'
+			disabled: True
 			color: 0, 0, 0, 1
 		BoxLayout:
 			background_color: 1, .3, .4, .85
 			orientation: 'horizontal'
 			Label: 
+				id: lbpesos
 				text: 'pesos ($)'
 				font_size :'25sp'
 				color: 0, 0, 0, 1 
 				valign: 'center'
 				halign: 'left'
+				disabled: True
 			TextInput:
 				id: txtGasto
 				input_filter: 'float'
@@ -105,15 +115,19 @@
 				font_size :'20sp'
 				on_text: root.ingMonto()
 				on_text_validate: root.foco(1)
+				disabled: True
 			
 
 	BoxLayout:
 		background_color: 1, .3, .4, .85
 		orientation: 'horizontal'
 		Label:
+			id: lbmontoabonado
 			text: 'Monto abonado: '
 			valign: 'center'
 			font_size :'25sp'
+			halign: 'right'
+			disabled: True
 			color: 0, 0, 0, 1
 		BoxLayout:
 			orientation: 'horizontal'
@@ -123,21 +137,26 @@
 					id:modMonto  
 					font_size :'25sp'
 					valign: 'center'
-					color: .2, .4, .9, 1
+					color: 1, .745, .039, 1
 					active: False
+					disabled: True
 				Label:
+					id: lbmodificar
 					text: 'Modificar'
 					valign: 'center'
 					font_size :'25sp'
 					color: 0, 0, 0, 1
+					disabled: True
 			BoxLayout:
 				orientation: 'horizontal'
 				Label: 
+					id: lbPesos
 					text: 'pesos ($)'
 					font_size :'25sp'
 					color: 0, 0, 0, 1
 					valign: 'center'
 					halign: 'right'
+					disabled: True
 				TextInput:
 					id: txtMonto
 					input_filter: 'float'
@@ -155,16 +174,20 @@
 		spacing: 10
 		padding: 2
 		Label:
+			id: lbobservacion
 			text: 'Observaciones: '
 			valign: 'center'
 			font_size :'25sp'
+			halign: 'right'
 			color: 0, 0, 0, 1
+			disabled: True
 		TextInput:
 			font_size :'20sp'
 			multiline:False
 			valign: 'center'
 			id: txtObservaciones
 			on_text_validate: root.foco(3)
+			disabled: True
 
 	BoxLayout:
 
@@ -176,6 +199,7 @@
 			valign: 'center'
 			text: ''
 			color: 1, .0, .0, 1
+			disabled: True
 
 			 
 	BoxLayout:
@@ -183,12 +207,14 @@
         Button:
 			text: 'Salir'
 			font_size :'25sp'
-			background_normal: ''			        
+			background_normal: 'normal.png'		        
 			background_color: 1, .745, .039, 1
 			on_press: app.stop() 
 		Button:
+			id: btnpagar
 			text: 'Pagar'
 			font_size :'25sp'
-			background_normal: ''			        
+			background_normal: 'normal.png'			        
 			background_color: 1, .745, .039, 1
 			on_press: root.btnPagar()
+			disabled: True

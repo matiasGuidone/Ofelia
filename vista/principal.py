@@ -40,8 +40,8 @@ class Principal(BoxLayout):
         tiuser.multiline=False
         
         but = BoxLayout(orientation='horizontal')
-        but.add_widget(Button(text="Ingresar" ,on_press = lambda *args: self.iniciar(tiuser.text, ticontr.text, logueo), background_normal= '', background_color= (1, .745, .039, 1), font_size =25.0))       
-        but.add_widget(Button(text="Salir",on_press = lambda *args: logueo.dismiss(), background_normal= '', background_color= (1, .745, .039, 1), font_size =25.0))
+        but.add_widget(Button(text="Ingresar" ,on_press = lambda *args: self.iniciar(tiuser.text, ticontr.text, logueo), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))       
+        but.add_widget(Button(text="Salir",on_press = lambda *args: logueo.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
         
         contenido.add_widget(tiuser)
         contenido.add_widget(ticontr)
@@ -58,7 +58,7 @@ class Principal(BoxLayout):
         if len(self.user) == 0:
             contenido = BoxLayout(orientation='vertical')
             contenido.add_widget(Label(text=str("Usuario o contraseña errónea")))
-            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss(), background_normal= '', background_color= (1, .745, .039, 1), font_size =25.0))
+            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
             popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130))
             popup.open()
         else:

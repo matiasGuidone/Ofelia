@@ -36,10 +36,10 @@ class RegistroCuentas(BoxLayout):
         sistema = platform.system() 
         for index in range(len(datos)): 
             if sistema == "Windows":
-                btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None,  height = 40) 
+                btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None,  height = 40, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) 
                 btn.bind(on_press = lambda btn: self.elegirSubCat(btn.text.rsplit("-",2)[0]))
             else:
-                btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
+                btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) 
                 btn.bind(on_press = lambda btn: self.elegirSubCat(btn.id))
             btn.bind(on_release = lambda btn: dropdown.select(btn.text)) 
             dropdown.add_widget(btn) 
@@ -112,17 +112,17 @@ class RegistroCuentas(BoxLayout):
         contenido = BoxLayout(orientation='vertical')
         #campos de llenado
         if self.id != 0:
-            nombre = TextInput(hint_text="Nombre de "+self.str_seleccion,text = self.cuenta[0][1])
-            descr = TextInput( hint_text="Descripción",text = self.cuenta[0][2] )
-            sueldo = TextInput( hint_text="Sueldo", input_filter = 'float',text = str(self.cuenta[0][5]) )
-            contacto = TextInput( hint_text="Contacto" ,text = self.cuenta[0][7] )
-            cuenta = TextInput(hint_text = "Cuenta", input_filter = 'float',text = str(self.cuenta[0][11]) )
+            nombre = TextInput(hint_text="Nombre de "+self.str_seleccion,text = self.cuenta[0][1],multiline=False,font_size=25.0)
+            descr = TextInput( hint_text="Descripción",text = self.cuenta[0][2],multiline=False,font_size=25.0 )
+            sueldo = TextInput( hint_text="Sueldo", input_filter = 'float',text = str(self.cuenta[0][5]),multiline=False,font_size=25.0 )
+            contacto = TextInput( hint_text="Contacto" ,text = self.cuenta[0][7],multiline=False,font_size=25.0 )
+            cuenta = TextInput(hint_text = "Cuenta", input_filter = 'float',text = str(self.cuenta[0][11]) ,multiline=False,font_size=25.0)
         else:
-            nombre = TextInput(hint_text="Nombre de "+self.str_seleccion)
-            descr = TextInput( hint_text="Descripción" )
-            sueldo = TextInput( hint_text="Sueldo", input_filter = 'float' )
-            contacto = TextInput( hint_text="Contacto" )
-            cuenta = TextInput(hint_text = "Cuenta", input_filter = 'float')
+            nombre = TextInput(hint_text="Nombre de "+self.str_seleccion,multiline=False,font_size=25.0)
+            descr = TextInput( hint_text="Descripción" ,multiline=False,font_size=25.0)
+            sueldo = TextInput( hint_text="Sueldo", input_filter = 'float' ,multiline=False,font_size=25.0)
+            contacto = TextInput( hint_text="Contacto",multiline=False,font_size=25.0 )
+            cuenta = TextInput(hint_text = "Cuenta", input_filter = 'float',multiline=False,font_size=25.0)
 
         
  
@@ -133,9 +133,9 @@ class RegistroCuentas(BoxLayout):
         contenido.add_widget(descr)
         if self.tipoCuenta == 1 :
             contenido.add_widget(sueldo)
-            but.add_widget(Button(text="Guardar" ,on_press = lambda *args: self.guardarCuenta(nombre.text, descr.text, float(sueldo.text), contacto.text, float(cuenta.text), popup)))
+            but.add_widget(Button(text="Guardar" ,on_press = lambda *args: self.guardarCuenta(nombre.text, descr.text, float(sueldo.text), contacto.text, float(cuenta.text), popup), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
         else:
-            but.add_widget(Button(text="Guardar" ,on_press = lambda *args: self.guardarCuenta(nombre.text, descr.text, 0, contacto.text, float(cuenta.text), popup)))
+            but.add_widget(Button(text="Guardar" ,on_press = lambda *args: self.guardarCuenta(nombre.text, descr.text, 0, contacto.text, float(cuenta.text), popup), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
         contenido.add_widget(contacto)
         contenido.add_widget(cuenta)
         contenido.add_widget(but)
@@ -171,15 +171,15 @@ class RegistroCuentas(BoxLayout):
         if len(self.cuenta) == 0 :
             contenido = BoxLayout(orientation='vertical')
             contenido.add_widget(Label(text=str("Seleccione una cuenta de la lista.")))
-            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss()))
+            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
             popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130))
             popup.open()
         else:    
             cont = BoxLayout(orientation='vertical')
             buttons = BoxLayout()
             cont.add_widget(Label(text='¿ Desea eliminar la cuenta de "'+self.cuenta[0][1]+'" ?'))
-            buttons.add_widget(Button(text='si', on_press = lambda btn: self.elimina(mensj) ))
-            buttons.add_widget(Button(text='no',on_press = lambda *args: mensj.dismiss() ))
+            buttons.add_widget(Button(text='si', on_press = lambda btn: self.elimina(mensj), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0 ))
+            buttons.add_widget(Button(text='no',on_press = lambda *args: mensj.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0 ))
             cont.add_widget(buttons)
             mensj = Popup(title="Confirmar", content= cont,auto_dismiss=False, size_hint=(None,None), size=(430, 120))
             mensj.open()
