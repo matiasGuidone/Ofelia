@@ -80,6 +80,23 @@ class Box(BoxLayout):
         self.ids.tiobservacion.multiline=False
         self.ids.timonto.focus=True
 
+    def activoCaja(self, a):
+        if a==1:
+            self.ids.timonto.disabled = not self.ids.cajaa.active
+            self.ids.lbAnterior.disabled = not self.ids.cajaa.active
+            self.ids.tiPago.disabled = not self.ids.cajaa.active
+            self.ids.lbPago.disabled= not self.ids.cajaa.active
+            self.ids.lbPagoAnterior.disabled = not self.ids.cajaa.active
+            self.ids.tiobservacion.disabled = not self.ids.cajaa.active
+            self.ids.lbobserAnt.disabled = not self.ids.cajaa.active
+        else:
+            self.ids.timontob.disabled = not self.ids.cajab.active
+            self.ids.lbAnteriorb.disabled = not self.ids.cajab.active
+            self.ids.tiPagob.disabled = not self.ids.cajab.active
+            self.ids.lbPagob.disabled = not self.ids.cajab.active
+            self.ids.lbPagoAnteriorb.disabled = not self.ids.cajab.active
+            self.ids.tiobservacionb.disabled = not self.ids.cajab.active
+            self.ids.lbobserAntb.disabled = not self.ids.cajab.active
     
 
 # Manejo escucha de teclado

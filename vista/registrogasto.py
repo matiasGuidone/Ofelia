@@ -73,7 +73,7 @@ class RegistroGasto(BoxLayout):
         self.ids.lbpesos.disabled = v
         self.ids.txtGasto.disabled = v
         self.ids.lbmontoabonado.disabled = v        
-        self.ids.modMonto.active = v
+        self.ids.modMonto.active = not v
         self.ids.modMonto.disabled = v
         self.ids.lbmodificar.disabled = v
         self.ids.lbPesos.disabled = v

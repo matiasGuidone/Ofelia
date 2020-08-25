@@ -11,13 +11,7 @@
 		Rectangle:
             pos: self.pos
             size: self.size
-			source: 'Fondo.png'
-	BoxLayout:			
-			# Label:
-			# 	id: lblTitu
-			# 	text: 'Usuarios'
-			# 	color: 0, 0, 0, 1
-		 
+	BoxLayout:					 
 	BoxLayout:
 		orientation: 'horizontal'
 		Label:
@@ -35,7 +29,6 @@
 			font_size :'25sp'
 			background_normal: 'normal.png'				        
 			background_color: 1, .745, .039, 1
-
 	BoxLayout:	
 	BoxLayout:
 		orientation: 'horizontal'
@@ -47,26 +40,6 @@
 			background_normal: 'normal.png'		
 			text: ' Editar '		        
 			background_color: 1, .745, .039, 1
-#			BoxLayout:
-#				pos: self.parent.pos
-#				size: self.parent.size
-#				orientation: 'horizontal'
-#				Label:
-#				Image:
-#					background_color: 1, 1, 1, 1
-#					source: '../image/icon/edit.png'
-#					width: 17
-#					size_hint_x: None
-#					
-#				Label:
-#					text: 'Editar'
-#					width: 70
-#					font_size :'25sp'
-#					size_hint_x: None
-#					color: 1, 1, 1, 1
-#				Label:
-				
-
 		Button:
 			font_size :'25sp'
 			background_normal: 'normal.png'		      
@@ -74,23 +47,6 @@
 			on_press: root.btnNuevo()
 			text: ' Nuevo '
 			id: btnNuevo
-#			BoxLayout:
-#				pos: self.parent.pos
-#				size: self.parent.size
-#				orientation: 'horizontal'
-#				Label:
-#				Image:
-#					source: '../image/icon/plus-square.png'
-#					width: 17
-#					size_hint_x: None
-#					
-#				Label:
-#					text: 'Nuevo'
-#					width: 70
-#					font_size :'25sp'
-#					size_hint_x: None
-#					color: 1, 1, 1, 1
-#				Label:
 		Button:
 			on_press: root.btnEliminar()
 			font_size :'25sp'
@@ -115,13 +71,7 @@
 #					size_hint_x: None
 #					color: 1, 1, 1, 1
 #				Label:
-		Label:
-		# Label:
-		# 	text: 'Usuario'
-		# 	color: 0, 0, 0, 1
-		# TextInput:
-		# 	id: txtUsuario
-	
+		Label:	
 	BoxLayout:
 		orientation: 'horizontal'	
 	BoxLayout:
@@ -133,12 +83,6 @@
 	BoxLayout:
 		background_color: 1, .3, .4, .85
 		orientation: 'horizontal'
-		# Label:
-		# 	text: 'Contraseña'
-		# 	color: 0, 0, 0, 1
-		# TextInput:
-		# 	password: True
-		# 	id: txtContra
 	BoxLayout:
 		background_color: 1, .3, .4, .85
 		orientation: 'horizontal'
@@ -148,20 +92,3 @@
 			background_normal: 'normal.png'				        
 			background_color: 1, .745, .039, 1
 			on_press: app.stop() 
-		# Label:
-		# 	text: 'Confirmar contraseña'
-		# 	color: 0, 0, 0, 1
-		# TextInput:
-		# 	password: True
-		# 	id: txtConfContra
-			 
-	# BoxLayout:
-    #     orientation: 'horizontal'
-    #     Button:
-	# 		text: 'Aceptar'
-	# 		background_color: 0, 0, 1, 1
-	# 		on_press: root.btnAceptar()
-    #     Button:
-	# 		text: 'Cancelar'
-	# 		background_color: .2, .4, .9, 1
-	# 		on_press: root.btnCancelar()
