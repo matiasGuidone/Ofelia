@@ -14,11 +14,25 @@
         BoxLayout:
             orientation:'horizontal'
             size_hint: None, None
-            size: 600, 40
+            size: 600, 50
+            BoxLayout:
+                orientation:'vertical'
+                ToggleButton:
+                    id: tgbEstado                
+                    text: 'Estado de Cajas'
+                    font_size: '25sp'
+                    background_normal: 'normal.png'				        
+                    background_color: 1, .745, .039, 1
+                    on_press: root.estado()     
+            Label:
+            Label:
+            Label:           
             Label:
                 text:'Habilitar caja 1'
                 font_size: '25sp'    
-                color: 0,0,0,1            
+                color: 0,0,0,1       
+            Label:
+            Label:     
             CheckBox:
                 id: cajaa
                 valign: 'center'
@@ -28,16 +42,77 @@
             Label:
             Label:
             Label:
+            Label:
+            Label:
+            Label:
                 text:'Habilitar caja 2'
                 font_size: '25sp'  
-                color: 0,0,0,1          
+                color: 0,0,0,1        
+            Label:
+            Label:  
             CheckBox:
                 id: cajab
                 valign: 'center'
                 color: 1, .745, .039, 1
                 active: False
                 disabled: False
-
+    BoxLayout:
+        orientation:'vertical'
+        size_hint: None, None		        
+        size: 120, 150
+        Scatter:
+            do_rotation : False     
+            scale_min : .5 
+            scale_max : 2.  
+            BoxLayout:
+                orientation:'vertical'            
+                Label:
+                    text: 'Turno'  
+                    font_size: '18sp'  
+                    color: 0,0,0,1   
+                GridLayout:
+                    size: 120 , 120  
+                    rows: 4
+                    cols: 2
+                    padding: 2
+                    background: 'Fondop.png'
+                    Label:
+                        text: 'Inicial:'
+                        font_size: '16sp'  
+                        color: 0,0,0,1   
+                    Label:
+                        id:lblinicial
+                        text:''
+                        font_size: '16sp'  
+                        color: 0,0,0,1   
+                    Label:
+                        text: 'Venta:'
+                        font_size: '16sp'  
+                        color: 0,0,0,1   
+                    Label:
+                        id:lblventa
+                        text:''
+                        font_size: '16sp'  
+                        color: 0,0,0,1   
+                    Label:
+                        text: 'Total:'
+                        font_size: '16sp'  
+                        color: 0,0,0,1   
+                    Label:
+                        id:lbltotal
+                        text:''
+                        font_size: '16sp'  
+                        color: 0,0,0,1   
+                    Label:
+                        text: 'Abrió:'
+                        font_size: '16sp'  
+                        color: 0,0,0,1   
+                    Label:
+                        id: lbhora
+                        text: ''
+                        font_size: '16sp'  
+                        color: 0,0,0,1   
+            
     BoxLayout:
         orientation:'horizontal'
         id:boxa

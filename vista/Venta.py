@@ -7,7 +7,6 @@ from kivy.app import App
 # configuration
 from kivy.config import Config
 Config.set("graphics", "window_state",  'maximized')
-#Config.set("graphics", "height", 110)
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -98,6 +97,12 @@ class Box(BoxLayout):
             self.ids.tiobservacionb.disabled = not self.ids.cajab.active
             self.ids.lbobserAntb.disabled = not self.ids.cajab.active
     
+    #Muestro estado de cajas
+    def estado(self):
+        pass
+
+
+
 
 # Manejo escucha de teclado
     def enter(self, n):
