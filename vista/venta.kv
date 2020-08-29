@@ -11,144 +11,163 @@
             size: self.size
     AnchorLayout:
         anchor_y: 'top'
+        anchor_x: 'left'
         BoxLayout:
             orientation:'horizontal'
             size_hint: None, None
-            size: 600, 50
+            size: 340, 150
             BoxLayout:
                 orientation:'vertical'
+                size_hint: None, None
+                size: 220, 150
                 ToggleButton:
                     id: tgbEstado                
                     text: 'Estado de Cajas'
-                    font_size: '25sp'
-                    background_normal: 'normal.png'				        
+                    font_size: '16sp'
+                    background_normal: 'normal.png'	
+                    size_hint: None, None	
+                    size: 190, 30
                     background_color: 1, .745, .039, 1
                     on_press: root.estado()     
-            Label:
-            Label:
-            Label:           
-            Label:
-                text:'Habilitar caja 1'
-                font_size: '25sp'    
-                color: 0,0,0,1       
-            Label:
-            Label:     
-            CheckBox:
-                id: cajaa
-                valign: 'center'
-                color: 1, .745, .039, 1
-                active: False
-                disabled: False
-            Label:
-            Label:
-            Label:
-            Label:
-            Label:
-            Label:
-                text:'Habilitar caja 2'
-                font_size: '25sp'  
-                color: 0,0,0,1        
-            Label:
-            Label:  
-            CheckBox:
-                id: cajab
-                valign: 'center'
-                color: 1, .745, .039, 1
-                active: False
-                disabled: False
-    BoxLayout:
-        orientation:'vertical'
-        size_hint: None, None		        
-        size: 120, 150
-        Scatter:
-            do_rotation : False     
-            scale_min : .5 
-            scale_max : 2.  
-            BoxLayout:
-                orientation:'vertical'            
                 Label:
-                    text: 'Turno'  
-                    font_size: '18sp'  
-                    color: 0,0,0,1   
-                GridLayout:
-                    size: 120 , 120  
-                    rows: 4
-                    cols: 2
-                    padding: 2
-                    background: 'Fondop.png'
+                    size_hint: None, None
+                    size: 220, 20                     
+                BoxLayout:
+                    orientation:'horizontal'
+                    Label:   
+                        text:'   Habilitar caja 1'
+                        size: 190, 30
+                        font_size: '16sp'    
+                        color: 0,0,0,1     
+                    CheckBox:
+                        id: cajaa
+                        valign: 'center'
+                        h_hint: None
+                        size: 30, 30
+                        color: 1, .745, .039, 1
+                        disabled: True
+                                  
+                BoxLayout:
+                    orientation:'horizontal'
                     Label:
-                        text: 'Inicial:'
+                        text:'   Habilitar caja 2'
+                        size: 190, 30
                         font_size: '16sp'  
                         color: 0,0,0,1   
+                    CheckBox:
+                        id: cajab
+                        valign: 'center'
+                        size: 30, 30
+                        h_hint: None
+                        color: 1, .745, .039, 1
+                        disabled: True
+            BoxLayout:
+                orientation:'vertical'
+                size_hint: None, None		        
+                size: 120, 150
+                BoxLayout:
+                    orientation:'vertical'      
                     Label:
-                        id:lblinicial
-                        text:''
-                        font_size: '16sp'  
-                        color: 0,0,0,1   
-                    Label:
-                        text: 'Venta:'
-                        font_size: '16sp'  
-                        color: 0,0,0,1   
-                    Label:
-                        id:lblventa
-                        text:''
-                        font_size: '16sp'  
-                        color: 0,0,0,1   
-                    Label:
-                        text: 'Total:'
-                        font_size: '16sp'  
-                        color: 0,0,0,1   
-                    Label:
-                        id:lbltotal
-                        text:''
-                        font_size: '16sp'  
-                        color: 0,0,0,1   
-                    Label:
-                        text: 'Abrió:'
-                        font_size: '16sp'  
-                        color: 0,0,0,1   
-                    Label:
-                        id: lbhora
-                        text: ''
-                        font_size: '16sp'  
-                        color: 0,0,0,1   
-            
+                        id: lbtitu
+                        text: 'Turno'  
+                        font_size: '18sp'  
+                    BoxLayout:
+                        orientation:'horizontal'  
+                        size: 120 , 30  
+                        Label:
+                            id: laIni
+                            text: 'Inicial:'
+                            font_size: '16sp'  
+                        Label:
+                            id:lblinicial
+                            text:''
+                            font_size: '16sp'                  
+                    BoxLayout:
+                        orientation:'horizontal'  
+                        size: 120 , 30    
+                        Label:
+                            id: lbvent
+                            text: 'Venta:'
+                            font_size: '16sp'  
+                        Label:
+                            id:lblventa
+                            text:''
+                            font_size: '16sp'                  
+                    BoxLayout:
+                        orientation:'horizontal'  
+                        size: 120 , 30  
+                        Label:
+                            id: lbtot
+                            text: 'Total:'
+                            font_size: '16sp'  
+                        Label:
+                            id:lbltotal 
+                            text:''
+                            font_size: '16sp'                  
+                    BoxLayout:
+                        orientation:'horizontal'  
+                        size: 120 , 30  
+                        Label:
+                            id: lbAbri
+                            text: 'Abrió:'
+                            font_size: '16sp'  
+                        Label:
+                            id: lbhora
+                            text: ''
+                            font_size: '16sp'  
+                
     BoxLayout:
         orientation:'horizontal'
         id:boxa
         size_hint: None, None
-        size: 810, 90
+        size: 400, 90
         Scatter:         
             id: Scat
             do_rotation : False     
             scale_min : .5 
             scale_max : 2.                
             GridLayout:
-                size: 810 , 90  
+                size: 600 , 70  
                 rows: 1
-                cols: 4
+                cols: 4  # Para agregar observación pongo 6 columnas
                 size_hint_x: .7  
                 size_hint_y: .10
                 BoxLayout:   
                     orientation: 'vertical'  
-                    size: 170 , 70  
-                    size_hint_x: 1  
-                    size_hint_y: 1
+                    size: 110 , 70  
+                    size_hint: 1, 1  
                     Label:
-                        text: 'Cargar Venta:   '    
+                        text: 'Cargar Venta:   '   
+                        valign: 'center' 
                         font_size: '20sp'    
                         color: 0, 0, 0, 1     
                         disabled: not cajaa.active 
                     Label:
                         text: 'Venta Anterior: '
+                        valign: 'center' 
                         font_size: '20sp'    
-                        disabled: not cajaa.active 
                         color: 0, 0, 0, 1
+                        disabled: not cajaa.active 
+                BoxLayout:
+                    orientation:'vertical'
+                    size: 10 , 70    
+                    size_hint: 1, 1      
+                    Label:
+                        text: '$'
+                        valign: 'center' 
+                        color: 0, 0, 0, 1
+                        font_size: '20sp'   
+                        disabled: not cajaa.active  
+                    Label:
+                        text: '$'
+                        valign: 'center' 
+                        color: 0, 0, 0, 1
+                        font_size: '20sp'   
+                        disabled: not cajaa.active  
                 BoxLayout:   
                     orientation: 'vertical'
-                    size: 50 , 70    
-                    size_hint_x: 1  
-                    size_hint_y: 1
+                    size: 40 , 70    
+                    size_hint: 1, 1   
                     TextInput:
                         id: timonto     
                         hint_text:"Monto"
@@ -157,20 +176,20 @@
                         write_tab: False 
                         multiline: False 
                         font_size: '20sp'      
-                        disabled: not cajaa.active 
-                        on_text_validate: root.enter(1)              
+                        on_text_validate: root.enter(1)     
+                        disabled: not cajaa.active          
                     Label:
+                        id: lbAnterior
                         text: 'Monto'
                         color: 0, 0, 0, 1
+                        valign: 'center' 
                         font_size: '20sp'   
                         disabled: not cajaa.active  
-                        id: lbAnterior
 
                 BoxLayout:   
                     orientation: 'vertical'  
                     size: 200 , 70  
-                    size_hint_x: 1  
-                    size_hint_y: 1
+                    size_hint: 1, 1   
                     BoxLayout:   
                         orientation: 'horizontal'  
                         TextInput:
@@ -181,160 +200,158 @@
                             font_size: '20sp'    
                             focused: True
                             write_tab: False 
-                            disabled: not cajaa.active 
                             multiline: False   
                             on_text: root.filtro()
                             on_text_validate: root.enter(2)  
+                            disabled: not cajaa.active 
                         Label:
                             text: 'Efectivo'
                             size: 168 , 33  
+                            valign: 'center' 
                             color: 0, 0, 0, 1
-                            disabled: not cajaa.active 
                             font_size: '20sp'    
                             id: lbPago
+                            disabled: not cajaa.active 
                     Label:
                         text: 'Pagó'
                         color: 0, 0, 0, 1
+                        valign: 'center' 
                         font_size: '20sp'    
-                        disabled: not cajaa.active 
-                        id: lbPagoAnterior
+                        id: lbPagoAnterior          
+                        disabled: not cajaa.active         
+                            
 
-                BoxLayout:  
-                    size: 350 , 70  
-                    orientation: 'vertical'
-                    size_hint_x: 1  
-                    size_hint_y: 1
-                    TextInput:
-                        focused: True
-                        write_tab: False 
-                        hint_text: 'Observación'
-                        multiline: False     
-                        disabled: not cajaa.active 
-                        font_size: '20sp'      
-                        on_text_validate: root.enter(3)   
-                        id: tiobservacion  
-                    Label:
-                        text: 'Observacion'
-                        color: 0, 0, 0, 1
-                        font_size: '20sp'   
-                        disabled: not cajaa.active  
-                        id: lbobserAnt
-    BoxLayout:
-        orientation:'horizontal'
-        id:boxb
-        size_hint: None, None
-        size: 810, 90
-        Scatter:         
-            id: Scatb
-            do_rotation : False     
-            scale_min : .5 
-            scale_max : 2.                
-            GridLayout:
-                size: 810 , 90  
-                rows: 1
-                cols: 4
-                size_hint_x: .7  
-                size_hint_y: .10
-                BoxLayout:   
-                    orientation: 'vertical'  
-                    size: 170 , 70  
-                    size_hint_x: 1  
-                    size_hint_y: 1
-                    Label:
-                        text: 'Cargar Venta:   '    
-                        font_size: '20sp'    
-                        disabled: not cajab.active 
-                        color: 0, 0, 0, 1      
-                    Label:
-                        text: 'Venta Anterior: '
-                        font_size: '20sp'    
-                        color: 0, 0, 0, 1
-                        disabled: not cajab.active 
-                BoxLayout:   
-                    orientation: 'vertical'
-                    size: 50 , 70    
-                    size_hint_x: 1  
-                    size_hint_y: 1
-                    TextInput:
-                        id: timontob     
-                        input_filter: 'float'
-                        font_size: '20sp'   
-                        hint_text:"Monto"        
-                        focused: True
-                        write_tab: False 
-                        disabled: not cajab.active 
-                        multiline: False   
-                        on_text_validate: root.enter(1)              
-                    Label:
-                        text: 'Monto Ant'
-                        color: 0, 0, 0, 1
-                        disabled: not cajab.active 
-                        font_size: '20sp'    
-                        id: lbAnteriorb
 
-                BoxLayout:   
-                    orientation: 'vertical'  
-                    size: 200 , 70  
-                    size_hint_x: 1  
-                    size_hint_y: 1
-                    BoxLayout:   
-                        orientation: 'horizontal'  
-                        TextInput:
-                            size: 30 , 33         
-                            id: tiPagob 
-                            input_filter: 'int'
-                            disabled: not cajab.active 
-                            font_size: '20sp'    
-                            focused: True
-                            hint_text:"Pagó"
-                            write_tab: False 
-                            multiline: False   
-                            on_text: root.filtro()
-                            on_text_validate: root.enter(2)  
-                        Label:
-                            text: 'Efectivo'
-                            size: 168 , 33  
-                            font_size: '20sp'
-                            disabled: not cajab.active     
-                            color: 0, 0, 0, 1
-                            id: lbPagob
-                    Label:
-                        text: 'Pago'
-                        color: 0, 0, 0, 1
-                        font_size: '20sp'   
-                        disabled: not cajab.active  
-                        id: lbPagoAnteriorb
+        #       BoxLayout:  
+        #           size: 350 , 70  
+        #           orientation: 'vertical'
+        #           size_hint_x: 1  
+        #           size_hint_y: 1
+        #           TextInput:
+        #               focused: True
+        #               write_tab: False 
+        #               hint_text: 'Observación'
+        #               multiline: False     
+        #               disabled: not cajaa.active 
+        #               font_size: '20sp'      
+        #               on_text_validate: root.enter(3)   
+        #               id: tiobservacion  
+        #           Label:
+        #               text: 'Observacion'
+        #               color: 0, 0, 0, 1
+        #               font_size: '20sp'   
+        #               disabled: not cajaa.active  
+        #               id: lbobserAnt
+ #  BoxLayout:
+ #      orientation:'horizontal'
+ #      id:boxb
+ #      size_hint: None, None
+ #      size: 810, 90
+ #      Scatter:         
+ #          id: Scatb
+ #          do_rotation : False     
+ #          scale_min : .5 
+ #          scale_max : 2.                
+ #          GridLayout:
+ #              size: 810 , 90  
+ #              rows: 1
+ #              cols: 4
+ #              size_hint_x: .7  
+ #              size_hint_y: .10
+ #              BoxLayout:   
+ #                  orientation: 'vertical'  
+ #                  size: 170 , 70  
+ #                  size_hint_x: 1  
+ #                  size_hint_y: 1
+ #                  Label:
+ #                      text: 'Cargar Venta:   '    
+ #                      font_size: '20sp'    
+ #                      disabled: not cajab.active 
+ #                      color: 0, 0, 0, 1      
+ #                  Label:
+ #                      text: 'Venta Anterior: '
+ #                      font_size: '20sp'    
+ #                      color: 0, 0, 0, 1
+ #                      disabled: not cajab.active 
+ #              BoxLayout:   
+ #                  orientation: 'vertical'
+ #                  size: 50 , 70    
+ #                  size_hint_x: 1  
+ #                  size_hint_y: 1
+ #                  TextInput:
+ #                      id: timontob     
+ #                      input_filter: 'float'
+ #                      font_size: '20sp'   
+ #                      hint_text:"Monto"        
+ #                      focused: True
+ #                      write_tab: False 
+ #                      disabled: not cajab.active 
+ #                      multiline: False   
+ #                      on_text_validate: root.enter(1)              
+ #                  Label:
+ #                      text: 'Monto Ant'
+ #                      color: 0, 0, 0, 1
+ #                      disabled: not cajab.active 
+ #                      font_size: '20sp'    
+ #                      id: lbAnteriorb
 
-                BoxLayout:  
-                    size: 350 , 70  
-                    orientation: 'vertical'
-                    size_hint_x: 1  
-                    size_hint_y: 1
-                    TextInput:
-                        focused: True
-                        write_tab: False 
-                        multiline: False     
-                        hint_text:'Observación'
-                        font_size: '20sp'    
-                        disabled: not cajab.active   
-                        on_text_validate: root.enter(3)   
-                        id: tiobservacionb  
-                    Label:
-                        text: 'Observacion Anterior'
-                        color: 0, 0, 0, 1
-                        font_size: '20sp'
-                        disabled: not cajab.active     
-                        id: lbobserAntb
+ #              BoxLayout:   
+ #                  orientation: 'vertical'  
+ #                  size: 200 , 70  
+ #                  size_hint_x: 1  
+ #                  size_hint_y: 1
+ #                  BoxLayout:   
+ #                      orientation: 'horizontal'  
+ #                      TextInput:
+ #                          size: 30 , 33         
+ #                          id: tiPagob 
+ #                          input_filter: 'int'
+ #                          disabled: not cajab.active 
+ #                          font_size: '20sp'    
+ #                          focused: True
+ #                          hint_text:"Pagó"
+ #                          write_tab: False 
+ #                          multiline: False   
+ #                          on_text: root.filtro()
+ #                          on_text_validate: root.enter(2)  
+ #                      Label:
+ #                          text: 'Efectivo'
+ #                          size: 168 , 33  
+ #                          font_size: '20sp'
+ #                          disabled: not cajab.active     
+ #                          color: 0, 0, 0, 1
+ #                          id: lbPagob
+ #                  Label:
+ #                      text: 'Pago'
+ #                      color: 0, 0, 0, 1
+ #                      font_size: '20sp'   
+ #                      disabled: not cajab.active  
+ #                      id: lbPagoAnteriorb
+
+ #              BoxLayout:  
+ #                  size: 350 , 70  
+ #                  orientation: 'vertical'
+ #                  size_hint_x: 1  
+ #                  size_hint_y: 1
+ #                  TextInput:
+ #                      focused: True
+ #                      write_tab: False 
+ #                      multiline: False     
+ #                      hint_text:'Observación'
+ #                      font_size: '20sp'    
+ #                      disabled: not cajab.active   
+ #                      on_text_validate: root.enter(3)   
+ #                      id: tiobservacionb  
+ #                  Label:
+ #                      text: 'Observacion Anterior'
+ #                      color: 0, 0, 0, 1
+ #                      font_size: '20sp'
+ #                      disabled: not cajab.active     
+ #                      id: lbobserAntb
     BoxLayout:
         orientation:'horizontal'
         size_hint_x: 1  
         size_hint_y: .12
-        Button:
-            text: 'Borrar Anterior'
-            font_size: '25sp'
-			background_normal: 'normal.png'			        
-			background_color: 1, .745, .039, 1
-            id: btnBorrarAnt
         Button:
             text: 'Gestionar Cajas'
             font_size: '25sp'

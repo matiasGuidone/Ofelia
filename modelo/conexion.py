@@ -6,7 +6,7 @@ class conexion:
     con=sqlite3.connect("data-ofelia.db")
 
     def insert_case(self, argument):
-            if argument == "Usuarios" : return "insert into Usuarios (nombre_usu,tipo_usu,contraseña) values (?,?,?)"
+            if argument == "Usuarios" : return "insert into Usuarios (nombre_usu,tipo_usu,contraseña,sesion) values (?,?,?,0)"
             elif argument == "CategoriaGastos": return "insert into CategoriaGastos (nombre_cat_gasto) values (?)"
             elif argument == "SubcategoriaGastos": return "insert into SubcategoriaGastos ( nomb_subcat, descr_subcat, empleado_id, proveedor_id, sueldo, adelanto, contacto, f_h_adelanto, f__h_pago, CategoriaGastos_id_cat_gasto, cuenta) values (?,?,?,?,?,?,?,?,?,?,?)"
             elif argument == "Turnos": return "insert into Turnos (turno, caja_ini_turno, fecha, f_h_apertura, f_h_cierre, Usuarios_id_usu) values (?,?,?,?,?,?)"
@@ -18,7 +18,7 @@ class conexion:
         
 
     def update_case(self, argument):
-            if argument == "Usuarios": return "update Usuarios set nombre_usu = ? ,tipo_usu = ? ,contraseña = ? where id_usu = ?"
+            if argument == "Usuarios": return "update Usuarios set nombre_usu = ? ,tipo_usu = ? ,contraseña = ?,sesion = ? where id_usu = ?"
             elif argument == "CategoriaGastos": return "update CategoriaGastos set nombre_cat_gasto = ? where id_cat_gasto = ?"
             elif argument == "SubcategoriaGastos": return "update SubcategoriaGastos set nomb_subcat = ?, descr_subcat = ?, empleado_id = ?, proveedor_id = ?, sueldo = ?, adelanto = ?, contacto = ?, f_h_adelanto = ?, f__h_pago = ?, CategoriaGastos_id_cat_gasto = ?, cuenta = ? where id_subcat_gasto = ?"
             elif argument == "Turnos": return "update Turnos set turno = ?, caja_ini_turno = ?, fecha = ?, f_h_apertura = ?, f_h_cierre = ?, Usuarios_id_usu = ? where id_turno = ?"
@@ -77,12 +77,11 @@ class conexion:
         return cursor.fetchall()
 
     def selectAll(self, tabla, condiciones = None):
+        con=sqlite3.connect("data-ofelia.db")
         if condiciones == None :
-            con=sqlite3.connect("data-ofelia.db")
             cursor=con.execute("select * from "+tabla)
             return cursor.fetchall()
         else :
-            con=sqlite3.connect("data-ofelia.db")
             consulta = "select * from "+tabla
             consulta += " where 1 = 1 "
             for i in range(len(condiciones)):

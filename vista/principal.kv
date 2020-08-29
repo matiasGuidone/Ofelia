@@ -41,7 +41,7 @@
 			font_size :'25sp'
 			background_normal: 'normal.png'				        
 			background_color: 1, .745, .039, 1
-			on_press: root.btnVentas()
+			on_release: root.btnVentas()
 		Button:
 			id: cuen
 			size_hint: 1,.17
@@ -49,15 +49,7 @@
 			text: 'Cuentas'
 			background_normal: 'normal.png'			
 			background_color: 1, .745, .039, 1
-			on_press: root.btnCuentas()
-		Button:
-			id: usu
-			size_hint: 1,.17
-			font_size :'25sp'
-			text: 'Usuarios'
-			background_normal: 'normal.png'		
-			background_color: 1, .745, .039, 1
-			on_press: root.btnUsuarios()
+			on_release: root.btnCuentas()
 		Button:
 			id: pag
 			size_hint: 1,.17
@@ -65,7 +57,16 @@
 			text: 'Pagos'
 			background_normal: 'normal.png'			
 			background_color: 1, .745, .039, 1
-			on_press: root.btnPagos()
+			on_release: root.btnPagos()
+		Button:
+			id: btnmain
+			size_hint: 1,.17
+			font_size :'25sp'
+			text: 'Programa'
+			background_normal: 'normal.png'			
+			background_color: 1, .745, .039, 1	
+			on_release: root.cargoPrograma()
+
 		
 		 
 	 

@@ -1,0 +1,14 @@
+#:kivy 1.10.0
+
+<Box>:
+    text: 'Turno'
+	orientation: 'vertical'  
+    canvas.before:
+		Color:
+			rgba:  1, 1, 1, 1
+		Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation:'horizontal'
+        

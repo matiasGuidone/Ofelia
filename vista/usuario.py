@@ -38,19 +38,17 @@ class Usuario(BoxLayout):
             btn = Button()
            
             if sistema == "Windows":
-                btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None, height = 40, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) 
+                btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None, height = 50, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =20.0) 
                 btn.bind(on_press = lambda btn: self.selectUsuario(btn.text.rsplit("-",2)[0]))
             else:
-                 btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) 
-                 btn.bind(on_press = lambda btn: self.selectUsuario(btn.id))
-            
+                btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 50, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =20.0) 
+                btn.bind(on_press = lambda btn: self.selectUsuario(btn.id))
             
             btn.bind(on_release = lambda btn: self.ids.drpUsuarios.select(btn.text)) 
             self.ids.drpUsuarios.add_widget(btn) 
 
-        mainbutton = self.ids.btnMain
-        mainbutton.bind(on_release = self.ids.drpUsuarios.open) 
-        self.ids.drpUsuarios.bind(on_select = lambda instance, x: setattr(mainbutton, 'text', x))
+        self.ids.btnMain.bind(on_release = self.ids.drpUsuarios.open) 
+        self.ids.drpUsuarios.bind(on_select = lambda instance, x: setattr(self.ids.btnMain, 'text', x))        
 
     def selectUsuario(self,id):
         self.id = int(id)

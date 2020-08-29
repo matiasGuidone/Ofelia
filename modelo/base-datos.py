@@ -27,7 +27,8 @@ try:
                               id_usu integer primary key autoincrement,
                               nombre_usu text,
                               tipo_usu text,
-                              contraseña text
+                              contraseña text,
+                              sesion integer
                         )""")
 
     conexion.execute("""create table Turnos (

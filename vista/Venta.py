@@ -17,10 +17,8 @@ sys.path.append(os.getcwd())
 from modelo.conexion import conexion
 from modelo.FechayHora import FechayHora
 
-
 #damian
 class Box(BoxLayout):
-    pass
     sistema=None
     dropdown=None
     diccTipoPago={'0' : "Efectivo", '1' : "Débito", '2' : "Crédito"}
@@ -29,15 +27,15 @@ class Box(BoxLayout):
     tipoPago=0
     mont=False
     Pago=False
+    cont=0
 
     def __init__(self, **kwargs):         
         super().__init__(**kwargs)
         self.inicio() 
-        pass
         
     def btnRegistrarVenta(self):
         #v = AccionVentas(self.turno, self.caja)
-#montoDeVenta(float), observación,idTurno,tipoPago,Caja
+        #montoDeVenta(float), observación,idTurno,tipoPago,Caja
         #v.cargarVenta([])
         print ("registro venta")
 
@@ -46,13 +44,47 @@ class Box(BoxLayout):
         #v=AccionVentas(turno, caja)
 #montoDeVenta(float), observación,idTurno,tipoPago,Caja
         #v.cargarVenta([])
-        print ("Borro venta")
+        self.cont += 1
+        print ("Borro venta " + str(self.cont))
 
     def inicio(self):
+
+        self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
+        self._keyboard.bind(on_key_down=self._on_keyboard_down)
+
         self.turno=0#consulto en base de datos
         self.caja=0 
         self.focoComponentes()   
+        self.ids.cajaa.active=False
+    #    self.ids.cajab.active=False
+        self.activoCaja(1)
+    #    self.activoCaja(2)
+
+    def _keyboard_closed(self):
+        pass
+
+    def seteoVenta(self):
+        self.ids.timonto.text=""
+        self.ids.tiPago.text=""
+        self.ids.lbPago.text="Efectivo"
+        self.ids.timonto.focus=True
+        self.Pago=False
+        self.mmont=False
+
+        self.cont += 1
+        print ("Seteo venta " + str(self.cont))
+
+    def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
         
+        print ("Pruebo venta " + str(keycode[1]))
+
+        teclas = {
+            'numpadsubstract': self.btnBorrar,
+            'numpadadd': self.seteoVenta,
+        }
+
+        if keycode[1] in teclas:
+            teclas[keycode[1]]()
 
     def filtro(self):  
         if len(self.ids.tiPago.text) > 1:
@@ -76,7 +108,7 @@ class Box(BoxLayout):
         #self.ids.timonto(hint_text = "Tipo de Pago" )
         #self.ids.tiPago(hint_text = "Observación" )
         self.ids.timonto.multiline=False
-        self.ids.tiobservacion.multiline=False
+      #  self.ids.tiobservacion.multiline=False
         self.ids.timonto.focus=True
 
     def activoCaja(self, a):
@@ -86,19 +118,40 @@ class Box(BoxLayout):
             self.ids.tiPago.disabled = not self.ids.cajaa.active
             self.ids.lbPago.disabled= not self.ids.cajaa.active
             self.ids.lbPagoAnterior.disabled = not self.ids.cajaa.active
-            self.ids.tiobservacion.disabled = not self.ids.cajaa.active
-            self.ids.lbobserAnt.disabled = not self.ids.cajaa.active
-        else:
-            self.ids.timontob.disabled = not self.ids.cajab.active
-            self.ids.lbAnteriorb.disabled = not self.ids.cajab.active
-            self.ids.tiPagob.disabled = not self.ids.cajab.active
-            self.ids.lbPagob.disabled = not self.ids.cajab.active
-            self.ids.lbPagoAnteriorb.disabled = not self.ids.cajab.active
-            self.ids.tiobservacionb.disabled = not self.ids.cajab.active
-            self.ids.lbobserAntb.disabled = not self.ids.cajab.active
+         #   self.ids.tiobservacion.disabled = not self.ids.cajaa.active
+         #   self.ids.lbobserAnt.disabled = not self.ids.cajaa.active
+            self.ids.timonto.focus=True
+    #   else:
+    #       self.ids.timontob.disabled = not self.ids.cajab.active
+    #       self.ids.lbAnteriorb.disabled = not self.ids.cajab.active
+    #       self.ids.tiPagob.disabled = not self.ids.cajab.active
+    #       self.ids.lbPagob.disabled = not self.ids.cajab.active
+    #       self.ids.lbPagoAnteriorb.disabled = not self.ids.cajab.active
+    #       self.ids.tiobservacionb.disabled = not self.ids.cajab.active
+    #       self.ids.lbobserAntb.disabled = not self.ids.cajab.active
     
     #Muestro estado de cajas
     def estado(self):
+        if self.ids.tgbEstado.state=='down':
+            self.ids.lbhora.color=(0,0,0,1)
+            self.ids.lbAbri.color=(0,0,0,1)
+            self.ids.lbltotal.color=(0,0,0,1)
+            self.ids.lbtot.color=(0,0,0,1)
+            self.ids.lblventa.color=(0,0,0,1)
+            self.ids.lbvent.color=(0,0,0,1)
+            self.ids.lblinicial.color=(0,0,0,1)
+            self.ids.laIni.color=(0,0,0,1)
+            self.ids.lbtitu.color=(0,0,0,1)
+        else:            
+            self.ids.lbhora.color=(1,1,1,1)
+            self.ids.lbAbri.color=(1,1,1,1)
+            self.ids.lbltotal.color=(1,1,1,1)
+            self.ids.lbtot.color=(1,1,1,1)
+            self.ids.lblventa.color=(1,1,1,1)
+            self.ids.lbvent.color=(1,1,1,1)
+            self.ids.lblinicial.color=(1,1,1,1)
+            self.ids.laIni.color=(1,1,1,1)
+            self.ids.lbtitu.color=(1,1,1,1)
         pass
 
 
@@ -114,27 +167,40 @@ class Box(BoxLayout):
         elif n == 2: 
             if self.ids.tiPago.text!=None and self.mont:
                 self.ids.tiPago.focus=False
-                self.ids.tiobservacion.focus=True
-                self.Pago=True
-        elif n == 3:
-            if self.mont and self.Pago:
-                self.ids.tiobservacion.focus=False
-                self.ids.lbAnterior.text=self.ids.timonto.text
-                print(self.ids.timonto.text)
+            #    self.ids.tiobservacion.focus=True                
+                
+                
+            #esto no estaría con observacion                    
+                self.ids.lbAnterior.text=self.ids.timonto.text                
                 self.ids.lbPagoAnterior.text=self.diccTipoPago[str(self.tipoPago)]
-                print(self.diccTipoPago[str(self.tipoPago)])
-                self.ids.lbobserAnt.text=self.ids.tiobservacion.text
-                print(self.ids.tiobservacion.text)
             
                 #Guardar en base
                 self.btnRegistrarVenta()
                 self.ids.timonto.text=""
-                self.ids.tiobservacion.text=""
                 self.ids.tiPago.text=""
                 self.ids.lbPago.text="Efectivo"
                 self.ids.timonto.focus=True
                 self.Pago=False
                 self.mmont=False
+      #elif n == 3:
+      #    if self.mont and self.Pago:
+      #        self.ids.tiobservacion.focus=False
+      #        self.ids.lbAnterior.text=self.ids.timonto.text
+      #        print(self.ids.timonto.text)
+      #        self.ids.lbPagoAnterior.text=self.diccTipoPago[str(self.tipoPago)]
+      #        print(self.diccTipoPago[str(self.tipoPago)])
+      #        self.ids.lbobserAnt.text=self.ids.tiobservacion.text
+      #        print(self.ids.tiobservacion.text)
+      #    
+      #        #Guardar en base
+      #        self.btnRegistrarVenta()
+      #        self.ids.timonto.text=""
+      #        self.ids.tiobservacion.text=""
+      #        self.ids.tiPago.text=""
+      #        self.ids.lbPago.text="Efectivo"
+      #        self.ids.timonto.focus=True
+      #        self.Pago=False
+      #        self.mmont=False
 
 
 class AccionVentas:

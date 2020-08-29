@@ -139,7 +139,7 @@ class RegistroCuentas(BoxLayout):
         contenido.add_widget(contacto)
         contenido.add_widget(cuenta)
         contenido.add_widget(but)
-        popup = Popup(title = titulo, content= contenido, size_hint=(None,None),auto_dismiss=False, size=(460, 370))
+        popup = Popup(title = titulo, content= contenido, size_hint=(None,None),auto_dismiss=False, size=(460, 370), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
         popup.open()
         pass
 
@@ -172,7 +172,7 @@ class RegistroCuentas(BoxLayout):
             contenido = BoxLayout(orientation='vertical')
             contenido.add_widget(Label(text=str("Seleccione una cuenta de la lista.")))
             contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
-            popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130))
+            popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
             popup.open()
         else:    
             cont = BoxLayout(orientation='vertical')
@@ -181,7 +181,7 @@ class RegistroCuentas(BoxLayout):
             buttons.add_widget(Button(text='si', on_press = lambda btn: self.elimina(mensj), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0 ))
             buttons.add_widget(Button(text='no',on_press = lambda *args: mensj.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0 ))
             cont.add_widget(buttons)
-            mensj = Popup(title="Confirmar", content= cont,auto_dismiss=False, size_hint=(None,None), size=(430, 120))
+            mensj = Popup(title="Confirmar", content= cont,auto_dismiss=False, size_hint=(None,None), size=(430, 120), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
             mensj.open()
          
         pass
