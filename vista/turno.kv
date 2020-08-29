@@ -11,4 +11,15 @@
             size: self.size
     BoxLayout:
         orientation:'horizontal'
-        
+        size_hint: None, None
+        size: 220, 150
+        ToggleButton:
+            id: tgbEstado                
+            text: 'Abrir Turno'
+            font_size: '25sp'
+            background_normal: 'normal.png'	
+            size_hint: None, None	
+            size: 190, 30
+            background_color: 1, .745, .039, 1
+            group: 'turno'
+            on_press: root.estado() 

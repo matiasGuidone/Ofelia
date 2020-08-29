@@ -28,6 +28,10 @@ class Box(BoxLayout):
     mont=False
     Pago=False
     cont=0
+    user=[]
+    sesion=[]
+    turnos=[]
+    turnoActual=[]
 
     def __init__(self, **kwargs):         
         super().__init__(**kwargs)
@@ -81,6 +85,7 @@ class Box(BoxLayout):
         teclas = {
             'numpadsubstract': self.btnBorrar,
             'numpadadd': self.seteoVenta,
+            '/': self.btnGestionarTurno,
         }
 
         if keycode[1] in teclas:
@@ -153,6 +158,14 @@ class Box(BoxLayout):
             self.ids.laIni.color=(1,1,1,1)
             self.ids.lbtitu.color=(1,1,1,1)
         pass
+#Falta estado de turno
+    def btnGestionarTurno(self):
+        self.user = conexion().selectAll('Turnos', ['sesion', str(1)])
+        self.sesion=self.user[0]
+        if
+            self.user = conexion().selectAll('Usuarios', ['sesion', str(1)])
+            self.sesion=self.user[0]
+
 
 
 
