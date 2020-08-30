@@ -124,7 +124,7 @@ class Box(BoxLayout):
             self.user=conexion().selectAll('Usuarios', ['sesion', 1])
             self.sesion=self.user[0]
             contenido = BoxLayout(orientation='vertical')
-            lala = Label(text = self.sesion[1])
+            lala = Label(text = self.sesion[1], font_size =25.0)
             ticontr = TextInput(hint_text="Contraseña", password = True)        
             ticontr.multiline=False
                     
