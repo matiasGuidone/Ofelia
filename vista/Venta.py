@@ -12,7 +12,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
+from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
+from kivy.uix.popup import Popup
 sys.path.append(os.getcwd())
 from modelo.conexion import conexion
 from modelo.FechayHora import FechayHora
@@ -32,6 +34,7 @@ class Box(BoxLayout):
     sesion=[]
     turnos=[]
     turnoActual=[]
+    ventas=[]
 
     def __init__(self, **kwargs):         
         super().__init__(**kwargs)
@@ -61,7 +64,7 @@ class Box(BoxLayout):
         self.focoComponentes()   
         self.ids.cajaa.active=False
     #    self.ids.cajab.active=False
-        self.activoCaja(1)
+        self.setearTablita()
     #    self.activoCaja(2)
 
     def _keyboard_closed(self):
@@ -116,26 +119,55 @@ class Box(BoxLayout):
       #  self.ids.tiobservacion.multiline=False
         self.ids.timonto.focus=True
 
-    def activoCaja(self, a):
-        if a==1:
-            self.ids.timonto.disabled = not self.ids.cajaa.active
-            self.ids.lbAnterior.disabled = not self.ids.cajaa.active
-            self.ids.tiPago.disabled = not self.ids.cajaa.active
-            self.ids.lbPago.disabled= not self.ids.cajaa.active
-            self.ids.lbPagoAnterior.disabled = not self.ids.cajaa.active
-         #   self.ids.tiobservacion.disabled = not self.ids.cajaa.active
-         #   self.ids.lbobserAnt.disabled = not self.ids.cajaa.active
-            self.ids.timonto.focus=True
-    #   else:
-    #       self.ids.timontob.disabled = not self.ids.cajab.active
-    #       self.ids.lbAnteriorb.disabled = not self.ids.cajab.active
-    #       self.ids.tiPagob.disabled = not self.ids.cajab.active
-    #       self.ids.lbPagob.disabled = not self.ids.cajab.active
-    #       self.ids.lbPagoAnteriorb.disabled = not self.ids.cajab.active
-    #       self.ids.tiobservacionb.disabled = not self.ids.cajab.active
-    #       self.ids.lbobserAntb.disabled = not self.ids.cajab.active
-    
-    #Muestro estado de cajas
+    def openPopup(self, a):
+        if self.ids.cajaa.active:  
+            self.user=conexion().selectAll('Usuarios', ['sesion', 1])
+            self.sesion=self.user[0]
+            contenido = BoxLayout(orientation='vertical')
+            lala = Label(text = self.sesion[1])
+            ticontr = TextInput(hint_text="Contraseña", password = True)        
+            ticontr.multiline=False
+                    
+            but = BoxLayout(orientation='horizontal')
+            but.add_widget(Button(text="Ingresar" ,on_release = lambda *args: self.activoCaja(a, bano, ticontr.text==self.sesion[3]), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))       
+            but.add_widget(Button(text="Salir",on_press = lambda *args: (bano.dismiss(), self.desact()), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
+            
+            contenido.add_widget(lala)
+            contenido.add_widget(ticontr)
+
+            contenido.add_widget(but)
+            bano = Popup(title= 'Acceso', content= contenido, size_hint=(None,None),auto_dismiss=False, size=(420, 170), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
+            bano.open()
+
+    def desact(self):
+        self.ids.cajaa.active=False
+
+    def activoCaja(self, a, pop, al):
+        if al:
+            print("1")
+            if a==1:
+                self.ids.timonto.disabled = not self.ids.cajaa.active
+                self.ids.lbAnterior.disabled = not self.ids.cajaa.active
+                self.ids.tiPago.disabled = not self.ids.cajaa.active
+                self.ids.lbPago.disabled= not self.ids.cajaa.active
+                self.ids.lbPagoAnterior.disabled = not self.ids.cajaa.active
+            #   self.ids.tiobservacion.disabled = not self.ids.cajaa.active
+            #   self.ids.lbobserAnt.disabled = not self.ids.cajaa.active
+                self.ids.timonto.focus=True
+        #   else:
+        #       self.ids.timontob.disabled = not self.ids.cajab.active
+        #       self.ids.lbAnteriorb.disabled = not self.ids.cajab.active
+        #       self.ids.tiPagob.disabled = not self.ids.cajab.active
+        #       self.ids.lbPagob.disabled = not self.ids.cajab.active
+        #       self.ids.lbPagoAnteriorb.disabled = not self.ids.cajab.active
+        #       self.ids.tiobservacionb.disabled = not self.ids.cajab.active
+        #       self.ids.lbobserAntb.disabled = not self.ids.cajab.active
+        else:
+            print("2")
+            self.ids.cajaa.active=False
+        pop.dismiss()
+
+        #Muestro estado de cajas
     def estado(self):
         if self.ids.tgbEstado.state=='down':
             self.ids.lbhora.color=(0,0,0,1)
@@ -158,13 +190,205 @@ class Box(BoxLayout):
             self.ids.laIni.color=(1,1,1,1)
             self.ids.lbtitu.color=(1,1,1,1)
         pass
-#Falta estado de turno
-    def btnGestionarTurno(self):
-        self.user = conexion().selectAll('Turnos', ['sesion', str(1)])
+    
+    def dameVenta(self):        
+        self.turnos = conexion().selectAll('Turnos', ['estado', str(1)])
+        self.turnoActual=self.turnos[0]        
+
+        self.ventas = conexion().selectAll('Ventas', ['Turnos_id_turno', self.turnoActual[0]])
+        contVent=0
+        for i in range(len(self.ventas)):
+            if self.ventas[i][3]=='0':
+                contVent+=int(self.ventas[i][2])
+        return contVent
+
+    def cerrarTurno(self, pop):
+        fhf=FechayHora().formatos(11)
+        conexion().update([self.turnoActual[1], self.turnoActual[2],self.turnoActual[3], self.turnoActual[4], fhf,  self.turnoActual[6], 0, self.turnoActual[0]],'Turnos')
+        
+        #Muestro un resumen del turno que se cerró
+        contenido = BoxLayout(orientation='vertical')       
+        con = BoxLayout(orientation='horizontal')
+        lbF  = Label(text="Fecha: ", font_size =20.0)
+        lbFecha  = Label(text=self.turnoActual[3], font_size =20.0)    
+
+        con1 = BoxLayout(orientation='horizontal')
+        lbT  = Label(text="Turno: ", font_size =20.0)
+        lbTurno  = Label(text=self.turnoActual[1], font_size =20.0)  
+
+        con2 = BoxLayout(orientation='horizontal') 
+        lbI  = Label(text="Inicial: ", font_size =20.0)
+        lbInicial  = Label(text='$ ' + self.turnoActual[2], font_size =20.0)   
+        
+        con3 = BoxLayout(orientation='horizontal') 
+        lbC  = Label(text="Caja: ", font_size =20.0)
+        lbCaja = Label(text='$ ' + str(self.dameVenta()), font_size =20.0)  
+
+        con4 = BoxLayout(orientation='horizontal') 
+        lbA = Label(text="Abierto: ", font_size =20.0)
+        lbAbierto  = Label(text=self.turnoActual[4], font_size =20.0)   
+        
+        con6 = BoxLayout(orientation='horizontal') 
+        lbB = Label(text="Cerrado: ", font_size =20.0)
+        lbBa  = Label(text= fhf, font_size =20.0)   
+
+        con5 = BoxLayout(orientation='horizontal') 
+        lbin  = Label(text="Iniciado por: ", font_size =20.0)
+        lbini  = Label(text=self.sesion[1], font_size =20.0)   
+        
+        but = BoxLayout(orientation='horizontal')
+        but.add_widget(Button(text="Aceptar",on_press = lambda *args: logueo.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
+        
+        con.add_widget(lbF)
+        con.add_widget(lbFecha)
+        con1.add_widget(lbT)
+        con1.add_widget(lbTurno)
+        con2.add_widget(lbI)
+        con2.add_widget(lbInicial)
+        con3.add_widget(lbC)
+        con3.add_widget(lbCaja)
+        con4.add_widget(lbA)
+        con4.add_widget(lbAbierto)
+        con5.add_widget(lbin)
+        con5.add_widget(lbini)
+        con6.add_widget(lbB)
+        con6.add_widget(lbBa)
+
+        contenido.add_widget(con)
+        contenido.add_widget(con1)
+        contenido.add_widget(con2)
+        contenido.add_widget(con3)
+        contenido.add_widget(con4)
+        contenido.add_widget(con6)
+        contenido.add_widget(con5)
+        contenido.add_widget(but)
+
+        logueo = Popup(title= 'Resumen del Turno', content= contenido, size_hint=(None,None),auto_dismiss=False, size=(420, 280), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
+        logueo.open()
+        
+        #Deshabilitar controles y setear en 0
+
+    def confirmo(self):
+        cont = BoxLayout(orientation='vertical')
+        buttons = BoxLayout()
+        cont.add_widget(Label(text='¿ Desea dar por terminado el turno "'+self.turnoActual[1]+'" ?', font_size =20.0))
+        buttons.add_widget(Button(text='si', on_press = lambda btn: self.cerrarTurno(mensj), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) )
+        buttons.add_widget(Button(text='no',on_press = lambda *args: mensj.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) )
+        cont.add_widget(buttons)
+        mensj = Popup(title="Confirmar", content= cont,auto_dismiss=False, size_hint=(None,None), size=(480, 150), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
+        mensj.open()
+    
+    def setearTablita(self):
+        self.turnos = conexion().selectAll('Turnos', ['estado', str(1)])
+        if len(self.turnos[0])>0:
+            self.turnoActual=self.turnos[0]
+            self.ids.lbtitu.text = 'Turno: ' + self.turnoActual[1]
+            self.ids.lblinicial.text = '$ ' + str(self.turnoActual[2])
+            self.ids.lblventa.text = '$ ' + str(self.dameVenta())
+            self.ids.lbltotal.text = '$ ' + str(self.dameVenta()+int(self.turnoActual[2]))
+            self.ids.lbhora.text = self.turnoActual[4]
+            self.ids.cajaa.disabled=False
+        else:
+            self.ids.lbtitu.text = 'Turno: '
+            self.ids.lblinicial.text = '$ 0'
+            self.ids.lblventa.text = '$ 0'
+            self.ids.lbltotal.text = '$ 0'
+            self.ids.lbhora.text = 'Cerrado'
+            self.ids.cajaa.disabled=True
+
+
+    def nuevoTurno(self, estr, pop):
+        self.user=conexion().selectAll("Usuarios", ["sesion", "1"])
         self.sesion=self.user[0]
-        if
-            self.user = conexion().selectAll('Usuarios', ['sesion', str(1)])
-            self.sesion=self.user[0]
+        tourno='Mañana'
+        if datetime.now().hour>13:
+            tourno='Tarde'
+        conexion().insert([tourno, estr, FechayHora().formatos(10), FechayHora().formatos(11), "s", self.sesion[0], 1], 'Turnos')
+        self.setearTablita()
+        pop.dismiss()
+
+    def btnGestionarTurno(self):
+        self.turnos = conexion().selectAll('Turnos', ['estado', str(1)])
+        if len(self.turnos)>0:
+            self.turnoActual=self.turnos[0]
+            self.user=conexion().selectAll('Usuarios',['id_usu', self.turnoActual[6]])
+            self.sesion=self.user[0]        
+
+        contenido = BoxLayout(orientation='vertical')
+        # me fijo si ya hay un turno abierto
+        if len(self.turnoActual) > 0:
+            #si abierto ofrezco cerrarlo mostrando los detalles del turno en un popup        
+            con = BoxLayout(orientation='horizontal')
+            lbF  = Label(text="Fecha: ", font_size =20.0)
+            lbFecha  = Label(text=self.turnoActual[3], font_size =20.0)    
+
+            con1 = BoxLayout(orientation='horizontal')
+            lbT  = Label(text="Turno: ", font_size =20.0)
+            lbTurno  = Label(text=self.turnoActual[1], font_size =20.0)  
+
+            con2 = BoxLayout(orientation='horizontal') 
+            lbI  = Label(text="Inicial: ", font_size =20.0)
+            lbInicial  = Label(text='$ ' + str(self.turnoActual[2]), font_size =20.0)   
+            
+            con3 = BoxLayout(orientation='horizontal') 
+            lbC  = Label(text="Caja: ", font_size =20.0)
+            lbCaja = Label(text='$ ' + str(self.dameVenta()), font_size =20.0)  
+
+            con4 = BoxLayout(orientation='horizontal') 
+            lbA = Label(text="Abierto: ", font_size =20.0)
+            lbAbierto  = Label(text=self.turnoActual[4], font_size =20.0)   
+
+            con5 = BoxLayout(orientation='horizontal') 
+            lbin  = Label(text="Iniciado por: ", font_size =20.0)
+            lbini  = Label(text=self.sesion[1], font_size =20.0)   
+            
+            but = BoxLayout(orientation='horizontal')
+            but.add_widget(Button(text="Cerrar" ,on_release = lambda *args: self.confirmo(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))       
+            but.add_widget(Button(text="Salir",on_press = lambda *args: logueo.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
+            
+            con.add_widget(lbF)
+            con.add_widget(lbFecha)
+            con1.add_widget(lbT)
+            con1.add_widget(lbTurno)
+            con2.add_widget(lbI)
+            con2.add_widget(lbInicial)
+            con3.add_widget(lbC)
+            con3.add_widget(lbCaja)
+            con4.add_widget(lbA)
+            con4.add_widget(lbAbierto)
+            con5.add_widget(lbin)
+            con5.add_widget(lbini)
+
+            contenido.add_widget(con)
+            contenido.add_widget(con1)
+            contenido.add_widget(con2)
+            contenido.add_widget(con3)
+            contenido.add_widget(con4)
+            contenido.add_widget(con5)
+            contenido.add_widget(but)
+
+            logueo = Popup(title= 'Cerrar Turno', content= contenido, size_hint=(None,None),auto_dismiss=False, size=(420, 300), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
+            logueo.open()
+        
+        else:
+            con = BoxLayout(orientation='horizontal')
+            lbin  = Label(text='$', font_size =20.0) 
+            tini = TextInput(hint_text="Caja inicial", font_size =20.0, multiline=False, input_filter = 'float', on_text_validate = lambda *args: self.nuevoTurno(tini.text, nuevoTurn))
+            
+            but = BoxLayout(orientation='horizontal')
+            but.add_widget(Button(text="Abrir" ,on_release = lambda *args: self.nuevoTurno(tini.text, nuevoTurn), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))       
+            but.add_widget(Button(text="Salir",on_press = lambda *args: nuevoTurn.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
+            
+            con.add_widget(lbin)
+            con.add_widget(tini)
+
+            contenido.add_widget(con)
+            contenido.add_widget(but)
+
+            nuevoTurn = Popup(title= 'Abrir Turno', content= contenido, size_hint=(None,None),auto_dismiss=False, size=(420, 140), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
+            nuevoTurn.open()
+
+
 
 
 

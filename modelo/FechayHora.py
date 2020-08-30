@@ -40,7 +40,8 @@ class FechayHora:
             self.formato = "%H:%M:%S"
         elif nF==12:            
             self.formato = "%d-%m-%y  %H:%M:%S"
-        return self.formato
+        cadena1 = self.now.strftime(self.formato)  
+        return cadena1
 
     def resetear(self):
         self.now=datetime.now()

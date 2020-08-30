@@ -24,16 +24,21 @@ class Usuario(BoxLayout):
     id = 0
     tipo = ''
     user = []
+    verSesion=[]
+    sesion=[]
    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cargarDrp()
+        self.ids.btnEditar.disabled=True
+        self.ids.btnEliminar.disabled=True
         pass
 
     def cargarDrp(self):
-        datos = conexion().selectAll("Usuarios")
+        datos = conexion().selectAll("Usuarios")        
         self.ids.drpUsuarios.clear_widgets()  
         sistema = platform.system() 
+
         for index in range(len(datos)): 
             btn = Button()
            
@@ -44,16 +49,19 @@ class Usuario(BoxLayout):
                 btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 50, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =20.0) 
                 btn.bind(on_press = lambda btn: self.selectUsuario(btn.id))
             
-            btn.bind(on_release = lambda btn: self.ids.drpUsuarios.select(btn.text)) 
+            btn.bind(on_release = lambda btn: (self.ids.drpUsuarios.select(btn.text),self.deshabilitar())) 
             self.ids.drpUsuarios.add_widget(btn) 
 
         self.ids.btnMain.bind(on_release = self.ids.drpUsuarios.open) 
         self.ids.drpUsuarios.bind(on_select = lambda instance, x: setattr(self.ids.btnMain, 'text', x))        
 
+    def deshabilitar(self):  
+        self.ids.btnEditar.disabled=False
+        self.ids.btnEliminar.disabled=False
+
     def selectUsuario(self,id):
         self.id = int(id)
         self.user = conexion().selectId(self.id, 'Usuarios') 
-        pass
 
     def openPopup(self, titulo):
         #armado de popup 
@@ -110,7 +118,7 @@ class Usuario(BoxLayout):
             buttons.add_widget(Button(text='si', on_press = lambda btn: self.elimina(mensj), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) )
             buttons.add_widget(Button(text='no',on_press = lambda *args: mensj.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) )
             cont.add_widget(buttons)
-            mensj = Popup(title="Confirmar", content= cont,auto_dismiss=False, size_hint=(None,None), size=(480, 120), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
+            mensj = Popup(title="Confirmar", content= cont,auto_dismiss=False, size_hint=(None,None), size=(480, 150), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
             mensj.open()
         
         # param = [usuario_text, "admin", pass_text]

@@ -46,6 +46,7 @@
                         size: 30, 30
                         color: 1, .745, .039, 1
                         disabled: True
+                        on_press: root.openPopup(1) 
                                   
                 BoxLayout:
                     orientation:'horizontal'
@@ -370,6 +371,7 @@
 			background_normal: 'normal.png'				        
 			background_color: 1, .745, .039, 1
             id: btnGestionarTurno
+            on_release: root.btnGestionarTurno()
         Button:
             text: 'Salir'
             font_size: '25sp'

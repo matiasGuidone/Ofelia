@@ -39,6 +39,7 @@ try:
                               f_h_apertura integer,
                               f_h_cierre integer,
                               Usuarios_id_usu integer,
+                              estado integer,
                               FOREIGN KEY(Usuarios_id_usu) REFERENCES Usuarios(id_usu)
                         )""")
 

@@ -52,10 +52,10 @@ class RegistroGasto(BoxLayout):
             for index in range(len(datos)): 
                 
                 if sistema == "Windows":
-                    btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None,  height = 40) 
+                    btn = Button(text = '% d - ' % datos[index][0] + str(datos[index][1]), size_hint_y = None,  height = 40, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) 
                     btn.bind(on_press = lambda btn: self.elegirSubCat(btn.text.rsplit("-",2)[0]))
                 else:
-                    btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40) 
+                    btn = Button(text = '% d - ' % index + str(datos[index][1]), size_hint_y = None, id = str(datos[index][0]), height = 40, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) 
                     btn.bind(on_press = lambda btn: self.elegirSubCat(btn.id))
                 btn.bind(on_release = lambda btn: dropdown.select(btn.text)) 
                 dropdown.add_widget(btn) 
@@ -133,7 +133,7 @@ class RegistroGasto(BoxLayout):
         if self.id_subcategoria == 0 or not  len(self.ids.txtMonto.text) > 0:
             contenido = BoxLayout(orientation='vertical')
             contenido.add_widget(Label(text=str("Seleccione un "+self.str_seleccion+" de la lista e ingrese monto.")))
-            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss()))
+            contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss(),  height = 40, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
             popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
             popup.open()
         #(monto_gasto, observacion_gasto, Turnos_id_turno, SubcategoriaGastos_id_subcat_gasto)

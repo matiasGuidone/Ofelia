@@ -127,7 +127,7 @@ class RegistroCuentas(BoxLayout):
         
  
         but = BoxLayout(orientation='horizontal')
-        but.add_widget(Button(text="Cancelar",on_press = lambda *args: popup.dismiss()))
+        but.add_widget(Button(text="Cancelar",on_press = lambda *args: popup.dismiss(),  height = 40, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
         
         contenido.add_widget(nombre)
         contenido.add_widget(descr)

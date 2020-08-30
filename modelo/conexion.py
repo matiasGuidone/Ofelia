@@ -9,7 +9,7 @@ class conexion:
             if argument == "Usuarios" : return "insert into Usuarios (nombre_usu,tipo_usu,contraseña,sesion) values (?,?,?,0)"
             elif argument == "CategoriaGastos": return "insert into CategoriaGastos (nombre_cat_gasto) values (?)"
             elif argument == "SubcategoriaGastos": return "insert into SubcategoriaGastos ( nomb_subcat, descr_subcat, empleado_id, proveedor_id, sueldo, adelanto, contacto, f_h_adelanto, f__h_pago, CategoriaGastos_id_cat_gasto, cuenta) values (?,?,?,?,?,?,?,?,?,?,?)"
-            elif argument == "Turnos": return "insert into Turnos (turno, caja_ini_turno, fecha, f_h_apertura, f_h_cierre, Usuarios_id_usu) values (?,?,?,?,?,?)"
+            elif argument == "Turnos": return "insert into Turnos (turno, caja_ini_turno, fecha, f_h_apertura, f_h_cierre, Usuarios_id_usu, estado) values (?,?,?,?,?,?,?)"
             elif argument == "TiposDePagos": return "insert into TiposDePagos (nombre_tipo_pago) values (?)"
             elif argument == "Ventas": return "insert into Ventas (f_h_venta, monto_venta, borrado, f_h_borrado, observacion, Turnos_id_turno, TiposDePagos_id_tipo_pago, caja ) values (?,?,?,?,?,?,?,?)"
             elif argument == "CategoriaProductos": return "insert into CategoriaProductos (descr_categ) values (?)"
@@ -21,7 +21,7 @@ class conexion:
             if argument == "Usuarios": return "update Usuarios set nombre_usu = ? ,tipo_usu = ? ,contraseña = ?,sesion = ? where id_usu = ?"
             elif argument == "CategoriaGastos": return "update CategoriaGastos set nombre_cat_gasto = ? where id_cat_gasto = ?"
             elif argument == "SubcategoriaGastos": return "update SubcategoriaGastos set nomb_subcat = ?, descr_subcat = ?, empleado_id = ?, proveedor_id = ?, sueldo = ?, adelanto = ?, contacto = ?, f_h_adelanto = ?, f__h_pago = ?, CategoriaGastos_id_cat_gasto = ?, cuenta = ? where id_subcat_gasto = ?"
-            elif argument == "Turnos": return "update Turnos set turno = ?, caja_ini_turno = ?, fecha = ?, f_h_apertura = ?, f_h_cierre = ?, Usuarios_id_usu = ? where id_turno = ?"
+            elif argument == "Turnos": return "update Turnos set turno = ?, caja_ini_turno = ?, fecha = ?, f_h_apertura = ?, f_h_cierre = ?, Usuarios_id_usu = ?, estado = ? where id_turno = ?"
             elif argument == "TiposDePagos": return "update TiposDePagos set nombre_tipo_pago = ? where id_tipo_pago = ?"
             elif argument == "Ventas": return "update Ventas set f_h_venta = ?, monto_venta = ?, borrado = ?, f_h_borrado = ?, observacion = ?, Turnos_id_turno = ?, TiposDePagos_id_tipo_pago = ?, caja = ?  where id_venta = ?"
             elif argument == "CategoriaProductos": return "update CategoriaProductos set descr_categ = ? where id_cat_prod = ?"
@@ -86,9 +86,9 @@ class conexion:
             consulta += " where 1 = 1 "
             for i in range(len(condiciones)):
                 if i%2==0 :
-                    consulta += "and "+condiciones[i]
+                    consulta += "and "+str(condiciones[i])
                 else :
-                    consulta += " = "+condiciones[i]
+                    consulta += " = "+str(condiciones[i])
             cursor=con.execute(consulta)
             return cursor.fetchall()
         
