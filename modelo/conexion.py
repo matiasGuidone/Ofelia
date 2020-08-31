@@ -56,13 +56,13 @@ class conexion:
     def insert(self, parameter_list, tabla):
         con=sqlite3.connect("data-ofelia.db")
         cur = con.cursor()
-        cur.execute(self.insert_case(tabla),parameter_list)
+        cur.execute(self.insert_case(tabla), parameter_list)
         con.commit()
     
     def update(self, parameter_list, tabla):
         con=sqlite3.connect("data-ofelia.db")
         cur = con.cursor()
-        cur.execute(self.update_case(tabla),parameter_list)
+        cur.execute(self.update_case(tabla), parameter_list)
         con.commit()
 
     def delete(self, id, tabla):
