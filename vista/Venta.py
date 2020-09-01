@@ -21,15 +21,10 @@ from modelo.FechayHora import FechayHora
 
 #damian
 class Box(BoxLayout):
-    sistema=None
-    dropdown=None
     diccTipoPago={'1' : "Efectivo", '2' : "Débito", '3' : "Crédito"}
-    turno=""
-    caja=0
     tipoPago=1
     mont=False
     Pago=False
-    cont=0
     user=[]
     sesion=[]
     turnos=[]
@@ -39,6 +34,7 @@ class Box(BoxLayout):
     idUltimaVenta=''
     horaUltima=''
 
+#==============================CONSTRUYO=================================
     def __init__(self, **kwargs):         
         super().__init__(**kwargs)
         self.inicio()           
@@ -52,13 +48,12 @@ class Box(BoxLayout):
         self.focoComponentes()   
         self.setearTablita()
 
-    #========================MANEJO EVENTOS DE TECLADO===========================
+#========================MANEJO EVENTOS DE TECLADO===========================
     #-----------------MANEJO Esc-----------------
     def _keyboard_closed(self):
         pass
-
             
-#---------EFECTOS DE TECLADO PARA CAJA 1--------
+    #---------EFECTOS DE TECLADO PARA CAJA 1--------
     def enter(self, n):
         if n == 1:
             if self.ids.timonto.text!=None:
@@ -97,10 +92,10 @@ class Box(BoxLayout):
                 if self.horaUltima != '':                 
                     self.ventas=conexion().selectAll('Ventas', ['f_h_venta', self.horaUltima])
                     contenido = BoxLayout(orientation='vertical')
-                    lala = Label(text = 'Hora de registro: ' + self.ventas[0][1], font_size =20.0)
-                    lala1 = Label(text = 'Monto de venta:   $ ' + str(self.ventas[0][2]), font_size =20.0)
-                    lala2 = Label(text = 'Tipo de Pago:     ' + self.diccTipoPago[self.ventas[0][7]], font_size =20.0)
-                    lala3 = Label(text = 'Tipo de Pago:     ' + str(self.ventas[0][8]), font_size =20.0)
+                    lala = Label(text = 'Hora de registro:  ' + (self.ventas[0])[1], font_size =20.0)
+                    lala1 = Label(text = 'Monto de venta:   $ ' + str((self.ventas[0])[2]), font_size =20.0)
+                    lala2 = Label(text = 'Tipo de Pago:     ' + self.diccTipoPago[(self.ventas[0])[7]], font_size =20.0)
+                    lala3 = Label(text = 'Número de caja:   ' + str((self.ventas[0])[8]), font_size =20.0)
                     ticontr = TextInput(hint_text="Justificación", font_size=20.0)        
                     ticontr.multiline=False
                             
@@ -118,7 +113,7 @@ class Box(BoxLayout):
                     ticontr.focus=True
 
                     contenido.add_widget(but)
-                    bano = Popup(title= 'Borrar última venta', content= contenido, size_hint=(None,None),auto_dismiss=False, size=(420, 170), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
+                    bano = Popup(title= 'Borrar última venta', content= contenido, size_hint=(None,None),auto_dismiss=False, size=(420, 250), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
                     bano.open()
             except:
                     contenido = BoxLayout(orientation='vertical')
@@ -271,7 +266,7 @@ class Box(BoxLayout):
             self.ids.cajaa.active=False
         pop.dismiss()
 
-    #====================FUNCIONALES==================
+#=======================FUNCIONALES======================
     #----------------CAMBIO TIPO DE PAGO--------------
     def filtro(self):  
         if len(self.ids.tiPago.text) > 1:
@@ -297,8 +292,8 @@ class Box(BoxLayout):
         self.ventas = conexion().selectAll('Ventas', ['Turnos_id_turno', self.turnoActual[0]])
         contVent=0
         for i in range(len(self.ventas)):
-            if self.ventas[i][3]=='0':
-                contVent+=int(self.ventas[i][2])
+            if (self.ventas[i])[3]==0:
+                contVent+=float(self.ventas[i][2])
         return contVent
 
     #--------CIERRA UN TURNO Y MUESTRA RESULTADO----------
