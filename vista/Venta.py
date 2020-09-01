@@ -23,10 +23,10 @@ from modelo.FechayHora import FechayHora
 class Box(BoxLayout):
     sistema=None
     dropdown=None
-    diccTipoPago={'0' : "Efectivo", '1' : "Débito", '2' : "Crédito"}
+    diccTipoPago={'1' : "Efectivo", '2' : "Débito", '3' : "Crédito"}
     turno=""
     caja=0
-    tipoPago=0
+    tipoPago=1
     mont=False
     Pago=False
     cont=0
@@ -36,38 +36,103 @@ class Box(BoxLayout):
     turnoActual=[]
     ventas=[]
     controlaVentanaAbirta=0
+    idUltimaVenta=''
+    horaUltima=''
 
     def __init__(self, **kwargs):         
         super().__init__(**kwargs)
-        self.inicio() 
-        
-    def btnRegistrarVenta(self):
-        #v = AccionVentas(self.turno, self.caja)
-        #montoDeVenta(float), observación,idTurno,tipoPago,Caja
-        #v.cargarVenta([])
-        print ("registro venta")
-
-    def btnBorrar(self):
-        
-        self.cont += 1
-        print ("Borro venta " + str(self.cont))
+        self.inicio()           
 
     def inicio(self):
-
+        #========================MANEJO EVENTOS DE TECLADO===========================
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
         self._keyboard.bind(on_key_down=self._on_keyboard_down)
-
-        self.turno=0#consulto en base de datos
-        self.caja=0 
+        
+        #========================SETEO PROGRAMA===========================
         self.focoComponentes()   
-        self.ids.cajaa.active=False
-    #    self.ids.cajab.active=False
         self.setearTablita()
-    #    self.activoCaja(2)
 
+    #========================MANEJO EVENTOS DE TECLADO===========================
+    #-----------------MANEJO Esc-----------------
     def _keyboard_closed(self):
         pass
 
+    #----------MANEJO DISTINTAS TECLAS-----------
+    def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
+        teclas = {
+            'numpadsubstract': self.btnBorrar, # '-'
+            'numpadadd': self.seteoVenta,      # '+'
+            'numpaddivide': self.verTabl,      # '/'
+            'numpadmul': self.cajaA,           # '*'            
+        }
+        if keycode[1] in teclas:
+            teclas[keycode[1]]()
+
+    #----------BORRAR ÚLTIMA VENTA (PIDE JUSTIFICACIÓN)('-')-----------
+    def btnBorrar(self):
+        if self.controlaVentanaAbirta==0:
+            self.controlaVentanaAbirta=1
+            try:
+                if self.horaUltima != '':                 
+                    self.ventas=conexion().selectAll('Ventas', ['f_h_venta', self.horaUltima])
+                    contenido = BoxLayout(orientation='vertical')
+                    lala = Label(text = 'Hora de registro: ' + self.ventas[0][1], font_size =20.0)
+                    lala1 = Label(text = 'Monto de venta:   $ ' + str(self.ventas[0][2]), font_size =20.0)
+                    lala2 = Label(text = 'Tipo de Pago:     ' + self.diccTipoPago[self.ventas[0][7]], font_size =20.0)
+                    lala3 = Label(text = 'Tipo de Pago:     ' + str(self.ventas[0][8]), font_size =20.0)
+                    ticontr = TextInput(hint_text="Justificación", font_size=20.0)        
+                    ticontr.multiline=False
+                            
+                    but = BoxLayout(orientation='horizontal')
+                    but.add_widget(Button(text="Borrar" ,on_release = lambda *args: (self.borrarVenta(ticontr.text, bano)), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))       
+                    but.add_widget(Button(text="Salir",on_press = lambda *args: (bano.dismiss(), self.contrl()), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
+                    
+                    contenido.add_widget(lala)
+                    contenido.add_widget(lala1)
+                    contenido.add_widget(lala2)
+                    contenido.add_widget(lala3)
+                    contenido.add_widget(ticontr)
+
+                    ticontr.on_text_validate = lambda *args: (self.borrarVenta(ticontr.text, bano))
+                    ticontr.focus=True
+
+                    contenido.add_widget(but)
+                    bano = Popup(title= 'Borrar última venta', content= contenido, size_hint=(None,None),auto_dismiss=False, size=(420, 170), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
+                    bano.open()
+            except:
+                    contenido = BoxLayout(orientation='vertical')
+                    lala = Label(text = "No hay un registro de venta realizada /n durante la ejecución, le sugiero que /nverifique si existe un turno en ejecución,/n o bien acceda a gestionar registros." + self.ventas[0][1], font_size =20.0)                            
+                    but=Button(text="Salir",on_press = lambda *args: (msg.dismiss(), self.contrl()), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0)
+                    
+                    contenido.add_widget(lala)
+                    contenido.add_widget(but)
+                    msg = Popup(title= 'No hay registro', content= contenido, size_hint=(None,None),auto_dismiss=False, size=(420, 170), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
+                    msg.open()
+    
+    #-----------REGISTRO VENTA----------------
+    def btnRegistrarVenta(self):
+        self.horaUltima=FechayHora().formatos(11)
+        con=conexion()
+        con.insert([self.horaUltima, float(self.ids.timonto.text), '0', '','', int(self.turnoActual[0]), self.tipoPago, 1 ], 'Ventas')
+
+    #----------BORRAR ÚLTIMA VENTA-----------
+    def borrarVenta(self, obs, pop):
+        self.ventas[0][3]='1'
+        self.ventas[0][4]=FechayHora().formatos(11)
+        self.ventas[0][5]=obs
+        conexion().update('Ventas', self.ventas[0])
+        self.seteoVenta
+        self.ids.lbAnterior.text=''              
+        self.ids.lbPagoAnterior.text=''
+        self.contrl()
+        pop.dismiss()
+    
+    #---BANDERA PARA SABER SI HAY UN POPUP ABIERTO---
+    def contrl(self):
+        if self.controlaVentanaAbirta==1:
+            self.controlaVentanaAbirta=0
+
+    #----------SETEO CAJA 1 ('+')-----------
     def seteoVenta(self):
         self.ids.timonto.text=""
         self.ids.tiPago.text=""
@@ -76,19 +141,7 @@ class Box(BoxLayout):
         self.Pago=False
         self.mmont=False
         
-
-    def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
-        teclas = {
-            'numpadsubstract': self.btnBorrar,
-            'numpadadd': self.seteoVenta,
-            'numpaddivide': self.verTabl,
-            'numpadmul': self.cajaA,
-            
-        }
-
-        if keycode[1] in teclas:
-            teclas[keycode[1]]()
-
+    #----------MUESTRO U OCULTO RESUMEN ('/')-----------
     def verTabl(self):        
         if self.ids.tgbEstado.state=='down':
             self.ids.tgbEstado.state='normal'
@@ -96,6 +149,51 @@ class Box(BoxLayout):
             self.ids.tgbEstado.state='down'
         self.estado()
 
+    #-----MUESTRO U OCULTO CONTROLES DE LA TABLA------
+    def estado(self):
+        if self.ids.tgbEstado.state=='down':
+            self.ids.lbhora.color=(0,0,0,1)
+            self.ids.lbAbri.color=(0,0,0,1)
+            self.ids.lbltotal.color=(0,0,0,1)
+            self.ids.lbtot.color=(0,0,0,1)
+            self.ids.lblventa.color=(0,0,0,1)
+            self.ids.lbvent.color=(0,0,0,1)
+            self.ids.lblinicial.color=(0,0,0,1)
+            self.ids.laIni.color=(0,0,0,1)
+            self.ids.lbtitu.color=(0,0,0,1)
+        else:            
+            self.ids.lbhora.color=(1,1,1,1)
+            self.ids.lbAbri.color=(1,1,1,1)
+            self.ids.lbltotal.color=(1,1,1,1)
+            self.ids.lbtot.color=(1,1,1,1)
+            self.ids.lblventa.color=(1,1,1,1)
+            self.ids.lbvent.color=(1,1,1,1)
+            self.ids.lblinicial.color=(1,1,1,1)
+            self.ids.laIni.color=(1,1,1,1)
+            self.ids.lbtitu.color=(1,1,1,1)
+
+    #---------------SETEO TABLA DE RESUMEN------------
+    def setearTablita(self):
+        try:
+            self.turnos = conexion().selectAll('Turnos', ['estado', str(1)])
+            if len(self.turnos[0])>0:
+                self.turnoActual=self.turnos[0]
+                self.ids.lbtitu.text = 'Turno: ' + self.turnoActual[1]
+                self.ids.lblinicial.text = '$ ' + str(self.turnoActual[2])
+                self.ids.lblventa.text = '$ ' + str(self.dameVenta())
+                self.ids.lbltotal.text = '$ ' + str(self.dameVenta()+int(self.turnoActual[2]))
+                self.ids.lbhora.text = self.turnoActual[4]
+                self.ids.cajaa.disabled=False
+        except:            
+            self.ids.lbtitu.text = 'Turno: '
+            self.ids.lblinicial.text = '$ 0'
+            self.ids.lblventa.text = '$ 0'
+            self.ids.lbltotal.text = '$ 0'
+            self.ids.lbhora.text = 'Cerrado'
+            self.ids.cajaa.disabled=True
+
+    #----------FUNCION PARA:('*')(FUNCION DOBLE)-----------
+    #-------SI NO HAY TURNO INICIADO INICIA UNO NUEVO-------
     def cajaA(self):
         if self.controlaVentanaAbirta==0:
             try:
@@ -106,31 +204,7 @@ class Box(BoxLayout):
             except:
                 self.btnGestionarTurno()
 
-    def filtro(self):  
-        if len(self.ids.tiPago.text) > 1:
-            self.ids.tiPago.text=""
-            self.Pago=False
-            self.ids.lbPago.text="Efectivo"
-        elif len(self.ids.tiPago.text) == 0:
-            self.ids.lbPago.text="Efectivo"
-        elif (int(self.ids.tiPago.text)) in range(1,4):   
-            self.tipoPago=(int(self.ids.tiPago.text)-1)
-            self.ids.lbPago.text=str(self.diccTipoPago[str(self.tipoPago)])
-        else:
-            self.ids.tiPago.text="1"
-            self.tipoPago=0
-            self.ids.lbPago.text="Efectivo"
-            
-        
-    def focoComponentes(self):  
-        #self.ids.Scat(do_rotation=False)   
-        #self.ids.timonto(hint_text = "Monto" )
-        #self.ids.timonto(hint_text = "Tipo de Pago" )
-        #self.ids.tiPago(hint_text = "Observación" )
-        self.ids.timonto.multiline=False
-      #  self.ids.tiobservacion.multiline=False
-        self.ids.timonto.focus=True
-
+    #---------SEGURIDAD PARA HABILITAR CAJA--------
     def openPopup(self, a):
         if self.controlaVentanaAbirta==0:
             self.controlaVentanaAbirta=1
@@ -158,62 +232,47 @@ class Box(BoxLayout):
             else:
                 self.contrl()
 
+    #-----------DESHABILITO CAJA 1-----------
     def desact(self):
         self.ids.cajaa.active=False
 
+    #----------HABILITO CAJA 1----------------
     def activoCaja(self, a, pop, al):
         if al:
-            print("1")
             if a==1:
                 self.ids.timonto.disabled = not self.ids.cajaa.active
                 self.ids.lbAnterior.disabled = not self.ids.cajaa.active
                 self.ids.tiPago.disabled = not self.ids.cajaa.active
                 self.ids.lbPago.disabled= not self.ids.cajaa.active
                 self.ids.lbPagoAnterior.disabled = not self.ids.cajaa.active
-            #   self.ids.tiobservacion.disabled = not self.ids.cajaa.active
-            #   self.ids.lbobserAnt.disabled = not self.ids.cajaa.active
                 self.ids.timonto.focus=True
-        #   else:
-        #       self.ids.timontob.disabled = not self.ids.cajab.active
-        #       self.ids.lbAnteriorb.disabled = not self.ids.cajab.active
-        #       self.ids.tiPagob.disabled = not self.ids.cajab.active
-        #       self.ids.lbPagob.disabled = not self.ids.cajab.active
-        #       self.ids.lbPagoAnteriorb.disabled = not self.ids.cajab.active
-        #       self.ids.tiobservacionb.disabled = not self.ids.cajab.active
-        #       self.ids.lbobserAntb.disabled = not self.ids.cajab.active
         else:
-            print("2")
             self.ids.cajaa.active=False
         pop.dismiss()
 
-        #Muestro estado de cajas
-    def estado(self):
-        if self.ids.tgbEstado.state=='down':
-            self.ids.lbhora.color=(0,0,0,1)
-            self.ids.lbAbri.color=(0,0,0,1)
-            self.ids.lbltotal.color=(0,0,0,1)
-            self.ids.lbtot.color=(0,0,0,1)
-            self.ids.lblventa.color=(0,0,0,1)
-            self.ids.lbvent.color=(0,0,0,1)
-            self.ids.lblinicial.color=(0,0,0,1)
-            self.ids.laIni.color=(0,0,0,1)
-            self.ids.lbtitu.color=(0,0,0,1)
-        else:            
-            self.ids.lbhora.color=(1,1,1,1)
-            self.ids.lbAbri.color=(1,1,1,1)
-            self.ids.lbltotal.color=(1,1,1,1)
-            self.ids.lbtot.color=(1,1,1,1)
-            self.ids.lblventa.color=(1,1,1,1)
-            self.ids.lbvent.color=(1,1,1,1)
-            self.ids.lblinicial.color=(1,1,1,1)
-            self.ids.laIni.color=(1,1,1,1)
-            self.ids.lbtitu.color=(1,1,1,1)
-        pass
-    
-    def dameVenta(self):        
-        self.turnos = conexion().selectAll('Turnos', ['estado', str(1)])
-        self.turnoActual=self.turnos[0]        
+    #====================FUNCIONALES==================
+    #----------------CAMBIO TIPO DE PAGO--------------
+    def filtro(self):  
+        if len(self.ids.tiPago.text) > 1:
+            self.ids.tiPago.text=""
+            self.Pago=False
+            self.ids.lbPago.text="Efectivo"
+        elif len(self.ids.tiPago.text) == 0:
+            self.ids.lbPago.text="Efectivo"
+        elif (int(self.ids.tiPago.text)) in range(1,4):   
+            self.tipoPago=int(self.ids.tiPago.text)
+            self.ids.lbPago.text=str(self.diccTipoPago[str(self.tipoPago)])
+        else:
+            self.ids.tiPago.text="1"
+            self.tipoPago=1
+            self.ids.lbPago.text="Efectivo"
+            
+    #-------------FOCO PARA COMPONENTE--------------
+    def focoComponentes(self):  
+        self.ids.timonto.focus=True
 
+    #-----------DEVUELVE LA VENTA TOTAL DEL TURNO-------        
+    def dameVenta(self):
         self.ventas = conexion().selectAll('Ventas', ['Turnos_id_turno', self.turnoActual[0]])
         contVent=0
         for i in range(len(self.ventas)):
@@ -221,7 +280,10 @@ class Box(BoxLayout):
                 contVent+=int(self.ventas[i][2])
         return contVent
 
-    def cerrarTurno(self, pop):
+    #--------CIERRA UN TURNO Y MUESTRA RESULTADO----------
+    def cerrarTurno(self, pop, popup):
+        popup.dismiss()
+        pop.dismiss()
         self.controlaVentanaAbirta=1
         fhf=FechayHora().formatos(11)
         conexion().update([self.turnoActual[1], self.turnoActual[2],self.turnoActual[3], self.turnoActual[4], fhf,  self.turnoActual[6], 0, self.turnoActual[0]],'Turnos')
@@ -238,7 +300,7 @@ class Box(BoxLayout):
 
         con2 = BoxLayout(orientation='horizontal') 
         lbI  = Label(text="Inicial: ", font_size =20.0)
-        lbInicial  = Label(text='$ ' + self.turnoActual[2], font_size =20.0)   
+        lbInicial  = Label(text='$ ' + str(self.turnoActual[2]), font_size =20.0)   
         
         con3 = BoxLayout(orientation='horizontal') 
         lbC  = Label(text="Caja: ", font_size =20.0)
@@ -288,39 +350,23 @@ class Box(BoxLayout):
         
         #Deshabilitar controles y setear en 0
 
-    def confirmo(self):
+    #------------PIDO CONFIRMACION PARA CERRAR TURNO------------
+    def confirmo(self, pop):
+        self.contrl()
         if self.controlaVentanaAbirta==0:
             self.controlaVentanaAbirta=1
             cont = BoxLayout(orientation='vertical')
             buttons = BoxLayout()
-            cont.add_widget(Label(text='¿ Desea dar por terminado el turno "'+self.turnoActual[1]+'" ?', font_size =20.0))
-            buttons.add_widget(Button(text='si', on_press = lambda btn: self.cerrarTurno(mensj), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) )
+            cont.add_widget(Label(text='¿Desea dar por terminado el turno ' + self.turnoActual[1] + '?', font_size =20.0))
+            buttons.add_widget(Button(text='si', on_press = lambda btn: self.cerrarTurno(mensj, pop), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) )
             buttons.add_widget(Button(text='no',on_press = lambda *args: mensj.dismiss(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0) )
             cont.add_widget(buttons)
             mensj = Popup(title="Confirmar", content= cont,auto_dismiss=False, size_hint=(None,None), size=(480, 150), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
             mensj.open()
-    
-    def setearTablita(self):
-        try:
-            self.turnos = conexion().selectAll('Turnos', ['estado', str(1)])
-            if len(self.turnos[0])>0:
-                self.turnoActual=self.turnos[0]
-                self.ids.lbtitu.text = 'Turno: ' + self.turnoActual[1]
-                self.ids.lblinicial.text = '$ ' + str(self.turnoActual[2])
-                self.ids.lblventa.text = '$ ' + str(self.dameVenta())
-                self.ids.lbltotal.text = '$ ' + str(self.dameVenta()+int(self.turnoActual[2]))
-                self.ids.lbhora.text = self.turnoActual[4]
-                self.ids.cajaa.disabled=False
-        except:            
-            self.ids.lbtitu.text = 'Turno: '
-            self.ids.lblinicial.text = '$ 0'
-            self.ids.lblventa.text = '$ 0'
-            self.ids.lbltotal.text = '$ 0'
-            self.ids.lbhora.text = 'Cerrado'
-            self.ids.cajaa.disabled=True
 
-
+    #-------------------------ABRO TURNO----------------------------
     def nuevoTurno(self, estr, pop):
+        self.controlaVentanaAbirta=1
         self.user=conexion().selectAll("Usuarios", ["sesion", "1"])
         self.sesion=self.user[0]
         tourno='Mañana'
@@ -328,12 +374,10 @@ class Box(BoxLayout):
             tourno='Tarde'
         conexion().insert([tourno, estr, FechayHora().formatos(10), FechayHora().formatos(11), "s", self.sesion[0], 1], 'Turnos')
         self.setearTablita()
+        self.contrl()
         pop.dismiss()
 
-    def contrl(self):
-        if self.controlaVentanaAbirta==1:
-            self.controlaVentanaAbirta=0
-
+    #-------------------GESTION DE TURNO-----------------
     def btnGestionarTurno(self):
         if self.controlaVentanaAbirta==0:
             self.controlaVentanaAbirta=1
@@ -372,7 +416,7 @@ class Box(BoxLayout):
                 lbini  = Label(text=self.sesion[1], font_size =20.0)   
                 
                 but = BoxLayout(orientation='horizontal')
-                but.add_widget(Button(text="Cerrar" ,on_release = lambda *args: self.confirmo(), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))       
+                but.add_widget(Button(text="Cerrar" ,on_release = lambda *args: self.confirmo(logueo), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))       
                 but.add_widget(Button(text="Salir",on_press = lambda *args: (logueo.dismiss(), self.contrl()), background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
                 
                 con.add_widget(lbF)
@@ -420,10 +464,10 @@ class Box(BoxLayout):
 
 
 
+    
 
-
-
-
+    
+        
 # Manejo escucha de teclado de caja
     def enter(self, n):
         if n == 1:
@@ -437,12 +481,14 @@ class Box(BoxLayout):
             #    self.ids.tiobservacion.focus=True                
                 
                 
-            #esto no estaría con observacion                    
+            #esto no estaría con observacion     
+
                 self.ids.lbAnterior.text=self.ids.timonto.text                
                 self.ids.lbPagoAnterior.text=self.diccTipoPago[str(self.tipoPago)]
             
                 #Guardar en base
                 self.btnRegistrarVenta()
+
                 self.ids.timonto.text=""
                 self.ids.tiPago.text=""
                 self.ids.lbPago.text="Efectivo"
@@ -519,14 +565,6 @@ class AccionVentas:
         self.conex.insert(self.lista, "Ventas")
         pass
 
-    def borrarVenta(self):
-        pass
-
-    def ListarVentas(self):
-        pass
-
-    def BuscarVentas(self):
-        pass
     
 
 class Venta(App):
