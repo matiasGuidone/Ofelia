@@ -50,3 +50,14 @@ class FechayHora:
     # Prepara la cadena para guardar
         self.now=datetime.now()
         return self.now.strftime(self.formatos(12))
+
+    def getFechaFormateada(self, fecha):
+        ano='20'+fecha[6:8]
+        mes=fecha[3:5]
+        dia=fecha[0:2]
+        fec = datetime(int(ano), int(mes), int(dia), 0, 0, 0)
+        dia_sem = fec.weekday()
+        meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+        semana=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']
+        return semana[dia_sem]+" "+dia+" de "+meses[int(mes)]+" del "+ano
+        pass

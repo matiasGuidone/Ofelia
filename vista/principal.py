@@ -122,6 +122,14 @@ class Principal(BoxLayout):
             os.system('python vista/usuario.py')
         pass
 
+    def btnReporte(self):
+        self.abrir=5
+        if len(self.user) == 0 :
+            self.openPopup()
+        elif self.user[0][2]== 'admin':
+            os.system('python vista/reportes.py')
+        pass
+
     def btnCuentas(self):
         self.abrir=3
         if len(self.user) == 0 :
@@ -147,6 +155,8 @@ class Principal(BoxLayout):
             os.system('python vista/registrocuentas.py')
         elif self.abrir==4:
             os.system('python vista/registrogasto.py')
+        elif self.abrir==5:
+            os.system('python vista/reportes.py')
 
 class PrincipalApp(App):
     def build(self):

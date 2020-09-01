@@ -52,7 +52,30 @@ class conexion:
             elif argument == "ProductosPorMayor": return "delete from ProductosPorMayor where id_productos = ?"
             elif argument == "Gastos": return "delete from Gastos where id_gasto = ?"
  
+    #reportes
 
+    def getReporteDiario(self, dia):##DD-MM-YY
+        consulta = "SELECT fecha, hora, turno, montoingreso, montoegreso, observacion FROM (SELECT Turnos.fecha as fecha, Ventas.f_h_venta as hora, Turnos.turno as turno, Ventas.monto_venta as montoingreso, '' as montoegreso, 'caja: '||Usuarios.nombre_usu||', tipo pago: '||TiposDePagos.nombre_tipo_pago as observacion from Ventas join Turnos on Turnos.id_turno = Ventas.Turnos_id_turno join Usuarios on Usuarios.id_usu = Turnos.Usuarios_id_usu join TiposDePagos on Ventas.TiposDePagos_id_tipo_pago = TiposDePagos.id_tipo_pago UNION SELECT Turnos.fecha as fecha, substr(Gastos.fecha,11,17) as hora, Turnos.turno as turno, '' as montoingreso, Gastos.monto_gasto as montoegreso, 'caja: '||Usuarios.nombre_usu||', gasto: '|| SubcategoriaGastos.nomb_subcat as observacion from Gastos join Turnos on Turnos.id_turno = Gastos.Turnos_id_turno join Usuarios on Usuarios.id_usu = Turnos.Usuarios_id_usu join SubcategoriaGastos on Gastos.SubcategoriaGastos_id_subcat_gasto = SubcategoriaGastos.id_subcat_gasto ) where fecha = ? ORDER BY hora ASC"
+        con = sqlite3.connect("data-ofelia.db")
+        cursor=con.execute(consulta,[dia])
+        return cursor.fetchall()
+        pass
+
+    def getReporteMensual(self, mes): ##MM-YY
+        con=sqlite3.connect("data-ofelia.db")
+        consulta = "select Turnos.fecha as dia, ifnull(totalmanana,0) as turno_mañana, ifnull(totaltarde,0) as turno_tarde, (ifnull(totaltarde,0)+ifnull(totalmanana,0)) as total_diario, ((ifnull(totaltarde,0)+ifnull(totalmanana,0))*0.03) as porcentaje , ifnull(totalgastos,0) as gastos from Turnos left join ( select Turnos.fecha, SUM(Ventas.monto_venta) as totalmanana from Ventas join Turnos on ventas.Turnos_id_turno = Turnos.id_turno where Turnos.turno like 'Mañana' group by Turnos.fecha) T1 on Turnos.fecha = T1.fecha left join ( select Turnos.fecha, SUM(Ventas.monto_venta) as totaltarde from Ventas join Turnos on ventas.Turnos_id_turno = Turnos.id_turno where Turnos.turno like 'Tarde' group by Turnos.fecha) T2 on Turnos.fecha = T2.fecha left join ( select Turnos.fecha, SUM(Gastos.monto_gasto ) as totalgastos from Gastos join Turnos on Gastos.Turnos_id_turno = Turnos.id_turno group by Turnos.fecha) T3 on Turnos.fecha = T3.fecha where substr(Turnos.fecha,4,5) = ?"
+        cursor=con.execute(consulta,[mes])
+        return cursor.fetchall()
+        pass
+
+    def getReporteCancelados(self, dia):
+        consulta = "select ventas.observacion , ventas.f_h_borrado , ventas.f_h_venta, ventas.monto_venta, usuarios.nombre_usu from ventas join turnos on ventas.Turnos_id_turno = turnos.id_turno join Usuarios on turnos.Usuarios_id_usu = usuarios.id_usu where ventas.borrado = 1 and turnos.fecha = ?"
+        con=sqlite3.connect("data-ofelia.db")
+        cursor=con.execute(consulta,[dia])
+        return cursor.fetchall()
+        pass
+
+    #consultas
     def insert(self, parameter_list, tabla):
         con=sqlite3.connect("data-ofelia.db")
         cur = con.cursor()
@@ -91,7 +114,3 @@ class conexion:
                     consulta += " = "+str(condiciones[i])
             cursor=con.execute(consulta)
             return cursor.fetchall()
-        
-
-            
- 
