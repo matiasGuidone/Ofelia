@@ -5,6 +5,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.config import Config
 import platform
+from datetime import datetime
 
 import sys, os
 sys.path.append(os.getcwd())
@@ -130,9 +131,10 @@ class RegistroGasto(BoxLayout):
 
 #Evento de botn de pagar realiza el descuento en la cuenta que tiene a favor el registro seleccionado
     def btnPagar(self): 
-        if self.id_subcategoria == 0 or not  len(self.ids.txtMonto.text) > 0:
+        self.turnos = conexion().selectAll('Turnos', ['estado', str(1)])
+        if (self.id_subcategoria == 0 or not  len(self.ids.txtMonto.text) > 0) and len(self.turnos[0]) == 0 :
             contenido = BoxLayout(orientation='vertical')
-            contenido.add_widget(Label(text=str("Seleccione un "+self.str_seleccion+" de la lista e ingrese monto.")))
+            contenido.add_widget(Label(text=str("Seleccione un "+self.str_seleccion+" de la lista e ingrese monto. asegurese de tener iniciado un turno")))
             contenido.add_widget(Button(text='Aceptar', on_press = lambda *args: popup.dismiss(),  height = 40, background_normal= 'normal.png', background_color= (1, .745, .039, 1), font_size =25.0))
             popup = Popup(title="Mensaje", content= contenido, size_hint=(None,None),auto_dismiss=False, size=(400, 130), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
             popup.open()
@@ -165,7 +167,21 @@ class RegistroGasto(BoxLayout):
         else :
             self.ids.txtMonto.text = self.ids.txtGasto.text
         pass
- 
+
+    def nuevoTurno(self, estr, pop):
+        self.user=conexion().selectAll("Usuarios", ["sesion", "1"])
+        self.sesion=self.user[0]
+        tourno='Mañana'
+        if datetime.now().hour>13:
+            tourno='Tarde'
+        conexion().insert([tourno, estr, FechayHora().formatos(10), FechayHora().formatos(11), "s", self.sesion[0], 1], 'Turnos')
+        self.setearTablita()
+        pop.dismiss()
+    
+    def setearTablita(self):
+        self.turnos = conexion().selectAll('Turnos', ['estado', str(1)])
+        if len(self.turnos[0])>0:
+            self.turnoActual=self.turnos[0]
 
 class RegistroGastoApp(App):
     def build(self):

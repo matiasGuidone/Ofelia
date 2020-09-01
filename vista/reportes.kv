@@ -1,0 +1,69 @@
+#:kivy 1.10.0
+ 
+
+<Reportes>:	 
+	orientation: 'vertical'
+	spacing: 15
+	padding: 4
+	canvas.before:
+		Color:
+			rgba:  1, 1, 1, 1
+		Rectangle:
+            pos: self.pos
+            size: self.size	
+	Image:
+		source: 'reportes.png'
+		# size_hint: .4, .4
+	BoxLayout:
+		orientation: 'horizontal'
+		Button:
+			text: 'Reporte diario'
+			on_press: root.btnDiario()
+			size_hint: (0.7,0.2)
+		Button:
+			text: 'Reporte Mensual'
+			on_press: root.btnMensual()
+			size_hint: (0.7,0.2)
+		Button:
+			text: 'Reporte cancelados'
+			on_press: root.btnCancelado()
+			size_hint: (0.7,0.2)
+	 
+	BoxLayout:
+        orientation: 'horizontal'
+		Button:
+			text: 'Salir'
+			font_size :'25sp'
+			background_normal: 'normal.png'		        
+			background_color: 1, .745, .039, 1
+			on_press: app.stop() 
+			size_hint: (0.5,0.2)
+
+<SaveDialog>:
+
+    text_input: text_input
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            on_selection: text_input.text = self.selection and self.selection[0] or ''
+
+        TextInput:
+            id: text_input
+            size_hint_y: None
+            height: 30
+            multiline: False
+			text: root.archivo
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancelar"
+                on_release: root.dismiss()
+
+            Button:
+                text: "Guardar"
+                on_release: root.save(filechooser.path, text_input.text)
