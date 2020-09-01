@@ -57,6 +57,27 @@ class Box(BoxLayout):
     def _keyboard_closed(self):
         pass
 
+            
+#---------EFECTOS DE TECLADO PARA CAJA 1--------
+    def enter(self, n):
+        if n == 1:
+            if self.ids.timonto.text!=None:
+                self.ids.timonto.focus=False
+                self.ids.tiPago.focus=True
+                self.mont=True
+        elif n == 2: 
+            if self.ids.tiPago.text!=None and self.mont:
+                self.ids.tiPago.focus=False
+                self.ids.lbAnterior.text=self.ids.timonto.text                
+                self.ids.lbPagoAnterior.text=self.diccTipoPago[str(self.tipoPago)]
+                self.btnRegistrarVenta()
+                self.ids.timonto.text=""
+                self.ids.tiPago.text=""
+                self.ids.lbPago.text="Efectivo"
+                self.ids.timonto.focus=True
+                self.Pago=False
+                self.mmont=False
+
     #----------MANEJO DISTINTAS TECLAS-----------
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
         teclas = {
@@ -460,112 +481,6 @@ class Box(BoxLayout):
 
                 nuevoTurn = Popup(title= 'Abrir Turno', content= contenido, size_hint=(None,None),auto_dismiss=False, size=(420, 140), background='Fondop.png', separator_color=(1, .745, .039, 1), title_size=25.0, separator_height=5.0)
                 nuevoTurn.open()
-        
-
-
-
-    
-
-    
-        
-# Manejo escucha de teclado de caja
-    def enter(self, n):
-        if n == 1:
-            if self.ids.timonto.text!=None:
-                self.ids.timonto.focus=False
-                self.ids.tiPago.focus=True
-                self.mont=True
-        elif n == 2: 
-            if self.ids.tiPago.text!=None and self.mont:
-                self.ids.tiPago.focus=False
-            #    self.ids.tiobservacion.focus=True                
-                
-                
-            #esto no estaría con observacion     
-
-                self.ids.lbAnterior.text=self.ids.timonto.text                
-                self.ids.lbPagoAnterior.text=self.diccTipoPago[str(self.tipoPago)]
-            
-                #Guardar en base
-                self.btnRegistrarVenta()
-
-                self.ids.timonto.text=""
-                self.ids.tiPago.text=""
-                self.ids.lbPago.text="Efectivo"
-                self.ids.timonto.focus=True
-                self.Pago=False
-                self.mmont=False
-      #elif n == 3:
-      #    if self.mont and self.Pago:
-      #        self.ids.tiobservacion.focus=False
-      #        self.ids.lbAnterior.text=self.ids.timonto.text
-      #        print(self.ids.timonto.text)
-      #        self.ids.lbPagoAnterior.text=self.diccTipoPago[str(self.tipoPago)]
-      #        print(self.diccTipoPago[str(self.tipoPago)])
-      #        self.ids.lbobserAnt.text=self.ids.tiobservacion.text
-      #        print(self.ids.tiobservacion.text)
-      #    
-      #        #Guardar en base
-      #        self.btnRegistrarVenta()
-      #        self.ids.timonto.text=""
-      #        self.ids.tiobservacion.text=""
-      #        self.ids.tiPago.text=""
-      #        self.ids.lbPago.text="Efectivo"
-      #        self.ids.timonto.focus=True
-      #        self.Pago=False
-      #        self.mmont=False
-
-
-class AccionVentas:
-#Utiles para la corrida
-    lista=None   
-#conexion
-    conex=None
-#Datos venta
-    id_Venta=0
-    f_h_venta=None
-    monto_venta=0.0
-    borrado=0
-    fechaBorrado=None
-    observacion=""
-    tiposDePago_id_tipo_pago=0
-    caja=0
-#turno
-    id_Turno=0
-#   turno=""
-#   caja_ini_turno=0.0
-#   fecha=0
-#   f_h_apertura=0
-#   f_h_cierre=0
-#   id_usu=0
-# tipo de Pago 0=Efectivo - 1=Targeta de Débito - 2=Targeta de Crédito
-    tipoDePago=["Efectivo", "Targeta de Débito", "Targeta de Crédito"]
-
-    def _init_(self, turno, caja):
-        self.id_Turno=turno
-        self.caja=caja
-        self.conex=conexion()
-        self.f_h_venta=FechayHora()
-        self.fechaBorrado=FechayHora()
-        
-        pass
-
-    def cargarVenta(self, lista2):
-        #La lista viene con montoDeVenta(float), observación,idTurno,tipoPago,Caja        
-        self.lista = lista2
-
-        #pongo en 0 borrado y fecha de borrado
-        (self.lista).insert(2,0)
-        (self.lista).insert(3,"")   
-
-        #formateo fecha y hora actuales
-        self.f_h_venta.resetear()
-        (self.lista).insert(0, ((self.f_h_venta).getAhoraGuardo()))
-
-        self.conex.insert(self.lista, "Ventas")
-        pass
-
-    
 
 class Venta(App):
     def build(self):
